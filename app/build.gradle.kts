@@ -8,7 +8,9 @@
 
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
+    java
     application
+    id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
 repositories {
@@ -16,7 +18,17 @@ repositories {
     mavenCentral()
 }
 
+val javaFXModules = listOf("base", "controls", "fxml", "swing", "graphics" )
+val supportedPlatforms = listOf("linux", "mac", "win") // All required for OOP
+val javaFxVersion = 17
+
 dependencies {
+
+    for (platform in supportedPlatforms) {
+        for (module in javaFXModules) {
+            implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
+        }
+    }
     // Use JUnit Jupiter for testing.
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
 
