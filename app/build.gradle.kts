@@ -11,6 +11,7 @@ plugins {
     java
     application
     id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 repositories {
@@ -20,10 +21,14 @@ repositories {
 
 val javaFXModules = listOf("base", "controls", "fxml", "swing", "graphics" )
 val supportedPlatforms = listOf("linux", "mac", "win") // All required for OOP
-val javaFxVersion = 17
+val javaFxVersion = "21.0.2"
+
+javafx {
+    version = "21.0.2"
+    modules( "javafx.base", "javafx.controls", "javafx.fxml", "javafx.swing", "javafx.graphics" )
+}
 
 dependencies {
-
     for (platform in supportedPlatforms) {
         for (module in javaFXModules) {
             implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
