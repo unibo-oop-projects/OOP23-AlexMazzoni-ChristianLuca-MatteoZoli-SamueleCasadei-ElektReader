@@ -10,8 +10,8 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     java
     application
-    id("com.github.johnrengelman.shadow") version "7.0.0"
-    id("org.openjfx.javafxplugin") version "0.1.0"
+
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 repositories {
@@ -19,26 +19,35 @@ repositories {
     mavenCentral()
 }
 
-val javaFXModules = listOf("base", "controls", "fxml", "swing", "graphics" )
+val javaFXModules = listOf(
+    "base",
+    "controls",
+    "fxml",
+    "swing",
+    "graphics"
+)
 val supportedPlatforms = listOf("linux", "mac", "win") // All required for OOP
-val javaFxVersion = "21.0.2"
-
-javafx {
-    version = "21.0.2"
-    modules( "javafx.base", "javafx.controls", "javafx.fxml", "javafx.swing", "javafx.graphics" )
-}
 
 dependencies {
+    // Suppressions for SpotBugs
+    compileOnly("com.github.spotbugs:spotbugs-annotations:4.8.3")
+
+    // Use JUnit Jupiter for testing.
+    val jUnitVersion = "5.10.1"
+    testImplementation("org.junit.jupiter:junit-jupiter:$jUnitVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
+
+
+    // Use JavaFX
+    val javaFxVersion = 15
     for (platform in supportedPlatforms) {
         for (module in javaFXModules) {
             implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
         }
     }
-    // Use JUnit Jupiter for testing.
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
-
-    // This dependency is used by the application.
-    implementation("com.google.guava:guava:31.1-jre")
+    
+    // This dependency is used by the application. (guava)
+    // implementation("com.google.guava:guava:31.1-jre")
 }
 
 application {

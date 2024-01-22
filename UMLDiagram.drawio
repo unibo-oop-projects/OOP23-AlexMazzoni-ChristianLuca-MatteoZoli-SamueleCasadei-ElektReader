@@ -1,88 +1,13 @@
-<mxfile host="app.diagrams.net" modified="2024-01-18T19:27:25.566Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0" etag="ymilNNDrvPoFnjgI9U55" version="22.1.21" type="github">
-  <diagram name="Page-1" id="ecqLVog1buzcT9Wsd1fs">
-    <mxGraphModel dx="2066" dy="1153" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-1" value="&lt;font style=&quot;font-size: 26px;&quot;&gt;ELEKTREADER&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="310" y="485" width="230" height="130" as="geometry" />
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-2" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="560" y="500" as="sourcePoint" />
-            <mxPoint x="580" y="450" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-3" value="CHRISTIAN" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="540" y="380" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-4" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="610" y="360" as="sourcePoint" />
-            <mxPoint x="620" y="310" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="610" y="370" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-5" value="SON&amp;nbsp; SOLO BOZZE PER PRENDERE CONFIDENZA CON L&#39;APPLICATIVO, PER ORA è PIù UNO SCHEMA E-R / MAPPA MENTALE PIUTTOSTO CHE UN UML." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="500" y="180" width="250" height="120" as="geometry" />
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-6" value="GESTIONE RIPRODUZIONE" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="470" y="110" width="110" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-7" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="460" y="110" as="sourcePoint" />
-            <mxPoint x="370" y="80" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="380" y="70" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-8" value="VIDEO (GESTIONE GUI DELL&#39;ARGOMENTO)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="250" y="70" width="110" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-9" value="VARIE FUNZIONALITà RELATIVE" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="590" y="50" width="90" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-10" value="METADATI (USER HISTORY)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="690" y="65" width="90" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-11" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="610" y="175" as="sourcePoint" />
-            <mxPoint x="590" y="140" as="targetPoint" />
-            <Array as="points" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-12" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="550" y="100" as="sourcePoint" />
-            <mxPoint x="580" y="70" as="targetPoint" />
-            <Array as="points" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-13" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="760" y="220" as="sourcePoint" />
-            <mxPoint x="770" y="120" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="790" y="205" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-14" value="RIPRODUZIONE BASILARE" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="400" y="15" width="90" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="acSkTr7RVJCc_wWsa3M2-15" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.382;exitY=-0.08;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="acSkTr7RVJCc_wWsa3M2-6">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="515" y="100" as="sourcePoint" />
-            <mxPoint x="490" y="70" as="targetPoint" />
-            <Array as="points" />
-          </mxGeometry>
-        </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
+<mxfile host="65bd71144e">
+    <diagram name="Page-1" id="ecqLVog1buzcT9Wsd1fs">
+        <mxGraphModel dx="879" dy="745" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="acSkTr7RVJCc_wWsa3M2-1" value="&lt;font style=&quot;font-size: 26px;&quot;&gt;ELEKTREADER&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="485" width="230" height="130" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
 </mxfile>
