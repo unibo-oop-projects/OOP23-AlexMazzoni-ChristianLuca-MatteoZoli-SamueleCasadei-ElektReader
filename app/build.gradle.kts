@@ -10,7 +10,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     java
     application
-
+    id ("org.openjfx.javafxplugin") version "0.0.10" // Use the latest version
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
@@ -24,6 +24,7 @@ val javaFXModules = listOf(
     "controls",
     "fxml",
     "swing",
+    "media",
     "graphics"
 )
 val supportedPlatforms = listOf("linux", "mac", "win") // All required for OOP
@@ -39,7 +40,7 @@ dependencies {
 
 
     // Use JavaFX
-    val javaFxVersion = 15
+    val javaFxVersion = 21
     for (platform in supportedPlatforms) {
         for (module in javaFXModules) {
             implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
@@ -58,4 +59,8 @@ application {
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+tasks.run {
+
 }

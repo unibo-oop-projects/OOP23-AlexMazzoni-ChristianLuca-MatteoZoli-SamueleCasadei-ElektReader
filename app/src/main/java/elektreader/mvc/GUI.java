@@ -1,19 +1,21 @@
 package elektreader.mvc;
 
+import java.io.IOException;
+
+import elektreader.App;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class GUI extends Application {
     @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
-        Label label = new Label("Hello, World!");
-        StackPane root = new StackPane();
-        root.getChildren().add(label);
-        primaryStage.setScene(new Scene(root, 300, 250));
-        primaryStage.show();
+    public void start(Stage stage) throws IOException {
+        //VBox root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/app.fxml"));
+        //Scene scene = new Scene(root, 500, 250);
+        stage.setTitle(App.class.getPackageName());
+        //stage.setScene(scene);
+        stage.show();
     }
 }
