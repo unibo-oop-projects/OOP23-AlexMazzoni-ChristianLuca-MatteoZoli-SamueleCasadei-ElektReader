@@ -1,4 +1,4 @@
-package elektreader.mvc.view;
+package elektreader.view;
 
 public class PlaylistView {
     

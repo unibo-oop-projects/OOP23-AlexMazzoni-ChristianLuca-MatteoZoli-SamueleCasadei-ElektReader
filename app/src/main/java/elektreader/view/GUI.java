@@ -1,4 +1,4 @@
-package elektreader.mvc;
+package elektreader.view;
 
 import elektreader.App;
 import javafx.application.Application;

@@ -3,7 +3,7 @@
  */
 package elektreader;
 
-import elektreader.mvc.GUI;
+import elektreader.view.GUI;
 import javafx.application.Application;
 
 public class App{
