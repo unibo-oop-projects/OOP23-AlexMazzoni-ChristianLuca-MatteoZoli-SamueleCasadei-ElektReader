@@ -13,13 +13,15 @@ import javafx.util.Duration;
 
 public class Mp3PlayList implements PlayList{
 
+    private final File playlistDir;
     private Set<Song> songs;
     private List<Song> queue;
     private final int FIRST = 0;
 
-    public Mp3PlayList(Set<File> files) {
+    public Mp3PlayList(File directory) {
+        playlistDir = directory;
         Set<Song> convertedMp3 = new HashSet<>();
-        for(File file : files){
+        for(File file : directory.listFiles()){
             convertedMp3.add(new Mp3Song(file.getAbsolutePath()));
         }
         this.songs = convertedMp3;
@@ -73,6 +75,11 @@ public class Mp3PlayList implements PlayList{
     @Override
     public boolean removeSong(Song song) {
         return this.songs.remove(song);
+    }
+        
+    @Override
+    public String getName() {
+        return playlistDir.getName();
     }
     
 }

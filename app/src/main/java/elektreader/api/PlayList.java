@@ -12,7 +12,12 @@ public interface PlayList {
      * @return the set of songs contained in the playlist, this is not used in
      * the actual reproduction
      */
-    public Set<Song> getSongs();
+    Set<Song> getSongs();
+
+    /**
+     * @return the name of the current playlist, which is also the directory name
+     */
+    String getName();
 
     /**
      * @return the queue of songs used for the actual reproduction of tracks

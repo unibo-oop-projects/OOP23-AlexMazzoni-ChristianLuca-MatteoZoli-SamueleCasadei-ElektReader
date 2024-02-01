@@ -1,5 +1,7 @@
 package elektreader.model;
 
+import java.io.File;
+
 import elektreader.api.Song;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -7,12 +9,14 @@ import javafx.util.Duration;
 
 public class Mp3Song implements Song{
 
+    private final File songFile;
     private final MediaPlayer player;
     private final Media data;
 
     public Mp3Song(String path) {
-        this.data = new Media(path);
-        this.player = new MediaPlayer(data);
+        songFile = new File(path);
+        data = new Media(songFile.getAbsolutePath());
+        player = new MediaPlayer(data);
     }
 
     @Override
