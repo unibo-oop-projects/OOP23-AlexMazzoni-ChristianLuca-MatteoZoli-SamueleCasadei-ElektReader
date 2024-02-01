@@ -9,11 +9,14 @@ import javafx.util.Duration;
  */
 public interface PlayList {
 
+    /**
+     * @return the path of the playlist location (the directory location)
+     */
     Path getPath();
 
     /**
-     * @param index the index of the 
-     * @return
+     * @param index the position of the song in the queue
+     * @return the the song at the specified position
      */
     Song getSong(int index);
 
