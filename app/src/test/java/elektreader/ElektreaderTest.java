@@ -6,13 +6,22 @@ package elektreader;
 import org.junit.jupiter.api.Test;
 
 import elektreader.api.Reader;
+import elektreader.model.ReaderImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.junit.jupiter.api.Assertions;
+
 class ElektreaderTest {
-    Reader app;
+
+    final Path TESTPATH = Paths.get(System.getProperty("user.home")+"/elektreaderTEST/Environment");
+    Reader app = new ReaderImpl();
 
     @Test void testEnvironment() {
-        
+        Assertions.assertTrue(app.setCurrentEnvironment(TESTPATH));
+        System.out.println(app.getCurrentEnvironment());
     }
 }

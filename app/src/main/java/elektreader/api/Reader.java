@@ -1,7 +1,10 @@
 package elektreader.api;
 
+
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Optional;
+
 
 /**
  * This interface represents the logic of a 
@@ -20,25 +23,25 @@ public interface Reader {
      * @return true if it can be used as current environment, 
      * else wait for a valid folder and false is return (the program doesn't stop if is invalid).
      */
-    public boolean setCurrentEnvironment(final File folder);
+    public boolean setCurrentEnvironment(final Path folder);
 
 
-    public Optional<File> getCurrentEnvironment();
+    public Optional<Path> getCurrentEnvironment();
 
     
-    public boolean setCurrentPlaylist();
+    public boolean setCurrentPlaylist(final Optional<PlayList> playlist);
     
     
-    public Optional<File> getCurrentPlaylist();
+    public Optional<PlayList> getCurrentPlaylist();
 
     
     public int getNPlaylists(); 
 
     
-    public boolean setCurrentSong();
+    public boolean setCurrentSong(final Optional<Song> song);
     
     
-    public Optional<File> getCurrentSong();
+    public Optional<Song> getCurrentSong();
 
     
     public int getNSongs();
