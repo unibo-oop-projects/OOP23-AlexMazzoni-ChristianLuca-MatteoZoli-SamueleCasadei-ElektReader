@@ -2,6 +2,7 @@ package elektreader.model;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -17,11 +18,12 @@ public class Mp3PlayList implements PlayList{
     private final File playlistDir;
     private Set<Song> songs;
     private List<Song> queue;
+    private final String supported = "mp3";
 
     public Mp3PlayList(final Path directory) {
         playlistDir = directory.toFile();
         Set<Song> convertedMp3 = new HashSet<>();
-        for(File file : playlistDir.listFiles()){
+        for(File file : getSupported(playlistDir.listFiles())){
             convertedMp3.add(new Mp3Song(file.toPath()));
         }
         this.songs = convertedMp3;
@@ -117,6 +119,17 @@ public class Mp3PlayList implements PlayList{
     @Override
     public Path getPath() {
         return this.playlistDir.toPath();
+    }
+
+    private Collection<File> getSupported(File ... files){
+        Collection<File> out = new HashSet<>();
+        for (File song : files){
+            var exetension = song.getAbsolutePath().split(".");
+            if(exetension[exetension.length-1].equals(supported)){
+                out.add(song);
+            }
+        }
+        return out;
     }
     
 }

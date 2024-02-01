@@ -5,9 +5,15 @@ package elektreader;
 
 import org.junit.jupiter.api.Test;
 
+import elektreader.api.PlayList;
 import elektreader.api.Reader;
+import elektreader.api.Song;
+import elektreader.model.Mp3PlayList;
 import elektreader.model.ReaderImpl;
+import javafx.util.Duration;
 
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -62,7 +68,14 @@ class ElektreaderTest {
     }
 
     @Test void testPlaylists() {
-        // TODO
+        Path customPath = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment","GENERI","MUSICA ROMAGNOLA");
+        PlayList plist = new Mp3PlayList(customPath);
+        Set<String> songNames = plist.getSongs().stream()
+            .map(Song::getName)
+            .collect(Collectors.toSet());
+        Assertions.assertEquals(Set.of("16 - valzer dell'usignolo.mp3", "15 - Bachata di Mengoni.mp3"), songNames);
+        Assertions.assertEquals(2, plist.getSize());
+
     }
 
     @Test void testSongs() {
