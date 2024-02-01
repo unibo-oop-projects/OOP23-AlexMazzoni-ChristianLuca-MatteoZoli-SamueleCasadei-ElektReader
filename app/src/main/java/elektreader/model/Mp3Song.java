@@ -1,6 +1,7 @@
 package elektreader.model;
 
 import java.io.File;
+import java.nio.file.Path;
 
 import elektreader.api.Song;
 import javafx.scene.media.Media;
@@ -13,8 +14,8 @@ public class Mp3Song implements Song{
     private final MediaPlayer player;
     private final Media data;
 
-    public Mp3Song(String path) {
-        songFile = new File(path);
+    public Mp3Song(final Path songPath) {
+        songFile = songPath.toFile();
         data = new Media(songFile.getAbsolutePath());
         player = new MediaPlayer(data);
     }

@@ -1,6 +1,7 @@
 package elektreader.model;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -18,11 +19,11 @@ public class Mp3PlayList implements PlayList{
     private List<Song> queue;
     private final int FIRST = 0;
 
-    public Mp3PlayList(File directory) {
-        playlistDir = directory;
+    public Mp3PlayList(final Path directory) {
+        playlistDir = directory.toFile();
         Set<Song> convertedMp3 = new HashSet<>();
-        for(File file : directory.listFiles()){
-            convertedMp3.add(new Mp3Song(file.getAbsolutePath()));
+        for(File file : playlistDir.listFiles()){
+            convertedMp3.add(new Mp3Song(file.toPath()));
         }
         this.songs = convertedMp3;
         this.queue = convertedMp3.stream().collect(Collectors.toList());
