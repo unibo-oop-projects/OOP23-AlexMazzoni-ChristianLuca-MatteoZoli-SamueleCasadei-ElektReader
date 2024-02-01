@@ -5,49 +5,46 @@ import java.nio.file.Path;
 
 import elektreader.api.Song;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class Mp3Song implements Song{
 
     private final File songFile;
-    private final MediaPlayer player;
     private final Media data;
 
+    /**
+     * @param songPath the file path, already filtered from illegal arguments 
+     */
     public Mp3Song(final Path songPath) {
         songFile = songPath.toFile();
-        data = new Media(songFile.getAbsolutePath());
-        player = new MediaPlayer(data);
-    }
-
-    @Override
-    public boolean isPlaying() {
-        return this.player.getStatus() == MediaPlayer.Status.PLAYING;
-    }
-
-    @Override
-    public void play() {
-        this.player.play();
-    }
-
-    @Override
-    public void pause() {
-        this.player.pause();
+        data = new Media(songPath.toUri().toString());
     }
 
     @Override
     public String getName() {
-        return this.data.getMetadata().get("Title").toString();
+        var title =  this.data.getMetadata().entrySet().stream()
+            .filter(e -> e.getKey().equals("title"))
+            .map(e -> e.getValue())
+            .findAny();
+        return title.isPresent() ? title.get().toString() : songFile.getName();
     }
 
     @Override
     public String getArtist() {
-        return this.data.getMetadata().get("Artist").toString();
+        var artist = this.data.getMetadata().entrySet().stream()
+        .filter(e -> e.getKey().equals("artist"))
+        .map(e -> e.getValue())
+        .findAny();
+        return artist.isPresent() ? artist.get().toString() : "";
     }
 
     @Override
     public String getGenre() {
-        return this.data.getMetadata().get("Genre").toString();
+        var genre = this.data.getMetadata().entrySet().stream()
+        .filter(e -> e.getKey().equals("genre"))
+        .map(e -> e.getValue())
+        .findAny();
+        return genre.isPresent() ? genre.get().toString() : "";
     }
 
     @Override
@@ -57,17 +54,42 @@ public class Mp3Song implements Song{
 
     @Override
     public String getAlbumName() {
-        return this.data.getMetadata().get("Album").toString();
+        var album = this.data.getMetadata().entrySet().stream()
+        .filter(e -> e.getKey().equals("album"))
+        .map(e -> e.getValue())
+        .findAny();
+        return album.isPresent() ? album.get().toString() : "";
     }
 
     @Override
-    public Double getVolume() {
-        return isPlaying() ? this.player.getVolume() : 0;
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((songFile == null) ? 0 : songFile.hashCode());
+        result = prime * result + ((data == null) ? 0 : data.hashCode());
+        return result;
     }
-    
+
     @Override
-    public void setVolume(Double amount) {
-        this.player.setVolume(amount);
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Mp3Song other = (Mp3Song) obj;
+        if (songFile == null) {
+            if (other.songFile != null)
+                return false;
+        } else if (!songFile.equals(other.songFile))
+            return false;
+        if (data == null) {
+            if (other.data != null)
+                return false;
+        } else if (!data.equals(other.data))
+            return false;
+        return true;
     }
     
 }

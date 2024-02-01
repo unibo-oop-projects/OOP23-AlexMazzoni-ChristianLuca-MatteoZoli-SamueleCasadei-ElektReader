@@ -1,5 +1,6 @@
 package elektreader.api;
 
+import java.nio.file.Path;
 import java.util.Set;
 import javafx.util.Duration;
 
@@ -7,6 +8,14 @@ import javafx.util.Duration;
  * A class which represents the concept of a playlist of songs
  */
 public interface PlayList {
+
+    Path getPath();
+
+    /**
+     * @param index the index of the 
+     * @return
+     */
+    Song getSong(int index);
 
     /**
      * @return the set of songs contained in the playlist, this is not used in
@@ -28,11 +37,6 @@ public interface PlayList {
      * shuffles the reproduction queue
      */
     void shuffleQueue();
-
-    /**
-     * starts to play the queue from the first song
-     */
-    void playQueue();
 
     /**
      * @return the complessive duration of all the songs in this playlist

@@ -9,21 +9,6 @@ import javafx.util.Duration;
 public interface Song {
 
     /**
-     * @return true if this song is currently playing, false otherwise
-     */
-    boolean isPlaying();
-
-    /**
-     * Plays this song only if it is already playing
-     */
-    void play();
-
-    /**
-     * Pauses this song only if it is playing
-     */
-    void pause();
-
-    /**
      * @return song's title, read through metadata
      */
     String getName();
@@ -48,17 +33,4 @@ public interface Song {
      */
     Duration getDuration();
 
-    /**
-     * @return the volume of the song, if it's currently playing.
-     * otherwise zero
-     */
-    Double getVolume();
-
-    /**
-     * Sets the volume of the song to a Defined amount
-     * @param amount the amount of volume that the song will have, if it's currently
-     * playing
-     */
-    void setVolume(Double amount);
-    
 }

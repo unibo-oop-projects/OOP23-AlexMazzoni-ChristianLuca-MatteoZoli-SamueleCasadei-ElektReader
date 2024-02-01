@@ -17,7 +17,6 @@ public class Mp3PlayList implements PlayList{
     private final File playlistDir;
     private Set<Song> songs;
     private List<Song> queue;
-    private final int FIRST = 0;
 
     public Mp3PlayList(final Path directory) {
         playlistDir = directory.toFile();
@@ -48,14 +47,6 @@ public class Mp3PlayList implements PlayList{
     }
 
     @Override
-    public void playQueue() {
-        while(this.queue.size() > 0){
-            this.queue.get(FIRST).play();
-            this.queue.remove(FIRST);
-        }
-    }
-
-    @Override
     public Duration getTotalDuration() {
         return this.songs.stream()
             .map(Song::getDuration)
@@ -81,6 +72,51 @@ public class Mp3PlayList implements PlayList{
     @Override
     public String getName() {
         return playlistDir.getName();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((playlistDir == null) ? 0 : playlistDir.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Mp3PlayList other = (Mp3PlayList) obj;
+        if (playlistDir == null) {
+            if (other.playlistDir != null)
+                return false;
+        } else if (!playlistDir.equals(other.playlistDir))
+            return false;
+        return true;
+    }
+
+    @Override
+    public Song getSong(int index) {
+        if(this.queue.size()>index){
+            return this.queue.get(index);
+        } else {
+            resetQueue();
+            return getSong(index);
+        }
+    }
+
+    private void resetQueue() {
+        this.queue = this.songs.stream()
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public Path getPath() {
+        return this.playlistDir.toPath();
     }
     
 }
