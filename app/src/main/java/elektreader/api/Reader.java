@@ -1,11 +1,8 @@
 package elektreader.api;
 
-
-import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
-
 
 /**
  * This interface represents the logic of a 
@@ -61,7 +58,6 @@ public interface Reader {
 
 
     /**
-     * non molto utile
      * @param path given a specified path
      * @return return the specified PlayList
      */
