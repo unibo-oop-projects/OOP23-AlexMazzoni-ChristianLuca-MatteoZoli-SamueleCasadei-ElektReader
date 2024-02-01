@@ -43,22 +43,22 @@ class ElektreaderTest {
         /* test playlist - song */ 
         //test valid playlist 1
         Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST1)));
-        //Assertions.assertEquals(app.getCurrentPlaylist().get(), TEST_PATH_PLAYLIST1);
+        Assertions.assertEquals(app.getCurrentPlaylist().get().getPath(), TEST_PATH_PLAYLIST1);
         
         //test valid playlist 2
         Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2)));
-        //Assertions.assertEquals(app.getCurrentPlaylist().get(), TEST_PATH_PLAYLIST1);
+        Assertions.assertEquals(app.getCurrentPlaylist().get().getPath(), TEST_PATH_PLAYLIST2);
 
         // test invalid playlist
         Assertions.assertFalse(app.setCurrentPlaylist(app.getPlaylist(TEST_INVALID_PLAYLIST)));
-        Assertions.assertEquals(app.getCurrentPlaylist().get(), Optional.empty());
+        Assertions.assertEquals(app.getCurrentPlaylist(), Optional.empty());
 
         //test valid song
         //Assertions.assertTrue(app.setCurrentSong(app.getCurrentPlaylist().get()));
 
 
         //test invalid song
-        //Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2)));
+        //Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2).get().getSong(0)));
     }
 
     @Test void testPlaylists() {
@@ -66,7 +66,7 @@ class ElektreaderTest {
     }
 
     @Test void testSongs() {
-        // TODO
+        //TODO
     }
 
     @Test void test() {
