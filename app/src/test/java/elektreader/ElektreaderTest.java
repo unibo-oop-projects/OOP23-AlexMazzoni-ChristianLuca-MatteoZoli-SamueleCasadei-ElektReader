@@ -8,20 +8,68 @@ import org.junit.jupiter.api.Test;
 import elektreader.api.Reader;
 import elektreader.model.ReaderImpl;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 
 class ElektreaderTest {
 
-    final Path TESTPATH = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment");
     Reader app = new ReaderImpl();
 
+    /* TEST CONSTANT */
+
+    /* mi raccomando per i test posizionare la cartella nel percorso specificato */
+    /* cartella: https://drive.google.com/file/d/1b5JAQ3Hc6FRwvO2BjIb7olaxOApJDrfp/view?usp=sharing */
+    final Path TEST_PATH = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment");
+
+    final Path TEST_INVALID_PLAYLIST = Paths.get(TEST_PATH.toString(), "GENERI"); 
+
+    final Path TEST_PATH_PLAYLIST1 = Paths.get(TEST_PATH.toString(), "tutta la musica");
+    final Path TEST_PATH_SONG1 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "04 - la bomba.mp3");
+    
+    final Path TEST_PATH_PLAYLIST2 = Paths.get(TEST_PATH.toString(), "GENERI", "MUSICA ROMAGNOLA");
+    final Path TEST_PATH_SONG2 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "16 - valzer dell'usignolo.mp3");
+
+
+    /* TESTS */
+
     @Test void testEnvironment() {
-        Assertions.assertTrue(app.setCurrentEnvironment(TESTPATH));
-        System.out.println(app.getCurrentEnvironment());
+        /* test environment */
+        Assertions.assertTrue(app.setCurrentEnvironment(TEST_PATH));
+        Assertions.assertEquals(app.getCurrentEnvironment().get(), TEST_PATH);
+        
+        /* test playlist - song */ 
+        //test valid playlist 1
+        Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST1)));
+        //Assertions.assertEquals(app.getCurrentPlaylist().get(), TEST_PATH_PLAYLIST1);
+        
+        //test valid playlist 2
+        Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2)));
+        //Assertions.assertEquals(app.getCurrentPlaylist().get(), TEST_PATH_PLAYLIST1);
+
+        // test invalid playlist
+        Assertions.assertFalse(app.setCurrentPlaylist(app.getPlaylist(TEST_INVALID_PLAYLIST)));
+        Assertions.assertEquals(app.getCurrentPlaylist().get(), Optional.empty());
+
+        //test valid song
+        //Assertions.assertTrue(app.setCurrentSong(app.getCurrentPlaylist().get()));
+
+
+        //test invalid song
+        //Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2)));
+    }
+
+    @Test void testPlaylists() {
+        // TODO
+    }
+
+    @Test void testSongs() {
+        // TODO
+    }
+
+    @Test void test() {
+        //TODO
     }
 }
