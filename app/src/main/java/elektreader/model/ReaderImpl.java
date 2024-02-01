@@ -1,6 +1,5 @@
 package elektreader.model;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,8 +16,17 @@ public class ReaderImpl implements Reader{
     private Optional<Path> root = Optional.empty();
     private Optional<List<PlayList>> playlists = Optional.empty();
 
+    private Optional<PlayList> currentPlaylist = Optional.empty();
+    private Optional<Song> currentSong = Optional.empty();
+
+    private boolean mediaStatus=false;
+
     private void resetEnvironment() {
+        this.root=Optional.empty();
         this.playlists=Optional.empty();
+        this.currentPlaylist=Optional.empty();
+        this.currentSong=Optional.empty();
+        this.mediaStatus=false;
     }
 
     private boolean isPlaylist(final Path t) {
@@ -31,10 +39,11 @@ public class ReaderImpl implements Reader{
     @Override
     public boolean setCurrentEnvironment(final Path folder) {
         try (Stream<Path> paths = Files.walk(folder)) {
-            // this.playlists = Optional.of(paths.filter(Files::isDirectory)
-            //         .filter(this::isPlaylist)
-            //         .map(Mp3PlayList::new)
-            //         .toList());
+            this.playlists = Optional.of(paths.filter(Files::isDirectory)
+                    .filter(this::isPlaylist)
+                    .map(Mp3PlayList::new)
+                    .map(PlayList.class::cast) // Cast the list of Mp3PlayList to a list of PlayList
+                    .toList());
         } catch (IOException e) {
             e.printStackTrace();
             resetEnvironment();
@@ -52,21 +61,30 @@ public class ReaderImpl implements Reader{
     }
 
     @Override
-    public boolean setCurrentPlaylist(final Optional<PlayList> playlist) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCurrentPlaylist'");
+    public boolean setCurrentPlaylist(final Optional<PlayList> playlist) {    //da rifare TODO
+        this.currentPlaylist = playlist;
+        return true;
     }
 
     @Override
     public Optional<PlayList> getCurrentPlaylist() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCurrentPlaylist'");
+        return this.currentPlaylist;
+    }
+
+    @Override
+    public Optional<List<PlayList>> getPlaylists() {
+        return this.playlists;
     }
 
     @Override
     public int getNPlaylists() {
+        return this.playlists.isPresent() ? this.playlists.get().size() : 0;
+    }
+
+    @Override
+    public Optional<PlayList> getPlaylist(final Path path) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getNPlaylists'");
+        throw new UnsupportedOperationException("Unimplemented method 'getPlaylist'");
     }
 
     @Override
@@ -77,20 +95,12 @@ public class ReaderImpl implements Reader{
 
     @Override
     public Optional<Song> getCurrentSong() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCurrentSong'");
-    }
-
-    @Override
-    public int getNSongs() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getNSongs'");
+        return this.currentSong;
     }
 
     @Override
     public boolean getStatusPlay() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStatusPlay'");
+        return this.mediaStatus;
     }
 
     @Override

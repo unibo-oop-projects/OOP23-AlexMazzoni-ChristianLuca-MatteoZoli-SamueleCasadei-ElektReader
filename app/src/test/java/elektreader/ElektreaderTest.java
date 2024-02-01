@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Assertions;
 
 class ElektreaderTest {
 
-    final Path TESTPATH = Paths.get(System.getProperty("user.home")+"/elektreaderTEST/Environment");
+    final Path TESTPATH = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment");
     Reader app = new ReaderImpl();
 
     @Test void testEnvironment() {
