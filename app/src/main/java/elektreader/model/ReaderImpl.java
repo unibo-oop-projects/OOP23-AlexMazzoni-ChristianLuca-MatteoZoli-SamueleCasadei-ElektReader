@@ -18,6 +18,8 @@ import javafx.scene.media.MediaPlayer;
 
 public class ReaderImpl implements Reader{
 
+    private final String SUPPORTED_FILE = "mp3"; 
+
     private Optional<Path> root = Optional.empty();
     private Optional<List<PlayList>> playlists = Optional.empty();
 
@@ -33,35 +35,43 @@ public class ReaderImpl implements Reader{
         this.currentSong=Optional.empty();
     }
 
-    private List<Path> getFiles(final Path playlist) {
-        List<Path> songs = new ArrayList<>(Collections.emptyList());
-        try (Stream<Path> filesPaths = Files.list(playlist)) {
-            songs = filesPaths.filter(t -> t.toString().matches(".*\\.mp3$")).toList();
-        } catch (IOException e) { throw new IllegalStateException("class doesn't support it or invalid state"); }
-        return songs;
+    private boolean isSong(final Path s) {
+        return s.toString().matches(".*\\."+SUPPORTED_FILE);
     }
 
     private boolean isPlaylist(final Path p) {
         try (Stream<Path> paths = Files.list(p)) {
-            return paths.allMatch(Files::isRegularFile);
+            return paths.anyMatch(this::isSong);
         } catch (Exception e) {}
         return false;
+    }
+
+    private List<Path> getFiles(final Path playlist) {
+        List<Path> songs = new ArrayList<>(Collections.emptyList());
+        try (Stream<Path> filesPaths = Files.list(playlist)) {
+            songs = filesPaths.filter(t -> t.toString().matches(".*\\."+SUPPORTED_FILE)).toList();
+        } catch (IOException e) { throw new IllegalStateException("class doesn't support it or invalid state"); }
+        return songs;
     }
 
     @Override
     public boolean setCurrentEnvironment(final Path root) {
         try (Stream<Path> paths = Files.walk(root)) {
-            this.playlists = Optional.of(paths.filter(Files::isDirectory)
-                    .filter(this::isPlaylist)
-                    .map(t -> new Mp3PlayList(t, getFiles(t)))
-                    .map(PlayList.class::cast) // Cast the list of Mp3PlayList to a list of PlayList
-                    .toList());
+            var tmpPlaylist = paths.filter(Files::isDirectory)
+                .filter(this::isPlaylist)
+                .map(t -> new Mp3PlayList(t, getFiles(t)))
+                .map(PlayList.class::cast) // Cast the list of Mp3PlayList to a list of PlayList
+                .toList();
+            this.playlists = tmpPlaylist.isEmpty() ? Optional.empty() : Optional.of(tmpPlaylist);
+            System.out.println(this.playlists);
         } catch (IOException e) {
             e.printStackTrace();
             resetEnvironment(); //reset all the environment 
             return false;
         }
-
+        if(this.playlists.isEmpty()) {
+            return false; 
+        }
         this.root = Optional.of(root);
         setCurrentPlaylist(Optional.empty());
         return true;

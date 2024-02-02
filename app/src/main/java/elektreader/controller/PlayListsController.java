@@ -1,4 +1,13 @@
 package elektreader.controller;
 
-public class PlayListsController {
+import elektreader.api.Reader;
+
+public class PlaylistsController{
+
+    private Reader reader;
+
+    public PlaylistsController(final Reader reader) {
+        this.reader = reader;
+    }
+
 }
