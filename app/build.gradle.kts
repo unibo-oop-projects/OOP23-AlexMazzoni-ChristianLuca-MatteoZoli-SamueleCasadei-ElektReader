@@ -53,14 +53,11 @@ dependencies {
 
 application {
     // Define the main class for the application.
+    mainModule.set("elektreader.javafx") // name defined in module-info.java
     mainClass.set("elektreader.App")
 }
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
-}
-
-tasks.run {
-
 }
