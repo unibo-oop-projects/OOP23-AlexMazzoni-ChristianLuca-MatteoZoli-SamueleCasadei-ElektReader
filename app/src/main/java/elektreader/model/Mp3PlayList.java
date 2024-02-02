@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,13 +19,12 @@ public class Mp3PlayList implements PlayList{
     private final File playlistDir;
     private Set<Song> songs;
     private List<Song> queue;
-    private final String supported = "mp3";
 
-    public Mp3PlayList(final Path directory) {
-        playlistDir = directory.toFile();
+    public Mp3PlayList(final Path playlist, final Collection<Path> tracks) {
+        playlistDir = playlist.toFile();
         Set<Song> convertedMp3 = new HashSet<>();
-        for(File file : getSupported(playlistDir.listFiles())){
-            convertedMp3.add(new Mp3Song(file.toPath()));
+        for(Path song : tracks){
+            convertedMp3.add(new Mp3Song(song));
         }
         this.songs = convertedMp3;
         this.queue = convertedMp3.stream().collect(Collectors.toList());
@@ -102,13 +102,28 @@ public class Mp3PlayList implements PlayList{
     }
 
     @Override
-    public Song getSong(int index) {
-        if(this.queue.size()>index){
-            return this.queue.get(index);
-        } else {
-            resetQueue();
-            return getSong(index);
+    public Optional<Song> getSong(int index) {
+        Song searched;
+        try {
+            searched = this.queue.get(index);
+            return Optional.of(searched);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            if(index < getSize()){
+                resetQueue();
+                return getSong(index);
+            }
+            else {
+                return Optional.empty();
+            }
         }
+        
+    }
+
+    public Optional<Song> getSong(Path path){
+        return this.songs.stream()
+            .filter(s -> s.getFile().toPath().equals(path)) /* filtro tutte le canzoni che corrispondono al percorso */
+            .findAny(); /* dato che ci può essere solo un file con quel nome, se c'è lo trovo */
+
     }
 
     private void resetQueue() {
@@ -119,17 +134,6 @@ public class Mp3PlayList implements PlayList{
     @Override
     public Path getPath() {
         return this.playlistDir.toPath();
-    }
-
-    private Collection<File> getSupported(File ... files){
-        Collection<File> out = new HashSet<>();
-        for (File song : files){
-            var exetension = song.getAbsolutePath().split(".");
-            if(exetension[exetension.length-1].equals(supported)){
-                out.add(song);
-            }
-        }
-        return out;
     }
     
 }

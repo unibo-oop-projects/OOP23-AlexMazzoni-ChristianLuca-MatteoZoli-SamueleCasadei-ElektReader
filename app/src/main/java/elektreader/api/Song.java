@@ -1,5 +1,7 @@
 package elektreader.api;
 
+import java.io.File;
+
 import javafx.util.Duration;
 /**
  * An interface representing the idea of a track which is playable by ElektReader.
@@ -27,6 +29,11 @@ public interface Song {
      * @return song's genre, read through metadata
      */
     String getGenre();
+
+    /**
+     * @return the file which represents the song
+     */
+    File getFile();
 
     /**
      * @return song's duration

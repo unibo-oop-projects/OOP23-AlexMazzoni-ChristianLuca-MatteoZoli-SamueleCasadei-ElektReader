@@ -1,6 +1,7 @@
 package elektreader.api;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.Set;
 import javafx.util.Duration;
 
@@ -18,13 +19,19 @@ public interface PlayList {
      * @param index the position of the song in the queue
      * @return the the song at the specified position
      */
-    Song getSong(int index);
+    Optional<Song> getSong(int index);
 
     /**
      * @return the set of songs contained in the playlist, this is not used in
      * the actual reproduction
      */
     Set<Song> getSongs();
+
+    /**
+     * @param path the path of the song to searched in this playlist
+     * @return an Optional of the song is present, Optional.empty otherwise
+     */
+    Optional<Song> getSong(Path path);
 
     /**
      * @return the name of the current playlist, which is also the directory name
