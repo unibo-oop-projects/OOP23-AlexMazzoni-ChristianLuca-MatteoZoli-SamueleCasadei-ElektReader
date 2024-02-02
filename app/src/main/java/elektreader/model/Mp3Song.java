@@ -62,6 +62,11 @@ public class Mp3Song implements Song{
     }
 
     @Override
+    public File getFile() {
+        return this.songFile;
+    }
+
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;

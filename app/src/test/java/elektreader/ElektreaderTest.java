@@ -68,8 +68,7 @@ class ElektreaderTest {
     }
 
     @Test void testPlaylists() {
-        Path customPath = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment","GENERI","MUSICA ROMAGNOLA");
-        PlayList plist = new Mp3PlayList(customPath);
+        PlayList plist = new Mp3PlayList(TEST_PATH_PLAYLIST2);
         Set<String> songNames = plist.getSongs().stream()
             .map(Song::getName)
             .collect(Collectors.toSet());
