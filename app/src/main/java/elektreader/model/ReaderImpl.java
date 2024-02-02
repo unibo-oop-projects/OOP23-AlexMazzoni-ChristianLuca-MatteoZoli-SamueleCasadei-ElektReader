@@ -53,8 +53,7 @@ public class ReaderImpl implements Reader{
         try (Stream<Path> paths = Files.walk(root)) {
             this.playlists = Optional.of(paths.filter(Files::isDirectory)
                     .filter(this::isPlaylist)
-                    .map(Mp3PlayList::new)
-                    //.map(t -> new Mp3PlayList(t, getFiles(t)))
+                    .map(t -> new Mp3PlayList(t, getFiles(t)))
                     .map(PlayList.class::cast) // Cast the list of Mp3PlayList to a list of PlayList
                     .toList());
         } catch (IOException e) {
@@ -114,8 +113,12 @@ public class ReaderImpl implements Reader{
         if(!song.isPresent() || !this.playlists.isPresent() || !this.currentPlaylist.isPresent()) {
             this.currentSong = Optional.empty();
             return false;
-        }
-        //this.currentSong = this.playlists.get().stream().filter(t -> t.equals(this.currentPlaylist.get())).map(t -> t.getSongs());
+        } 
+        this.currentSong = this.playlists.get().stream()
+            .filter(p -> p.equals(this.currentPlaylist.get()))
+            .flatMap(p -> p.getSongs().stream())
+            .filter(t -> t.equals(song.get()))
+            .findFirst();
         return this.currentSong.isPresent();
     }
 

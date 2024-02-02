@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -33,12 +34,13 @@ class ElektreaderTest {
     final Path TEST_PATH_SONG1 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "04 - la bomba.mp3");
     
     final Path TEST_PATH_PLAYLIST2 = Paths.get(TEST_PATH.toString(), "GENERI", "MUSICA ROMAGNOLA");
-    final Path TEST_PATH_SONG2 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "16 - valzer dell'usignolo.mp3");
+    final Path TEST_PATH_SONG2_15 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "15 - Bachata di Mengoni.mp3");
+    final Path TEST_PATH_SONG2_16 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "16 - valzer dell'usignolo.mp3");
 
 
     /* TESTS */
 
-    @Test void testEnvironment() {
+    @Test void testEnvironment() { /* test all the environment */
         Reader app = new ReaderImpl();
 
         /* test environment */
@@ -50,20 +52,21 @@ class ElektreaderTest {
         Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST1)));
         Assertions.assertEquals(app.getCurrentPlaylist().get().getPath(), TEST_PATH_PLAYLIST1);
         
+        //test invalid song - current playlist 1
+        Assertions.assertFalse(app.setCurrentSong(app.getPlaylist(TEST_PATH_PLAYLIST2).get().getSong(TEST_PATH_SONG1)));
+        Assertions.assertEquals(app.getCurrentSong(), Optional.empty());
+
         //test valid playlist 2
         Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2)));
         Assertions.assertEquals(app.getCurrentPlaylist().get().getPath(), TEST_PATH_PLAYLIST2);
 
+        //test valid song - current playlist 2
+        Assertions.assertTrue(app.setCurrentSong(app.getCurrentPlaylist().get().getSong(TEST_PATH_SONG2_15)));
+        Assertions.assertEquals(app.getCurrentSong().get().getFile().toPath(), TEST_PATH_SONG2_15);
+
         // test invalid playlist
         Assertions.assertFalse(app.setCurrentPlaylist(app.getPlaylist(TEST_INVALID_PLAYLIST)));
         Assertions.assertEquals(app.getCurrentPlaylist(), Optional.empty());
-
-        //test valid song
-        //Assertions.assertTrue(app.setCurrentSong(app.getCurrentPlaylist().get()));
-
-
-        //test invalid song
-        //Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2).get().getSong(0)));
     }
 
     @Test void testPlaylists() {
@@ -73,7 +76,6 @@ class ElektreaderTest {
             .collect(Collectors.toSet());
         Assertions.assertEquals(Set.of("16 - valzer dell'usignolo.mp3", "15 - Bachata di Mengoni.mp3"), songNames);
         Assertions.assertEquals(2, plist.getSize());
-
     }
 
     @Test void testSongs() {
