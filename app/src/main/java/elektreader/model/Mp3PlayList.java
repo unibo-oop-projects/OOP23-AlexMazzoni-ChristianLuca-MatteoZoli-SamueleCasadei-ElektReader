@@ -3,7 +3,6 @@ package elektreader.model;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -12,22 +11,23 @@ import java.util.stream.Collectors;
 
 import elektreader.api.PlayList;
 import elektreader.api.Song;
-import javafx.util.Duration;
 
 public class Mp3PlayList implements PlayList{
 
     private final File playlistDir;
-    private Set<Song> songs;
+    private List<Song> songs;
     private List<Song> queue;
 
     public Mp3PlayList(final Path playlist, final Collection<Path> tracks) {
         playlistDir = playlist.toFile();
-        Set<Song> convertedMp3 = new HashSet<>();
-        for(Path song : tracks){
-            convertedMp3.add(new Mp3Song(song));
-        }
+        List<Song> convertedMp3 = tracks.stream()
+            .sorted((p1,p2) -> getIndexFromName(p1.toFile().getName())-getIndexFromName(p2.toFile().getName()))
+            .map(p -> new Mp3Song(p))
+            .map(Song.class::cast)
+            .peek(s -> System.out.println(s.getName()+"\n"))
+            .toList();
         this.songs = convertedMp3;
-        this.queue = convertedMp3.stream().collect(Collectors.toList());
+        this.queue = convertedMp3;
     }
 
     @Override
@@ -49,10 +49,10 @@ public class Mp3PlayList implements PlayList{
     }
 
     @Override
-    public Duration getTotalDuration() {
+    public int getTotalDuration() {
         return this.songs.stream()
             .map(Song::getDuration)
-            .reduce((a,b) -> a.add(b))
+            .reduce((a,b) -> a+b)
             .get();
     }
 
@@ -134,6 +134,17 @@ public class Mp3PlayList implements PlayList{
     @Override
     public Path getPath() {
         return this.playlistDir.toPath();
+    }
+
+    /**
+     * @param name the name of the song file
+     * @return the index of the file, knowing every file name is structured
+     * like "index - actual name.mp3"
+     */
+    private int getIndexFromName(String name){
+        System.out.println(name.split(" ")[0]);
+        return Integer.valueOf(name.split(" ")[0]);
+
     }
     
 }

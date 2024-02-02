@@ -1,64 +1,65 @@
 package elektreader.model;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.jaudiotagger.audio.*;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.TagException;
 
 import elektreader.api.Song;
-import javafx.scene.media.Media;
-import javafx.util.Duration;
 
 public class Mp3Song implements Song{
 
     private final File songFile;
-    private final Media data;
+    private AudioFile data;
+    private AudioHeader header;
+    private Tag info;
 
     /**
      * @param songPath the file path, already filtered from illegal arguments 
      */
     public Mp3Song(final Path songPath) {
         songFile = songPath.toFile();
-        data = new Media(songPath.toUri().toString());
+        try {
+            this.data = AudioFileIO.read(songFile);
+            this.header = data.getAudioHeader();
+            this.info = data.getTag();
+        } catch (Exception e) {
+            throw new IllegalStateException("file corrotto o non supportato");
+        }
+        
     }
 
     @Override
     public String getName() {
-        var title =  this.data.getMetadata().entrySet().stream()
-            .filter(e -> e.getKey().equals("title"))
-            .map(e -> e.getValue())
-            .findAny();
-        return title.isPresent() ? title.get().toString() : songFile.getName();
+        return getPlainName(this.songFile.getName());
     }
 
     @Override
     public String getArtist() {
-        var artist = this.data.getMetadata().entrySet().stream()
-        .filter(e -> e.getKey().equals("artist"))
-        .map(e -> e.getValue())
-        .findAny();
-        return artist.isPresent() ? artist.get().toString() : "";
+        return info.getFirst(FieldKey.ARTIST);
     }
 
     @Override
     public String getGenre() {
-        var genre = this.data.getMetadata().entrySet().stream()
-        .filter(e -> e.getKey().equals("genre"))
-        .map(e -> e.getValue())
-        .findAny();
-        return genre.isPresent() ? genre.get().toString() : "";
+        return info.getFirst(FieldKey.GENRE);
     }
 
     @Override
-    public Duration getDuration() {
-        return this.data.getDuration();
+    public int getDuration() {
+        return header.getTrackLength();
     }
 
     @Override
     public String getAlbumName() {
-        var album = this.data.getMetadata().entrySet().stream()
-        .filter(e -> e.getKey().equals("album"))
-        .map(e -> e.getValue())
-        .findAny();
-        return album.isPresent() ? album.get().toString() : "";
+        return info.getFirst(FieldKey.ALBUM);
     }
 
     @Override
@@ -95,6 +96,20 @@ public class Mp3Song implements Song{
         } else if (!data.equals(other.data))
             return false;
         return true;
+    }
+
+    /**
+     * @param name the actual file name of the song
+     * @return the actual name, knowing that every song file name format is
+     * "index - actual name.mp3"
+     */
+    private String getPlainName(String name){
+        Pattern pattern = Pattern.compile("\\d+\\s-\\s(.*?)\\.\\w+");
+        Matcher matcher = pattern.matcher(name);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return "";
     }
     
 }

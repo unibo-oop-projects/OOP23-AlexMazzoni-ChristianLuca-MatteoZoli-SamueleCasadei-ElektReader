@@ -2,7 +2,6 @@ package elektreader.api;
 
 import java.io.File;
 
-import javafx.util.Duration;
 /**
  * An interface representing the idea of a track which is playable by ElektReader.
  * Creating an interface to program against makes the project way more flexible and
@@ -36,8 +35,8 @@ public interface Song {
     File getFile();
 
     /**
-     * @return song's duration
+     * @return song's duration in millis
      */
-    Duration getDuration();
+    int getDuration();
 
 }

@@ -38,6 +38,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:$jUnitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
 
+    implementation("org:jaudiotagger:2.0.3")
 
     // Use JavaFX
     val javaFxVersion = 21

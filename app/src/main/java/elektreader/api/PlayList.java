@@ -49,9 +49,9 @@ public interface PlayList {
     void shuffleQueue();
 
     /**
-     * @return the complessive duration of all the songs in this playlist
+     * @return the complessive duration of all the songs in this playlist in millis
      */
-    Duration getTotalDuration();
+    int getTotalDuration();
 
     /**
      * @return the number of songs contained in this playlist

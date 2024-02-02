@@ -12,11 +12,11 @@ import elektreader.model.Mp3PlayList;
 import elektreader.model.ReaderImpl;
 import javafx.application.Platform;
 
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -81,12 +81,13 @@ class ElektreaderTest {
     }
 
     @Test void testPlaylists() {
-        // PlayList plist = new Mp3PlayList(TEST_PATH_PLAYLIST2);
-        // Set<String> songNames = plist.getSongs().stream()
-        //     .map(Song::getName)
-        //     .collect(Collectors.toSet());
-        // Assertions.assertEquals(Set.of("16 - valzer dell'usignolo.mp3", "15 - Bachata di Mengoni.mp3"), songNames);
-        // Assertions.assertEquals(2, plist.getSize());
+        PlayList plist = new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16));
+        List<String> songNames = plist.getSongs().stream()
+            .map(Song::getName)
+            .collect(Collectors.toList());
+        Assertions.assertEquals(List.of("Bachata di Mengoni","valzer dell'usignolo"), songNames);
+        Assertions.assertEquals(2, plist.getSize());
+        Assertions.assertEquals(433, plist.getTotalDuration());
     }
 
     @Test void testSongs() {
