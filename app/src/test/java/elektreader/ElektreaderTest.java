@@ -37,6 +37,7 @@ class ElektreaderTest {
     /* mi raccomando per i test posizionare la cartella nel percorso specificato */
     /* cartella: https://drive.google.com/file/d/1b5JAQ3Hc6FRwvO2BjIb7olaxOApJDrfp/view?usp=sharing */
     final Path TEST_PATH = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment");
+    final Path TEST_INVALID_PATH = Paths.get(System.getProperty("user.home"),"ALL","Photoes");
 
     final Path TEST_INVALID_PLAYLIST = Paths.get(TEST_PATH.toString(), "GENERI"); 
 
@@ -55,9 +56,15 @@ class ElektreaderTest {
         Reader app = new ReaderImpl();
 
         /* test environment */
+        /* test invalid path */
+        Assertions.assertFalse(app.setCurrentEnvironment(TEST_INVALID_PATH));
+        Assertions.assertEquals(app.getCurrentEnvironment(), Optional.empty());
+        
+        /* test valid */
         Assertions.assertTrue(app.setCurrentEnvironment(TEST_PATH));
         Assertions.assertEquals(app.getCurrentEnvironment().get(), TEST_PATH);
         
+
         /* test playlist - song */ 
         //test valid playlist 1
         Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST1)));
