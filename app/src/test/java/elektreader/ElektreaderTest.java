@@ -10,7 +10,6 @@ import elektreader.api.Reader;
 import elektreader.api.Song;
 import elektreader.model.Mp3PlayList;
 import elektreader.model.ReaderImpl;
-import javafx.util.Duration;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,8 +20,6 @@ import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 
 class ElektreaderTest {
-
-    Reader app = new ReaderImpl();
 
     /* TEST CONSTANT */
 
@@ -42,6 +39,8 @@ class ElektreaderTest {
     /* TESTS */
 
     @Test void testEnvironment() {
+        Reader app = new ReaderImpl();
+
         /* test environment */
         Assertions.assertTrue(app.setCurrentEnvironment(TEST_PATH));
         Assertions.assertEquals(app.getCurrentEnvironment().get(), TEST_PATH);

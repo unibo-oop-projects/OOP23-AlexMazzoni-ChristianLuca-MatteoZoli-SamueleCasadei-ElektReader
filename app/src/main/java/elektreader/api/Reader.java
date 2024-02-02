@@ -30,7 +30,7 @@ public interface Reader {
      * @return true if it can be used as current environment, 
      * else wait for a valid folder and false is return (the program doesn't stop if is invalid).
     */
-    public boolean setCurrentEnvironment(final Path folder);
+    public boolean setCurrentEnvironment(final Path root);
     
 
     /**

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -31,19 +33,28 @@ public class ReaderImpl implements Reader{
         this.currentSong=Optional.empty();
     }
 
-    private boolean isPlaylist(final Path t) {
-        try (Stream<Path> paths = Files.list(t)) {
+    private List<Path> getFiles(final Path playlist) {
+        List<Path> songs = new ArrayList<>(Collections.emptyList());
+        try (Stream<Path> filesPaths = Files.list(playlist)) {
+            songs = filesPaths.filter(t -> t.toString().matches(".*\\.mp3$")).toList();
+        } catch (IOException e) { throw new IllegalStateException("class doesn't support it or invalid state"); }
+        return songs;
+    }
+
+    private boolean isPlaylist(final Path p) {
+        try (Stream<Path> paths = Files.list(p)) {
             return paths.allMatch(Files::isRegularFile);
         } catch (Exception e) {}
         return false;
     }
 
     @Override
-    public boolean setCurrentEnvironment(final Path folder) {
-        try (Stream<Path> paths = Files.walk(folder)) {
+    public boolean setCurrentEnvironment(final Path root) {
+        try (Stream<Path> paths = Files.walk(root)) {
             this.playlists = Optional.of(paths.filter(Files::isDirectory)
                     .filter(this::isPlaylist)
                     .map(Mp3PlayList::new)
+                    //.map(t -> new Mp3PlayList(t, getFiles(t)))
                     .map(PlayList.class::cast) // Cast the list of Mp3PlayList to a list of PlayList
                     .toList());
         } catch (IOException e) {
@@ -52,7 +63,7 @@ public class ReaderImpl implements Reader{
             return false;
         }
 
-        this.root = Optional.of(folder);
+        this.root = Optional.of(root);
         setCurrentPlaylist(Optional.empty());
         return true;
     }
@@ -74,7 +85,7 @@ public class ReaderImpl implements Reader{
             return false;
         }
         this.currentPlaylist = this.playlists.get().stream().filter(t -> t.equals(playlist.get())).findFirst();
-        return true;
+        return this.currentPlaylist.isPresent();
     }
 
     @Override
@@ -100,8 +111,12 @@ public class ReaderImpl implements Reader{
 
     @Override
     public boolean setCurrentSong(final Optional<Song> song) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCurrentSong'");
+        if(!song.isPresent() || !this.playlists.isPresent() || !this.currentPlaylist.isPresent()) {
+            this.currentSong = Optional.empty();
+            return false;
+        }
+        //this.currentSong = this.playlists.get().stream().filter(t -> t.equals(this.currentPlaylist.get())).map(t -> t.getSongs());
+        return this.currentSong.isPresent();
     }
 
     @Override
