@@ -19,7 +19,6 @@ import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 
 class ElektreaderTest {
-
     /*
      * If you are using JavaFX components in a non-GUI application or a unit test,
      *  you need to call the Platform.startup(Runnable) method with an empty runnable before using any JavaFX classes.
@@ -48,7 +47,7 @@ class ElektreaderTest {
     final Path TEST_INVALID_SONG = Paths.get(TEST_PATH_PLAYLIST1.toString(), "31 - video flashmob balla.mp4"); 
 
     /* TESTS */
-
+    
     @Test void testEnvironment() { /* test all the environment */
         notGUIToolkitInitialized();
         Reader app = new ReaderImpl();
@@ -86,10 +85,9 @@ class ElektreaderTest {
     }
 
     @Test void testPlaylists() {
-        notGUIToolkitInitialized();
         Reader app = new ReaderImpl();
-        PlayList plist = new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16));
 
+        PlayList plist = new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16));
         app.setCurrentEnvironment(TEST_PATH_PLAYLIST1);
         PlayList plist2 = new Mp3PlayList(TEST_PATH_PLAYLIST1, app.getPlaylist(TEST_PATH_PLAYLIST1).get().getSongs().stream()
             .map(s -> s.getFile().toPath())

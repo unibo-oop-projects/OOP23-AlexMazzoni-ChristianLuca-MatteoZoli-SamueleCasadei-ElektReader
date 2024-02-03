@@ -2,6 +2,7 @@ package elektreader.model;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;

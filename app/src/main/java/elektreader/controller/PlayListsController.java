@@ -11,14 +11,14 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class PlaylistsController {
+public class PlayListsController {
     private List<Button> btnPlaylists;
     private SongsController controllerSongs;
 
-    public PlaylistsController(final VBox playlistsList, final TilePane songsList) {
+    public PlayListsController(final VBox playlistsList, final TilePane songsList) {
         this.btnPlaylists = new ArrayList<>(Collections.emptyList());
         /* here i reference to a static method that will be in the next push */
-        for (var playlist : GUIController.getReader().getPlaylists().get()) {
+        for (var playlist : GUIController.getReader().getPlaylists()) {
             btnPlaylists.add(createButton(playlist, songsList));
         }
         playlistsList.getChildren().addAll(btnPlaylists);

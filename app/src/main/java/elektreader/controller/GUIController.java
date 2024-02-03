@@ -22,7 +22,7 @@ public class GUIController {
 	/* LOGICS */
 	private final static Reader reader = new ReaderImpl();
 
-	PlaylistsController controllerPlaylists;
+	PlayListsController controllerPlayLists;
 	SongsController controllerSongs;
 
 	/* MENU */
@@ -145,7 +145,7 @@ public class GUIController {
 	/* PRIVATE METHODS */
 	private void loadPlaylists() {
 		this.playlistsList.getChildren().clear();
-		this.controllerPlaylists = new PlaylistsController(this.playlistsList, this.songsList);
+		this.controllerPlayLists = new PlayListsController(this.playlistsList, this.songsList);
 	}
 
 	/* probabilmente il song va nel controller playlist */
