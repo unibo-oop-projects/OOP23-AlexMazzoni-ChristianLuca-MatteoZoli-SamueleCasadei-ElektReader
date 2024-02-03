@@ -2,8 +2,7 @@ package elektreader.api;
 
 import java.nio.file.Path;
 import java.util.Optional;
-import java.util.Set;
-import javafx.util.Duration;
+import java.util.List;
 
 /**
  * A class which represents the concept of a playlist of songs
@@ -22,10 +21,10 @@ public interface PlayList {
     Optional<Song> getSong(int index);
 
     /**
-     * @return the set of songs contained in the playlist, this is not used in
+     * @return the list of songs contained in the playlist, this is not used in
      * the actual reproduction
      */
-    Set<Song> getSongs();
+    List<Song> getSongs();
 
     /**
      * @param path the path of the song to searched in this playlist
@@ -49,9 +48,10 @@ public interface PlayList {
     void shuffleQueue();
 
     /**
-     * @return the complessive duration of all the songs in this playlist in millis
+     * @return the complessive duration of all the songs in this playlist in the 
+     * time stamp format h:mm:ss
      */
-    int getTotalDuration();
+    String getTotalDuration();
 
     /**
      * @return the number of songs contained in this playlist

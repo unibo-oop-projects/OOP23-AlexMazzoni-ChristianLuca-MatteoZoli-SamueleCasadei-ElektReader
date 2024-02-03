@@ -6,9 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.Set;
 import java.util.stream.Collectors;
-
 import elektreader.api.PlayList;
 import elektreader.api.Song;
 
@@ -24,15 +22,14 @@ public class Mp3PlayList implements PlayList{
             .sorted((p1,p2) -> getIndexFromName(p1.toFile().getName())-getIndexFromName(p2.toFile().getName()))
             .map(p -> new Mp3Song(p))
             .map(Song.class::cast)
-            .peek(s -> System.out.println(s.getName()+"\n"))
             .toList();
         this.songs = convertedMp3;
         this.queue = convertedMp3;
     }
 
     @Override
-    public Set<Song> getSongs() {
-        return Set.copyOf(this.songs);
+    public List<Song> getSongs() {
+        return List.copyOf(this.songs);
     }
 
     @Override
@@ -49,11 +46,11 @@ public class Mp3PlayList implements PlayList{
     }
 
     @Override
-    public int getTotalDuration() {
-        return this.songs.stream()
-            .map(Song::getDuration)
-            .reduce((a,b) -> a+b)
-            .get();
+    public String getTotalDuration() {
+        var secs = this.songs.stream()
+            .mapToInt(Song::getDuration) /* map on duration to get every song's duration */
+            .sum(); /* sum every duration */
+        return secs/3600+":"+(secs%3600)/60+":"+(secs%3600)%60;
     }
 
     @Override
@@ -142,7 +139,6 @@ public class Mp3PlayList implements PlayList{
      * like "index - actual name.mp3"
      */
     private int getIndexFromName(String name){
-        System.out.println(name.split(" ")[0]);
         return Integer.valueOf(name.split(" ")[0]);
 
     }

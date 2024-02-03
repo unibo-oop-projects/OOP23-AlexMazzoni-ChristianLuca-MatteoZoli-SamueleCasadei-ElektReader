@@ -7,16 +7,13 @@ import org.junit.jupiter.api.Test;
 
 import elektreader.api.PlayList;
 import elektreader.api.Reader;
-import elektreader.api.Song;
 import elektreader.model.Mp3PlayList;
 import elektreader.model.ReaderImpl;
 import javafx.application.Platform;
 
-import java.util.stream.Collectors;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -88,13 +85,24 @@ class ElektreaderTest {
     }
 
     @Test void testPlaylists() {
+        notGUIToolkitInitialized();
+        Reader app = new ReaderImpl();
         PlayList plist = new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16));
-        List<String> songNames = plist.getSongs().stream()
-            .map(Song::getName)
-            .collect(Collectors.toList());
-        Assertions.assertEquals(List.of("Bachata di Mengoni","valzer dell'usignolo"), songNames);
+
+        app.setCurrentEnvironment(TEST_PATH_PLAYLIST1);
+        PlayList plist2 = new Mp3PlayList(TEST_PATH_PLAYLIST1, app.getPlaylist(TEST_PATH_PLAYLIST1).get().getSongs().stream()
+            .map(s -> s.getFile().toPath())
+            .toList());
+
+        /* test on playlist with static and small size */
+        Assertions.assertTrue(plist.getSongs().get(0).getFile().toPath().equals(TEST_PATH_SONG2_15));
+        Assertions.assertTrue(plist.getSongs().get(1).getFile().toPath().equals(TEST_PATH_SONG2_16));
         Assertions.assertEquals(2, plist.getSize());
-        Assertions.assertEquals(433, plist.getTotalDuration());
+        Assertions.assertEquals("0:7:13", plist.getTotalDuration());
+        /* test on a playlist with dynamic and big size */
+        Assertions.assertEquals(app.getPlaylist(TEST_PATH_PLAYLIST1).get().getSongs().size(), plist2.getSize());
+        Assertions.assertEquals("1:56:44", plist2.getTotalDuration());
+        
     }
 
     @Test void testSongs() {
