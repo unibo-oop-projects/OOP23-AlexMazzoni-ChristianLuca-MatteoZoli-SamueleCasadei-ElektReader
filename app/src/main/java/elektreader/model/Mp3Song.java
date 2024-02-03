@@ -33,6 +33,7 @@ public class Mp3Song implements Song{
             this.header = data.getAudioHeader();
             this.info = data.getTag();
         } catch (Exception e) {
+            System.out.println(songFile+"   "+e.toString());
             throw new IllegalStateException("file corrotto o non supportato");
         }
         Logger.getLogger("org.jaudiotagger").setLevel(Level.WARNING);
@@ -44,13 +45,13 @@ public class Mp3Song implements Song{
     }
 
     @Override
-    public String getArtist() {
-        return info.getFirst(FieldKey.ARTIST);
+    public Optional<String> getArtist() {
+        return info.getFirst(FieldKey.ARTIST).equals("") ? Optional.empty() : Optional.of(info.getFirst(FieldKey.ARTIST));
     }
 
     @Override
-    public String getGenre() {
-        return info.getFirst(FieldKey.GENRE);
+    public Optional<String> getGenre() {
+        return info.getFirst(FieldKey.GENRE).equals("") ? Optional.empty() :Optional.of(info.getFirst(FieldKey.GENRE));
     }
 
     @Override
@@ -59,8 +60,8 @@ public class Mp3Song implements Song{
     }
 
     @Override
-    public String getAlbumName() {
-        return info.getFirst(FieldKey.ALBUM);
+    public Optional<String> getAlbumName() {
+        return info.getFirst(FieldKey.ALBUM).equals("") ? Optional.empty() :Optional.of(info.getFirst(FieldKey.ALBUM));
     }
 
     @Override
@@ -111,6 +112,15 @@ public class Mp3Song implements Song{
             return matcher.group(1);
         }
         return "";
+    }
+
+    @Override
+    public String DurationStringRep() {
+        int h = getDuration()/3600;
+        int m = (getDuration()%3600)/60;
+        int s = (getDuration()%3600)%60;
+        return h+":"+m+":"+s;
+
     }
     
 }
