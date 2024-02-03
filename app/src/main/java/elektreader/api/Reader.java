@@ -51,7 +51,7 @@ public interface Reader {
     /**
      * @return the list of the total playlists founded
     */
-    public Optional<List<PlayList>> getPlaylists();
+    public List<PlayList> getPlaylists();
 
 
     /**

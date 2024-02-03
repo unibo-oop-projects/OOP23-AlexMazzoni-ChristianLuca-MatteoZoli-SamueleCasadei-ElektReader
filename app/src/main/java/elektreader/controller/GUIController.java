@@ -8,11 +8,11 @@ import java.util.Optional;
 import elektreader.api.Reader;
 import elektreader.model.ReaderImpl;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 
@@ -20,9 +20,10 @@ import javafx.stage.DirectoryChooser;
 public class GUIController {
 
 	/* LOGICS */
-	private Reader reader = new ReaderImpl();
-	
+	private final static Reader reader = new ReaderImpl();
+
 	PlaylistsController controllerPlaylists;
+	SongsController controllerSongs;
 
 	/* MENU */
 	@FXML
@@ -36,6 +37,16 @@ public class GUIController {
 
 	@FXML
     private Button btnHelp;
+
+	/* DEBUG */
+	@FXML
+	private Button btnDebug1;
+	@FXML
+	private Button btnDebug2;
+	@FXML
+	private Button btnDebug3;
+	@FXML
+	private Button btnDebug4;
 
 	/* PANEL */
 	@FXML
@@ -56,11 +67,12 @@ public class GUIController {
     private Label lblSong;
 
 	@FXML
-    private VBox songsList;
+    private TilePane songsList;
 
 	/* MEDIA CONTROL */
 	@FXML
 	private HBox MediaControlPanel;
+
 
 	/* EVENTS */
 	/* logics */
@@ -72,13 +84,12 @@ public class GUIController {
 			chooser.setInitialDirectory(new File(System.getProperty("user.home")));
 			Optional<File> res = Optional.of(chooser.showDialog(null));
 			if(res.isPresent()) {
-				this.reader.setCurrentEnvironment(res.get().toPath());
+				if(reader.setCurrentEnvironment(res.get().toPath())) {
+					System.out.println("environment loaded: " + reader.getCurrentEnvironment().get());
+					loadPlaylists();
+				}
 			}
 		} catch (Exception e) {}
-		if(this.reader.getCurrentEnvironment().isPresent()) {
-			System.out.println("environment loaded: " + this.reader.getCurrentEnvironment().get());
-			loadPlaylists();
-		}
 	}
 
 	@FXML
@@ -91,12 +102,30 @@ public class GUIController {
 		//TODO - Alex
 	}
 
+	@FXML
+	private void help() { 
+		//TODO - anyone
+	}
+
 	/* DEBUG SECTION */
 	@FXML
-	private void debug() { 
+	private void debug1() { 
 		//TODO
-		//MATTEO QUESTO è PER TE da qua aggancia un nuovo stage e fa quello che vuoi ti do il pieno controllo
-		//ti consiglio di mettere lo stage che sti creando nella cartella View
+	}
+
+	@FXML
+	private void debug2() { 
+		//TODO
+	}
+
+	@FXML
+	private void debug3() { 
+		//TODO
+	}
+
+	@FXML
+	private void debug4() { 
+		//TODO
 	}
 
 	/* only graphics */
@@ -113,11 +142,10 @@ public class GUIController {
 		}
 	}
 
+	/* PRIVATE METHODS */
 	private void loadPlaylists() {
-		if(this.reader.getPlaylists().isPresent()) {
-			this.controllerPlaylists = new PlaylistsController(this.reader);
-			this.playlistsList.getChildren().addAll(this.reader.getPlaylists().get().stream().map(t -> new Label(t.getName())).map(Node.class::cast).toList());
-		}
+		this.playlistsList.getChildren().clear();
+		this.controllerPlaylists = new PlaylistsController(this.playlistsList, this.songsList);
 	}
 
 	/* probabilmente il song va nel controller playlist */
@@ -134,7 +162,7 @@ public class GUIController {
 
 	public GUIController() {}
 
-	public Reader getReader() {
-		return this.reader;
+	public static Reader getReader() {
+		return reader;
 	}
 }

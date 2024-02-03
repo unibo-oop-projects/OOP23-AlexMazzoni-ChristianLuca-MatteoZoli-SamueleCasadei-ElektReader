@@ -48,6 +48,7 @@ class ElektreaderTest {
     final Path TEST_PATH_SONG2_15 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "15 - Bachata di Mengoni.mp3");
     final Path TEST_PATH_SONG2_16 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "16 - valzer dell'usignolo.mp3");
 
+    final Path TEST_INVALID_SONG = Paths.get(TEST_PATH_PLAYLIST1.toString(), "31 - video flashmob balla.mp4"); 
 
     /* TESTS */
 

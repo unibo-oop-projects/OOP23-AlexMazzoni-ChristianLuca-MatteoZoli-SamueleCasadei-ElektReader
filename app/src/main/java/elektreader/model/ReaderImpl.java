@@ -98,8 +98,8 @@ public class ReaderImpl implements Reader{
     }
 
     @Override
-    public Optional<List<PlayList>> getPlaylists() {
-        return this.playlists;
+    public List<PlayList> getPlaylists() {
+        return this.playlists.get();
     }
 
     @Override

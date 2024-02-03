@@ -2,9 +2,14 @@ package elektreader.model;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.jaudiotagger.audio.*;
+
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 
@@ -23,13 +28,14 @@ public class Mp3Song implements Song{
     public Mp3Song(final Path songPath) {
         songFile = songPath.toFile();
         try {
+            
             this.data = AudioFileIO.read(songFile);
             this.header = data.getAudioHeader();
             this.info = data.getTag();
         } catch (Exception e) {
             throw new IllegalStateException("file corrotto o non supportato");
         }
-        
+        Logger.getLogger("org.jaudiotagger").setLevel(Level.WARNING);
     }
 
     @Override
