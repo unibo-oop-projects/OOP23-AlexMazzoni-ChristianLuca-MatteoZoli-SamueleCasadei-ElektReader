@@ -3,10 +3,15 @@
  */
 package elektreader;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import elektreader.view.GUI;
 import javafx.application.Application;
 
 public class App{
+    public static final Path TEST_PATH = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment");
+
     public static void main(String[] args) {
         Application.launch(GUI.class, args);
     }

@@ -1,0 +1,34 @@
+* {}
+
+
+.root {
+    
+}
+
+.btn {
+  -fx-background-color: rgb(210, 210, 210) !important;
+}
+
+.list {
+  /* CSS properties for the list class */
+}
+
+.label {
+  /* CSS properties for the label class */
+}
+
+.separator { 
+
+}
+
+.light {
+    -fx-background-color:white;
+    background-color: white;
+    -fx-mid-text-color: black;
+}
+
+.dark { 
+    -fx-background-color:black;
+    background-color: black;
+    -fx-mid-text-color: white ;
+}

@@ -2,28 +2,36 @@ package elektreader.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Path;
 import java.util.Optional;
-
+import java.util.ResourceBundle;
 
 import elektreader.api.Reader;
 import elektreader.model.ReaderImpl;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 
 
-public class GUIController {
+public class GUIController implements Initializable {
 
 	/* LOGICS */
 	private final static Reader reader = new ReaderImpl();
 
 	PlayListsController controllerPlayLists;
 	SongsController controllerSongs;
+
+	/* MAIN PARENT */
+	@FXML
+    private VBox root;
 
 	/* MENU */
 	@FXML
@@ -48,16 +56,14 @@ public class GUIController {
 	@FXML
 	private Button btnDebug4;
 
-	/* PANEL */
-	@FXML
-	private SplitPane splitPlaylistsSongs;
+	/* LIST */
 
 	/* PLAYLISTS */
 	@FXML
     private Label lblPlaylists;
 
 	@FXML
-    private Button btnPlaylistsShowPanel;
+    private ImageView imgPlaylistsShowPanel;
 
 	@FXML
     private VBox playlistsList;
@@ -84,10 +90,7 @@ public class GUIController {
 			chooser.setInitialDirectory(new File(System.getProperty("user.home")));
 			Optional<File> res = Optional.of(chooser.showDialog(null));
 			if(res.isPresent()) {
-				if(reader.setCurrentEnvironment(res.get().toPath())) {
-					System.out.println("environment loaded: " + reader.getCurrentEnvironment().get());
-					loadPlaylists();
-				}
+				loadEnvironment(Optional.of(res.get().toPath()));
 			}
 		} catch (Exception e) {}
 	}
@@ -125,24 +128,45 @@ public class GUIController {
 
 	@FXML
 	private void debug4() { 
-		//TODO
+		Group g = groupAll();
+		for (var element : g.getChildren()) {
+			
+			//element.getStyleClass().
+		}
 	}
 
 	/* only graphics */
 	@FXML
 	private void showPlaylists() {
-		if(lblPlaylists.getText().equals("")) { //is hidden
-			lblPlaylists.setText("Playlists");
+		if(this.lblPlaylists.getText().equals("")) { //is hidden
+			this.lblPlaylists.setText("Playlists");
 			this.playlistsList.setVisible(true);
-			this.splitPlaylistsSongs.setDividerPositions(0.31);
 		} else {
-			this.splitPlaylistsSongs.setDividerPositions(0);
 			this.playlistsList.setVisible(false);
-			lblPlaylists.setText("");
+			this.lblPlaylists.setText("");
 		}
 	}
 
+	private void responsive() {
+		
+	}
+	
+	private Group groupAll() {
+		return new Group(this.btnFile, this.btnFind, this.btnView, this.btnHelp,
+			this.btnDebug1, this.btnDebug2, this.btnDebug3, this.btnDebug4, 
+			this.lblPlaylists, this.imgPlaylistsShowPanel, this.playlistsList,
+			this.lblSong, this.songsList,
+			this.MediaControlPanel);
+	}
+
 	/* PRIVATE METHODS */
+	private void loadEnvironment(final Optional<Path> root) {
+		if(reader.setCurrentEnvironment(root.get())) {
+			System.out.println("environment loaded: " + reader.getCurrentEnvironment().get());
+			loadPlaylists();
+		}
+	}
+
 	private void loadPlaylists() {
 		this.playlistsList.getChildren().clear();
 		this.controllerPlayLists = new PlayListsController(this.playlistsList, this.songsList);
@@ -160,9 +184,12 @@ public class GUIController {
 	// 	this.controllerMediaControls = new MediaControlsController();
 	// }
 
-	public GUIController() {}
-
 	public static Reader getReader() {
 		return reader;
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
 	}
 }

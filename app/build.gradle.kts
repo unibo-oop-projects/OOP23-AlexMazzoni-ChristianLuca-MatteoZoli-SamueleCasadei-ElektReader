@@ -10,7 +10,6 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     java
     application
-    id ("org.openjfx.javafxplugin") version "0.0.10" // Use the latest version
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
