@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import elektreader.api.Song;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,10 +18,13 @@ public class SongsController {
     private List<VBox> btnSongs;
 
     public SongsController(final TilePane songsList) {
+        songsList.setPadding(new Insets(10));
+
         this.btnSongs = new ArrayList<>(Collections.emptyList());
-        for (var song : GUIController.getReader().getCurrentPlaylist().get().getSongs()) {
-            btnSongs.add(createButton(song));
-        }
+
+        GUIController.getReader().getCurrentPlaylist().get().getSongs().stream()
+            .forEach(s -> this.btnSongs.add(createButton(s)));
+
         songsList.getChildren().addAll(btnSongs);
     }
     
@@ -39,7 +43,7 @@ public class SongsController {
         img.setFitWidth(85.0);
         img.setPreserveRatio(true);
         btn.setGraphic(img);
-        Label duration = new Label(String.valueOf(song.getDuration()));
+        Label duration = new Label(song.DurationStringRep());
         Label title = new Label(song.getName());
         container.getChildren().addAll(btn, duration, title);
         return container;
