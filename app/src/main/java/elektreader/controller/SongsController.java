@@ -18,7 +18,6 @@ public class SongsController {
 
     public SongsController(final TilePane songsList) {
         this.btnSongs = new ArrayList<>(Collections.emptyList());
-        /* here i reference to a static method that will be in the next push */
         for (var song : GUIController.getReader().getCurrentPlaylist().get().getSongs()) {
             btnSongs.add(createButton(song));
         }

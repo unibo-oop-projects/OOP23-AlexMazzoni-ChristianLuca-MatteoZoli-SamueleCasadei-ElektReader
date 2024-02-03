@@ -17,7 +17,6 @@ public class PlayListsController {
 
     public PlayListsController(final VBox playlistsList, final TilePane songsList) {
         this.btnPlaylists = new ArrayList<>(Collections.emptyList());
-        /* here i reference to a static method that will be in the next push */
         for (var playlist : GUIController.getReader().getPlaylists()) {
             btnPlaylists.add(createButton(playlist, songsList));
         }
@@ -30,9 +29,9 @@ public class PlayListsController {
         btnPlaylist.setStyle("-fx-background-color: transparent;");
         btnPlaylist.setStyle("-fx-border-color: black;");
         btnPlaylist.setStyle("-fx-border-width: 4px;");
+        btnPlaylist.setStyle("-fx-width: 100%;");
         btnPlaylist.setFont(new Font(18.0));
         btnPlaylist.setOnMouseClicked(event -> {
-            /* here i reference to a static method that will be in the next push */
 					if(GUIController.getReader().setCurrentPlaylist(Optional.of(p))); {
                         songsList.getChildren().clear();
                         this.controllerSongs = new SongsController(songsList); 

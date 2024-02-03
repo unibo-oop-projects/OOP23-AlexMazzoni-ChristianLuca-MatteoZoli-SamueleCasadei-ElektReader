@@ -3,6 +3,7 @@ package elektreader.model;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -117,11 +118,10 @@ public class Mp3Song implements Song{
 
     @Override
     public String DurationStringRep() {
-        int h = getDuration()/3600;
-        int m = (getDuration()%3600)/60;
-        int s = (getDuration()%3600)%60;
-        return h+":"+m+":"+s;
-
+        long h = TimeUnit.SECONDS.toHours(getDuration()); /* amount of hours */
+        long m = TimeUnit.SECONDS.toMinutes(getDuration()%3600); /* amount of minutes, less the hours */
+        long s = (getDuration()%3600)%60; /* seconds left, less minutes, less hours */
+        return String.format("%02d:%02d:%02d",h,m,s);
     }
     
 }

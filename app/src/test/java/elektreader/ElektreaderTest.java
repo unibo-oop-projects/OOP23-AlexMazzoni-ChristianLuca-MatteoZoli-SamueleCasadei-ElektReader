@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import elektreader.api.PlayList;
 import elektreader.api.Reader;
+import elektreader.api.Song;
 import elektreader.model.Mp3PlayList;
+import elektreader.model.Mp3Song;
 import elektreader.model.ReaderImpl;
 import javafx.application.Platform;
 
@@ -38,7 +40,10 @@ class ElektreaderTest {
     final Path TEST_INVALID_PLAYLIST = Paths.get(TEST_PATH.toString(), "GENERI"); 
 
     final Path TEST_PATH_PLAYLIST1 = Paths.get(TEST_PATH.toString(), "tutta la musica");
-    final Path TEST_PATH_SONG1 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "04 - la bomba.mp3");
+    final Path TEST_PATH_SONG4 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "04 - la bomba.mp3");
+    final Path TEST_PATH_SONG5 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "05 - ritmo vuelta.mp3");
+    final Path TEST_PATH_SONG1 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "01 - flashmob.mp3");
+    final Path TEST_PATH_SONG3 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "03 - despacito.mp3");
     
     final Path TEST_PATH_PLAYLIST2 = Paths.get(TEST_PATH.toString(), "GENERI", "MUSICA ROMAGNOLA");
     final Path TEST_PATH_SONG2_15 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "15 - Bachata di Mengoni.mp3");
@@ -97,15 +102,31 @@ class ElektreaderTest {
         Assertions.assertTrue(plist.getSongs().get(0).getFile().toPath().equals(TEST_PATH_SONG2_15));
         Assertions.assertTrue(plist.getSongs().get(1).getFile().toPath().equals(TEST_PATH_SONG2_16));
         Assertions.assertEquals(2, plist.getSize());
-        Assertions.assertEquals("0:7:13", plist.getTotalDuration());
+        Assertions.assertEquals("00:07:13", plist.getTotalDuration());
         /* test on a playlist with dynamic and big size */
         Assertions.assertEquals(app.getPlaylist(TEST_PATH_PLAYLIST1).get().getSongs().size(), plist2.getSize());
-        Assertions.assertEquals("1:56:44", plist2.getTotalDuration());
+        Assertions.assertEquals("01:56:44", plist2.getTotalDuration());
         
     }
 
     @Test void testSongs() {
-        //TODO
+
+        Song s1 = new Mp3Song(TEST_PATH_SONG1);
+        Song s3 = new Mp3Song(TEST_PATH_SONG3);
+        Song s5 = new Mp3Song(TEST_PATH_SONG5);
+        Song s4 = new Mp3Song(TEST_PATH_SONG4);
+
+        Assertions.assertEquals("00:03:21", s1.DurationStringRep());
+        Assertions.assertEquals("flashmob", s1.getName());
+
+        Assertions.assertEquals("00:03:38", s3.DurationStringRep());
+        Assertions.assertEquals("despacito", s3.getName());
+
+        Assertions.assertEquals("00:03:21", s4.DurationStringRep());
+        Assertions.assertEquals("la bomba", s4.getName());
+
+        Assertions.assertEquals("00:03:32", s5.DurationStringRep());
+        Assertions.assertEquals("ritmo vuelta", s5.getName());
     }
 
     @Test void test() {

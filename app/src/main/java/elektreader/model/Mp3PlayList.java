@@ -50,7 +50,7 @@ public class Mp3PlayList implements PlayList{
         var secs = this.songs.stream()
             .mapToInt(Song::getDuration) /* map on duration to get every song's duration */
             .sum(); /* sum every duration */
-        return secs/3600+":"+(secs%3600)/60+":"+(secs%3600)%60;
+        return String.format("%02d:%02d:%02d" ,secs/3600,(secs%3600)/60,(secs%3600)%60);
     }
 
     @Override
