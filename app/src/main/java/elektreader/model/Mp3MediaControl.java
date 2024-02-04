@@ -34,7 +34,7 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void stop() {
-        this.mediaPlayer.stop();
+        this.mediaPlayer.stop();    //At this moment, mediaPlayer status will be set to status.STOPPED 
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void setQueue(final Iterable<Song> queue) {
-       this.queue = queue;
+        this.queue = queue;
         this.iterator = queue.iterator();
     }
 
