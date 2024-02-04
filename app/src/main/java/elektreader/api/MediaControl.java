@@ -1,7 +1,5 @@
 package elektreader.api;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.scene.media.Media;
 import javafx.util.Duration;
 
 public interface MediaControl {
@@ -14,25 +12,25 @@ public interface MediaControl {
 
     public void stop();
 
-    public boolean next();
+    public void next();
 
-    public boolean prev();
+    public void prev();
     
-    public boolean loop(final Song song);
+    public void loop();
 
     public void setQueue(final Iterable<Song> queue);
 
-    public void setSong(final Media song);
+    public void setSong(final Song song);
 
-    public boolean setRepSpeed();
+    public void setRepSpeed(final double rate);
 
-    public boolean setProgress(final Duration duration);
+    public void setProgress(final Duration duration);
 
     public Duration getDuration();
 
-    public boolean setVolume(final DoubleProperty volume);
+    public void setVolume(final double volume);
 
-    public DoubleProperty getVolume();
+    public double getVolume();
 
     public void mute();
 
