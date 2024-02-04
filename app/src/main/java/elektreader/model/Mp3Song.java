@@ -30,7 +30,7 @@ public class Mp3Song implements Song{
     public Mp3Song(final Path songPath) {
         songFile = songPath.toFile();
         try {
-            
+            Logger.getLogger("org.jaudiotagger").setLevel(Level.OFF);   
             this.data = AudioFileIO.read(songFile);
             this.header = data.getAudioHeader();
             this.info = data.getTag();
@@ -38,7 +38,6 @@ public class Mp3Song implements Song{
             System.out.println(songFile+"   "+e.toString());
             throw new IllegalStateException("file corrotto o non supportato");
         }
-        Logger.getLogger("org.jaudiotagger").setLevel(Level.WARNING);
     }
 
     @Override

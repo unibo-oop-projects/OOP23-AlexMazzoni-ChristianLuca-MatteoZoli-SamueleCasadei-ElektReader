@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import elektreader.api.MediaControl;
 import elektreader.api.PlayList;
 import elektreader.api.Reader;
 import elektreader.api.Song;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 public class ReaderImpl implements Reader{
 
@@ -26,13 +26,13 @@ public class ReaderImpl implements Reader{
     private Optional<PlayList> currentPlaylist = Optional.empty();
     private Optional<Song> currentSong = Optional.empty();
 
-    private Optional<MediaPlayer> player;
+    private Optional<MediaControl> player = Optional.empty();
 
     private void resetEnvironment() {
-        this.root=Optional.empty();
-        this.playlists=Optional.empty();
-        this.currentPlaylist=Optional.empty();
-        this.currentSong=Optional.empty();
+        this.root = Optional.empty();
+        this.playlists = Optional.empty();
+        this.currentPlaylist = Optional.empty();
+        this.currentSong = Optional.empty();
     }
 
     private boolean isSong(final Path s) {
@@ -63,7 +63,6 @@ public class ReaderImpl implements Reader{
                 .map(PlayList.class::cast) // Cast the list of Mp3PlayList to a list of PlayList
                 .toList();
             this.playlists = tmpPlaylist.isEmpty() ? Optional.empty() : Optional.of(tmpPlaylist);
-            System.out.println(this.playlists);
         } catch (IOException e) {
             e.printStackTrace();
             resetEnvironment(); //reset all the environment 
@@ -139,7 +138,7 @@ public class ReaderImpl implements Reader{
     }
 
     @Override
-    public Optional<MediaPlayer> getPlayer() {
+    public Optional<MediaControl> getPlayer() {
         return this.player;
     }
 

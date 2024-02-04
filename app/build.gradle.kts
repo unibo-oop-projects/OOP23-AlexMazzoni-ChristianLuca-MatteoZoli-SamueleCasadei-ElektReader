@@ -37,8 +37,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:$jUnitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
 
-    implementation("org:jaudiotagger:2.0.3")
-
     // Use JavaFX
     val javaFxVersion = 21
     for (platform in supportedPlatforms) {
@@ -46,7 +44,10 @@ dependencies {
             implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
         }
     }
-    
+
+    // Use jaudiotagger for FILE MP3 METADATA.
+    implementation("org:jaudiotagger:2.0.3")
+
     // This dependency is used by the application. (guava)
     // implementation("com.google.guava:guava:31.1-jre")
 }

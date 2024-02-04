@@ -35,7 +35,7 @@ class ElektreaderTest {
     /* mi raccomando per i test posizionare la cartella nel percorso specificato */
     /* cartella: https://drive.google.com/file/d/1b5JAQ3Hc6FRwvO2BjIb7olaxOApJDrfp/view?usp=sharing */
     final Path TEST_PATH = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment");
-    final Path TEST_INVALID_PATH = Paths.get(System.getProperty("user.home"),"ALL","Photoes");
+    final Path TEST_INVALID_PATH = Paths.get(System.getProperty("user.home"),"Desktop", "Music");
 
     final Path TEST_INVALID_PLAYLIST = Paths.get(TEST_PATH.toString(), "GENERI"); 
 
