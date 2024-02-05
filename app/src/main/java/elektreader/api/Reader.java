@@ -89,9 +89,9 @@ public interface Reader {
 
 
     /**
-     * @return the MediaPlayer is running
+     * @return the MediaControl is running
     */
-    public Optional<MediaPlayer> getPlayer();
+    public Optional<MediaControl> getPlayer();
 
 
 

@@ -3,6 +3,7 @@ package elektreader.model;
 import java.util.Iterator;
 
 import elektreader.api.MediaControl;
+import elektreader.api.PlayList;
 import elektreader.api.Song;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -11,15 +12,40 @@ import javafx.util.Duration;
 public class Mp3MediaControl implements MediaControl{
 
     private MediaPlayer mediaPlayer;
+    private Mp3PlayList myPlayList;
     private Iterable<Song> queue;
-    Iterator<Song> iterator;
+    private int queueIndex;
     static private final double SET_ZERO_VOLUME = 0.0;
 
 
-    public Mp3MediaControl(final Iterable<Song> queue, final Song song) {
-        this.queue = queue;
-        this.iterator = this.queue.iterator();
-        mediaPlayer = new MediaPlayer(new Media(song.getFile().toURI().toString()));
+    public Mp3MediaControl(final Mp3PlayList myPlayList) {
+        this.myPlayList = myPlayList;
+        this.queue = this.myPlayList.getQueue();        //Starting queue, given directly via playlist.
+        this.queueIndex = 0;                            //internal index useful to check currentSong.
+        this.initMediaPlayer();
+    }
+
+    private void initMediaPlayer() {
+        Song initSong = this.getCurrentSong();
+        this.mediaPlayer = new MediaPlayer(new Media(initSong.getFile().toURI().toString()));
+        this.mediaPlayer.setOnEndOfMedia(this::nextSong);
+    }
+
+    private Song getCurrentSong() {
+        int tempIndex = Math.min(queueIndex, 0);
+        return this.getSongAtCertainIndex(tempIndex);
+    }
+
+    private Song getSongAtCertainIndex(final int index) {
+        return this.myPlayList.getSong(index).get();
+    }
+
+    private int getQueueSize() {
+        int queueSize = 0;
+        for (Song elem : this.queue) {
+            queueSize++;
+        }
+        return queueSize;
     }
 
     @Override
@@ -37,19 +63,27 @@ public class Mp3MediaControl implements MediaControl{
         this.mediaPlayer.stop();    //At this moment, mediaPlayer status will be set to status.STOPPED 
     }
 
-    @Override
-    public void next() {
-        this.mediaPlayer = new MediaPlayer(new Media(this.iterator.next().getFile().toURI().toString()));
-        this.play();
+    public void currentSong() {
+        this.mediaPlayer.stop();
+        Song currSong = this.getCurrentSong();
+        this.mediaPlayer = new MediaPlayer(new Media(currSong.getFile().toURI().toString()));
+        this.mediaPlayer.setOnEndOfMedia(this::nextSong);
     }
 
     @Override
-    public void prev() {
-        
+    public void nextSong() {
+        this.queueIndex = (this.queueIndex + 1 + this.getQueueSize()) % this.getQueueSize();
+        this.currentSong();
     }
 
     @Override
-    public void loop() {
+    public void prevSong() {
+        this.queueIndex = (this.queueIndex - 1 + this.getQueueSize()) % this.getQueueSize();
+        this.currentSong();
+    }
+
+    @Override
+    public void loopSong() {
         Media media = this.mediaPlayer.getMedia();
         this.mediaPlayer = new MediaPlayer(media);
         this.mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -59,11 +93,12 @@ public class Mp3MediaControl implements MediaControl{
     @Override
     public void setQueue(final Iterable<Song> queue) {
         this.queue = queue;
-        this.iterator = queue.iterator();
     }
 
     @Override
     public void setSong(final Song song) {
+        this.queueIndex = 0;
+        //this.queue = this.myPlayList.getIndexFromName(song.getName());
         final Media media = new Media(song.getFile().toURI().toString());
         this.mediaPlayer = new MediaPlayer(media);
     }

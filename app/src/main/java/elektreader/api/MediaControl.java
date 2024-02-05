@@ -26,20 +26,22 @@ public interface MediaControl {
      */
     public void stop();
 
+
+    public void currentSong();
     /**
      * Changes current played song to the next in the queue.
      */
-    public void next();
+    public void nextSong();
 
     /**
      * Changes current played song in the previous in the queue
      */
-    public void prev();
+    public void prevSong();
     
     /**
      * Creates a playing loop with the current song played by our mediaPLayer.
      */
-    public void loop();
+    public void loopSong();
 
     /**
      * @param queue the queue to be set as the current one.
@@ -81,5 +83,5 @@ public interface MediaControl {
      */
     public void mute();
 
-
 }
+
