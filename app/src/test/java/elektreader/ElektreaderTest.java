@@ -5,9 +5,11 @@ package elektreader;
 
 import org.junit.jupiter.api.Test;
 
+import elektreader.api.MediaControl;
 import elektreader.api.PlayList;
 import elektreader.api.Reader;
 import elektreader.api.Song;
+import elektreader.model.Mp3MediaControl;
 import elektreader.model.Mp3PlayList;
 import elektreader.model.Mp3Song;
 import elektreader.model.ReaderImpl;
@@ -129,7 +131,36 @@ class ElektreaderTest {
         Assertions.assertEquals("ritmo vuelta", s5.getName());
     }
 
-    @Test void test() {
-        //TODO
+    @Test void testMediaControl() {
+
+        notGUIToolkitInitialized(); //Method used to make possibile to run only this test method.
+
+        //Creating a new 
+        MediaControl mC1;
+        mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16)));
+
+        //Volume methods tests
+        double volume = mC1.getVolume();
+        Assertions.assertEquals(volume, mC1.getVolume());
+        mC1.mute();
+        Assertions.assertEquals(0.0, mC1.getVolume());
+        mC1.setVolume(1.0);
+        Assertions.assertEquals(1.0, mC1.getVolume());
+
+        //Testing various void method useful for reproduction, song choice, queue gestion ecc.
+        mC1.getDuration();
+        mC1.play();
+        mC1.loopSong();
+        mC1.prevSong();
+        mC1.setSong(new Mp3Song(TEST_PATH_SONG2_15));
+        mC1.setQueue(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16)).getQueue());
+
+        //Changing reference of my mediaControl to another object of the same class.
+        mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16)));
+        mC1.mute();
+        Assertions.assertEquals(0.0, mC1.getVolume());
+        mC1.play();
+        mC1.pause();
+        mC1.stop();
     }
 }
