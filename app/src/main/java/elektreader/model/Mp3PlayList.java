@@ -176,7 +176,7 @@ public class Mp3PlayList implements PlayList{
      * like "index - actual name.mp3"
      */
     private Optional<Integer> getIndexFromName(String name){
-        Pattern pattern = Pattern.compile("\\d+\\s*-\\s*\\w+");
+        Pattern pattern = Pattern.compile("\\d+\\s*-\\s*.+\\.mp3");
         Matcher match = pattern.matcher(name);
         /* se il file rispetta il formato standard */
         if(match.matches()){
