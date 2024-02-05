@@ -49,7 +49,8 @@ public interface MediaControl {
     public void setQueue(final Iterable<Song> queue);
 
     /**
-     * @param song the song to be set as the current one.
+     * @param song the song to be set as the current one. Internal implementation works with the 
+     * reproduction queue too. Look at the implementation for further details.
      */
     public void setSong(final Song song);
 

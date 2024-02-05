@@ -1,9 +1,8 @@
 package elektreader.model;
 
-import java.util.Iterator;
+import java.util.*;
 
 import elektreader.api.MediaControl;
-import elektreader.api.PlayList;
 import elektreader.api.Song;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -13,6 +12,7 @@ public class Mp3MediaControl implements MediaControl{
 
     private MediaPlayer mediaPlayer;
     private Mp3PlayList myPlayList;
+    private List<Song> playlist;
     private Iterable<Song> queue;
     private int queueIndex;
     static private final double SET_ZERO_VOLUME = 0.0;
@@ -20,6 +20,7 @@ public class Mp3MediaControl implements MediaControl{
 
     public Mp3MediaControl(final Mp3PlayList myPlayList) {
         this.myPlayList = myPlayList;
+        this.playlist = myPlayList.getSongs();          //Taking a copy of entire playlist.
         this.queue = this.myPlayList.getQueue();        //Starting queue, given directly via playlist.
         this.queueIndex = 0;                            //internal index useful to check currentSong.
         this.initMediaPlayer();
@@ -42,7 +43,7 @@ public class Mp3MediaControl implements MediaControl{
 
     private int getQueueSize() {
         int queueSize = 0;
-        for (Song elem : this.queue) {
+        for (@SuppressWarnings("unused") Song elem : this.queue) {
             queueSize++;
         }
         return queueSize;
@@ -67,7 +68,8 @@ public class Mp3MediaControl implements MediaControl{
         this.mediaPlayer.stop();
         Song currSong = this.getCurrentSong();
         this.mediaPlayer = new MediaPlayer(new Media(currSong.getFile().toURI().toString()));
-        this.mediaPlayer.setOnEndOfMedia(this::nextSong);
+        this.play();
+        this.mediaPlayer.setOnEndOfMedia(this::nextSong);   //If media ends, the next song in the queue will be played.
     }
 
     @Override
@@ -97,10 +99,19 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void setSong(final Song song) {
+        if (!(this.playlist.contains(song))) {
+            return;
+        }
+        final int tempIndex = this.playlist.indexOf(song);
+        List<Song> tempList = new ArrayList<Song>();
+        for (int i = 0; tempIndex < this.playlist.size(); i++) {
+            tempList.add(playlist.get(i));
+        }
         this.queueIndex = 0;
-        //this.queue = this.myPlayList.getIndexFromName(song.getName());
-        final Media media = new Media(song.getFile().toURI().toString());
-        this.mediaPlayer = new MediaPlayer(media);
+        this.queue = tempList;
+        this.mediaPlayer = new MediaPlayer(new Media(song.getFile().toURI().toString()));
+        this.play();
+        this.mediaPlayer.setOnEndOfMedia(this::nextSong);
     }
 
     @Override
