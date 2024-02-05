@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.regex.*;
 import java.util.stream.Collectors;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
@@ -136,9 +137,14 @@ public class Mp3PlayList implements PlayList{
             .filter(p -> getIndexFromName(p.toFile().getName()).isPresent())
             .sorted((p1,p2) -> getIndexFromName(p1.toFile().getName()).get()-getIndexFromName(p2.toFile().getName()).get())
             .collect(Collectors.toList());
+        /* i need to use a temporary list in order to avoid concurrent modification and mantain counter in the scope
+         * which would be impossible using streams
+         */
+        List<Path> tmp = new ArrayList<>();
         for (Path song : withIndex){
-            song = setIndex(song, counter++);
+            tmp.add(withIndex.indexOf(song), setIndex(song, counter++));
         }
+        withIndex = tmp;
         for(Path song : songs.stream()
             .filter(p -> getIndexFromName(p.toFile().getName()).isEmpty())
             .toList()

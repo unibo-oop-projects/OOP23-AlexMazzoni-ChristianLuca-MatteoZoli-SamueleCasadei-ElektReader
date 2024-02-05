@@ -105,7 +105,7 @@ class ElektreaderTest {
         Assertions.assertEquals("00:07:13", plist.getTotalDuration());
         /* test on a playlist with dynamic and big size */
         Assertions.assertEquals(app.getPlaylist(TEST_PATH_PLAYLIST1).get().getSongs().size(), plist2.getSize());
-        Assertions.assertEquals("01:56:44", plist2.getTotalDuration());
+        Assertions.assertEquals("01:56:44", plist2.getTotalDuration()); 
         
     }
 
