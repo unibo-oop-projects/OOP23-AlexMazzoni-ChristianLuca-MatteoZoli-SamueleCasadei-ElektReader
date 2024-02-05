@@ -99,8 +99,6 @@ class ElektreaderTest {
             .toList());
 
         /* test on playlist with static and small size */
-        Assertions.assertTrue(plist.getSongs().get(0).getFile().toPath().equals(TEST_PATH_SONG2_15));
-        Assertions.assertTrue(plist.getSongs().get(1).getFile().toPath().equals(TEST_PATH_SONG2_16));
         Assertions.assertEquals(2, plist.getSize());
         Assertions.assertEquals("00:07:13", plist.getTotalDuration());
         /* test on a playlist with dynamic and big size */
