@@ -133,7 +133,7 @@ class ElektreaderTest {
 
         notGUIToolkitInitialized(); //Method used to make possibile to run only this test method.
 
-        //Creating a new 
+        //Declaring a new MediaControl instance
         MediaControl mC1;
         mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16)));
 
