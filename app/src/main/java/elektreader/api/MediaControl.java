@@ -9,8 +9,8 @@ import javafx.util.Duration;
  */
 public interface MediaControl {
 
-    //private boolean isOver(final Song song);
-
+    public Song getCurrentSong();
+    
     /**
      * Starts mediaPlayer execution.
      */

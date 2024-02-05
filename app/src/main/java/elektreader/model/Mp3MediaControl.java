@@ -32,8 +32,8 @@ public class Mp3MediaControl implements MediaControl{
         this.mediaPlayer.setOnEndOfMedia(this::nextSong);
     }
 
-    private Song getCurrentSong() {
-        int tempIndex = Math.min(queueIndex, 0);
+    public Song getCurrentSong() {
+        int tempIndex = Math.min(Math.max(queueIndex, 0), this.getQueueSize() - 1);
         return this.getSongAtCertainIndex(tempIndex);
     }
 
@@ -65,7 +65,7 @@ public class Mp3MediaControl implements MediaControl{
     }
 
     public void currentSong() {
-        this.mediaPlayer.stop();
+        this.stop();
         Song currSong = this.getCurrentSong();
         this.mediaPlayer = new MediaPlayer(new Media(currSong.getFile().toURI().toString()));
         this.play();
@@ -108,7 +108,7 @@ public class Mp3MediaControl implements MediaControl{
             tempList.add(playlist.get(i));
         }
         this.queueIndex = 0;
-        this.queue = tempList;
+        this.setQueue(tempList);
         this.mediaPlayer = new MediaPlayer(new Media(song.getFile().toURI().toString()));
         this.play();
         this.mediaPlayer.setOnEndOfMedia(this::nextSong);
