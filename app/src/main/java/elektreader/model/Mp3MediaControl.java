@@ -32,8 +32,8 @@ public class Mp3MediaControl implements MediaControl{
         this.mediaPlayer.setOnEndOfMedia(this::nextSong);
     }
 
-    private Song getCurrentSong() {
-        int tempIndex = Math.min(queueIndex, 0);
+    public Song getCurrentSong() {
+        int tempIndex = Math.min(Math.max(queueIndex, 0), this.getQueueSize() - 1);
         return this.getSongAtCertainIndex(tempIndex);
     }
 

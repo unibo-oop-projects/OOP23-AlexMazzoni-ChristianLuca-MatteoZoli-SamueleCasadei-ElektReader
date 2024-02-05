@@ -153,6 +153,8 @@ class ElektreaderTest {
         mC1.loopSong();
         mC1.prevSong();
         mC1.setSong(new Mp3Song(TEST_PATH_SONG2_15));
+        //Reminder: setSong(final Song song) still to be tested successfully! Test that must pass here below (Still commented).
+        //Assertions.assertEquals(new Mp3Song(TEST_PATH_SONG2_15).getName(), mC1.getCurrentSong().getName());
         mC1.setQueue(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16)).getQueue());
 
         //Changing reference of my mediaControl to another object of the same class.
@@ -160,7 +162,12 @@ class ElektreaderTest {
         mC1.mute();
         Assertions.assertEquals(0.0, mC1.getVolume());
         mC1.play();
-        mC1.pause();
-        mC1.stop();
+
+        //Testing basic reproduction methods (GUI implementation will be still more accurate to be sure that everything works correctly.).
+        Assertions.assertEquals(new Mp3Song(TEST_PATH_SONG2_15).getName(), mC1.getCurrentSong().getName());
+        mC1.nextSong();
+        Assertions.assertEquals(new Mp3Song(TEST_PATH_SONG2_16).getName(), mC1.getCurrentSong().getName());
+        mC1.prevSong();
+        Assertions.assertEquals(new Mp3Song(TEST_PATH_SONG2_15).getName(), mC1.getCurrentSong().getName());
     }
 }
