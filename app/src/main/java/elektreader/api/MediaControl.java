@@ -8,6 +8,7 @@ import javafx.util.Duration;
  * are useful about retrieving data, aminpulating reproduction eccetera.
  */
 public interface MediaControl {
+<<<<<<< HEAD
 
     //private boolean isOver(final Song song);
 
@@ -83,5 +84,8 @@ public interface MediaControl {
      */
     public void mute();
 
+=======
+    
+>>>>>>> b419017ce1b90a9878d9a6a646ea10b180c9bff3
 }
 
