@@ -1,7 +1,5 @@
 package elektreader.api;
 
-import java.util.List;
-
 import javafx.util.Duration;
 
 

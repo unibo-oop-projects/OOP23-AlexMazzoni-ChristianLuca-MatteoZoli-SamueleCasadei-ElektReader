@@ -159,9 +159,6 @@ class ElektreaderTest {
         mC1.getDuration();
         mC1.play();
         Thread.sleep(2000);
-        mC1.pause();
-        Thread.sleep(2000);
-        mC1.play();
         //mC1.loopSong();
         mC1.nextSong();
         Thread.sleep(2000);
