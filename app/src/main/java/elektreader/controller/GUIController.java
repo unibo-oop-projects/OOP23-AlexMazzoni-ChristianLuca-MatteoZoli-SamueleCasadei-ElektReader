@@ -15,18 +15,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 
 
 public class GUIController implements Initializable {
 
-	public static final double SCALE_PLAYLIST_SIZE = 0.3;
-	public static final double SCALE_SONG_SIZE = 0.7;
+	public static final double SIZE_ZERO = 0.0;
+	public static final double SCALE_PLAYLIST_SIZE = 0.2;
+	public static final double SCALE_SONG_SIZE = 0.8;
+	
 
 	/* LOGICS */
 	private final static Reader reader = new ReaderImpl();
@@ -61,8 +63,6 @@ public class GUIController implements Initializable {
 	@FXML
 	private Button btnDebug4;
 
-	/* LIST */
-
 	/* PLAYLISTS */
 	@FXML
     private Label lblPlaylists;
@@ -71,16 +71,22 @@ public class GUIController implements Initializable {
     private ImageView imgPlaylistsShowPanel;
 
 	@FXML
-    private VBox playlistsList;
+    private ScrollPane playlistsList;
 
 	/* SONGS */
 	@FXML
     private Label lblSong;
 
 	@FXML
-    private TilePane songsList;
+    private ScrollPane songsIcon;
+	
+	@FXML
+    private ScrollPane songsList;
 
 	/* MEDIA CONTROL */
+	@FXML
+	private Slider progressBar;
+
 	@FXML
 	private HBox MediaControlPanel;
 
@@ -152,12 +158,12 @@ public class GUIController implements Initializable {
 	/* only graphics */
 	@FXML
 	private void showPlaylists() {
-		if(this.lblPlaylists.getPrefWidth()==0.0) { //is hidden
+		if(this.lblPlaylists.getPrefWidth()==SIZE_ZERO) { //is hidden
 			this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE*GUI.scaleToScreenSize().getKey());
 			this.playlistsList.setVisible(true);
 		} else {
 			this.playlistsList.setVisible(false);
-			this.lblPlaylists.setText("");
+			this.lblPlaylists.setPrefWidth(SIZE_ZERO);
 		}
 	}
 
@@ -183,8 +189,8 @@ public class GUIController implements Initializable {
 	}
 
 	private void loadPlaylists() {
-		this.playlistsList.getChildren().clear();
-		this.controllerPlayLists = new PlayListsController(this.playlistsList, this.songsList);
+		this.playlistsList.setContent(null);
+		this.controllerPlayLists = new PlayListsController(this.playlistsList, this.songsIcon);
 	}
 
 	/* probabilmente il song va nel controller playlist */

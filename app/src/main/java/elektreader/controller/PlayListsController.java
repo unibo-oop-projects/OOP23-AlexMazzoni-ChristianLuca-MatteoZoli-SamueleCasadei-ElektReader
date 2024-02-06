@@ -7,6 +7,8 @@ import java.util.Optional;
 import elektreader.api.PlayList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
@@ -27,12 +29,12 @@ public class PlayListsController {
      * @param playlistsList the playlists panel in which the class grafts the buttons
      * @param songsList the songs panel to build the the new song controller
      */
-    public PlayListsController(final VBox playlistsList, final TilePane songsList) {
+    public PlayListsController(final ScrollPane playlistsPane, final ScrollPane songsPane) {
         this.btnPlaylists = new ArrayList<>(Collections.emptyList());
         for (var playlist : GUIController.getReader().getPlaylists()) {
-            btnPlaylists.add(createButton(playlist, songsList, playlistsList.getWidth()));
+            //btnPlaylists.add(createButton(playlist, songsPane, playlistsPane.getWidth()));
         }
-        playlistsList.getChildren().addAll(btnPlaylists);
+        // playlistsPane.setContent(btnPlaylists);
     }
 
     private Button createButton(final PlayList p, final TilePane songsList, final double resizeFactor) {

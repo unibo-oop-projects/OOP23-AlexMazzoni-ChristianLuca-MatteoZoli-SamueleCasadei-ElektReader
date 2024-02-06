@@ -49,11 +49,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="root" minWidth="900.0" prefHeight="915.0" prefWidth="1411.0" styleClass="root" stylesheets="@style/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elektreader.controller.GUIController">
+<GridPane fx:id="root" minWidth="900.0" prefHeight="915.0" prefWidth="1195.0" styleClass="root" stylesheets="@style/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elektreader.controller.GUIController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -167,7 +167,7 @@
       <Pane minHeight="4.0" styleClass="dark" GridPane.rowIndex="1" />
       <HBox prefWidth="900.0" GridPane.rowIndex="2">
          <children>
-        <AnchorPane>
+        <AnchorPane maxWidth="400.0">
           <children>
                   <VBox layoutY="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -236,11 +236,12 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="1000.0">
                            <children>
-                              <ScrollPane hbarPolicy="NEVER" layoutX="-22.0" layoutY="-3.0" styleClass="list" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <content>
-                                    <TilePane fx:id="songsList" prefColumns="6" prefRows="6" prefTileHeight="0.0" prefTileWidth="0.0" />
-                                 </content>
-                              </ScrollPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane fx:id="songsIcon" hbarPolicy="NEVER" styleClass="list" />
+                                    <ScrollPane fx:id="songsList" prefHeight="200.0" prefWidth="200.0" />
+                                 </children>
+                              </StackPane>
                            </children>
                         </AnchorPane>
                      </children>
