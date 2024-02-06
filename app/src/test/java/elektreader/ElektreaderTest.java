@@ -180,13 +180,19 @@ class ElektreaderTest {
         mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(getASong(TEST_PATH_PLAYLIST2, 0), getASong(TEST_PATH_PLAYLIST2, 1))));
         mC1.mute();
         Assertions.assertEquals(0.0, mC1.getVolume());
+        mC1.setVolume(0.5);
+        Assertions.assertEquals(0.5, mC1.getVolume());
         mC1.play();
 
         //Testing basic reproduction methods (GUI implementation will be still more accurate to be sure that everything works correctly.).
         Assertions.assertEquals(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 0)).getName(), mC1.getCurrentSong().getName());
+        System.out.println(mC1.getCurrentSong().getName());
         mC1.nextSong();
         Assertions.assertEquals(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 1)).getName(), mC1.getCurrentSong().getName());
+        System.out.println(mC1.getCurrentSong().getName());
         mC1.prevSong();
         Assertions.assertEquals(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 0)).getName(), mC1.getCurrentSong().getName());
+        System.out.println(mC1.getCurrentSong().getName());
+        mC1.stop();
     }
 }

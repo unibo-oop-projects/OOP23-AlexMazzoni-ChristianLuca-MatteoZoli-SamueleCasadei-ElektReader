@@ -82,12 +82,18 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void nextSong() {
+        if (this.index == (this.getPlaylistSize()-1)) {
+            return;
+        }
         this.index++;
         this.currentSong();
     }
 
     @Override
     public void prevSong() {
+        if (this.index == 0) {
+            return;
+        }
         this.index--;
         this.currentSong();
     }
@@ -103,6 +109,9 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void setSong(final Song song) {
+        if (!(this.playlist.contains(song))) {
+            return;
+        }
         this.index = playlist.indexOf(song);
         this.currentSong();
     }

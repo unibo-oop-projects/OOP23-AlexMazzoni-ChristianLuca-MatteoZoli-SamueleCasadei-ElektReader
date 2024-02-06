@@ -6,8 +6,8 @@ import javafx.util.Duration;
 
 
 /*
- * This interface models the logic about MediaControl aspect of our MP3Reader. It consists of a lot of helper methods that
- * are useful about retrieving data, aminpulating reproduction eccetera.
+ * This interface models the logic about MediaControl aspect of our MP3Reader. It consists of a lot of utility methods that
+ * are useful about retrieving data, manipulating reproduction, eccetera.
  */
 public interface MediaControl {
 
@@ -41,12 +41,12 @@ public interface MediaControl {
     public void currentSong();
 
     /**
-     * Changes current played song to the next in the queue.
+     * Changes current played song with the next in the playlist.
      */
     public void nextSong();
 
     /**
-     * Changes current played song in the previous in the queue
+     * Changes current played song with the previous in the playlist.
      */
     public void prevSong();
     
@@ -56,8 +56,7 @@ public interface MediaControl {
     public void loopSong();
 
     /**
-     * @param song the song to be set as the current one. Internal implementation works with the 
-     * reproduction queue too. Look at the implementation for further details.
+     * @param song the song to be set as the current one. Look at the implementation for further details.
      */
     public void setSong(final Song song);
 
