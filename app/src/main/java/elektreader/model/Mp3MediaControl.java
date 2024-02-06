@@ -21,7 +21,7 @@ public class Mp3MediaControl implements MediaControl{
     public Mp3MediaControl(final Mp3PlayList myPlayList) {
         this.myPlayList = myPlayList;
         this.playlist = myPlayList.getSongs();          //Taking a copy of entire playlist.
-        this.queue = this.myPlayList.getQueue();        //Starting queue, given directly via playlist.
+        this.queue = this.playlist;        //Starting queue, given directly via playlist.
         this.queueIndex = 0;                            //internal index useful to check currentSong.
         this.initMediaPlayer();
     }
@@ -102,12 +102,16 @@ public class Mp3MediaControl implements MediaControl{
         if (!(this.playlist.contains(song))) {
             return;
         }
-        final int tempIndex = this.playlist.indexOf(song);
-        List<Song> tempList = new ArrayList<Song>();
-        for (int i = 0; tempIndex < this.playlist.size(); i++) {
-            tempList.add(playlist.get(i));
+        List<Song> tempList = new ArrayList<>();
+        boolean flag = false;
+        for (Song elem : this.playlist) {
+            if (elem.equals(song)) {
+                flag = true;
+            }
+            if (flag) {
+                tempList.add(elem);
+            }
         }
-        this.queueIndex = 0;
         this.setQueue(tempList);
         this.mediaPlayer = new MediaPlayer(new Media(song.getFile().toURI().toString()));
         this.play();
