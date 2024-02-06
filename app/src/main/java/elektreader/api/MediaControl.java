@@ -9,25 +9,32 @@ import javafx.util.Duration;
  */
 public interface MediaControl {
 
+    /**
+     * @return current played song by our MediaPlayer.
+     */
     public Song getCurrentSong();
     
     /**
-     * Starts mediaPlayer execution.
+     * Starts MediaPlayer execution.
      */
     public void play();
 
     /**
-     * Pauses mediaPlayer execution.
+     * Pauses MediaPlayer execution.
      */
     public void pause();
 
     /**
-     * Stops mediaPlayer execution
+     * Stops MediaPlayer execution
      */
     public void stop();
 
 
+    /**
+     * Plays current song selected.
+     */
     public void currentSong();
+    
     /**
      * Changes current played song to the next in the queue.
      */
