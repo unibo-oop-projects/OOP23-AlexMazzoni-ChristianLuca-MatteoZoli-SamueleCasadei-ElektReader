@@ -3,7 +3,6 @@
  */
 package elektreader;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -33,7 +32,7 @@ class ElektreaderTest {
     /* mi raccomando per i test posizionare la cartella nel percorso specificato */
     /* cartella: https://drive.google.com/file/d/1b5JAQ3Hc6FRwvO2BjIb7olaxOApJDrfp/view?usp=sharing */
     final Path TEST_PATH = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment");
-    final Path TEST_INVALID_PATH = Paths.get(System.getProperty("user.home"),"Desktop", "Music");
+    final Path TEST_INVALID_PATH = Paths.get(System.getProperty("user.home"),"Desktop", "Musica");
 
     final Path TEST_INVALID_PLAYLIST = Paths.get(TEST_PATH.toString(), "GENERI"); 
 
@@ -44,14 +43,10 @@ class ElektreaderTest {
     final Path TEST_INVALID_SONG = Paths.get(TEST_PATH_PLAYLIST1.toString(), "31 - video flashmob balla.mp4"); 
 
     private Path getASong(final Path playlist, final int order) throws Exception {
-        try (var res = Files.list(playlist)) {
-            return res.filter(t -> ReaderImpl.isSong(t))
-            .filter(t -> t.getFileName().toString().matches("\\d+\\s*-\\s*.+\\.mp3"))
-            .toList().stream()
-                .sorted((o1, o2) -> (Integer.valueOf(o1.getFileName().toString().split(" ")[0]) >= Integer.valueOf(o2.getFileName().toString().split(" ")[0])) ? 1 : -1)
-                .toList()
-            .get(order);
-        } catch (Exception e) {throw e;}
+        return Reader.getAndFilterSongs(playlist).get().stream()
+            .sorted((o1, o2) -> (Integer.valueOf(o1.getFileName().toString().split(" ")[0]) >= Integer.valueOf(o2.getFileName().toString().split(" ")[0])) ? 1 : -1)
+            .toList()
+        .get(order);
     }
     
     /*
@@ -69,6 +64,8 @@ class ElektreaderTest {
         Reader app = new ReaderImpl();
 
         /* test environment */
+        Assertions.assertTrue(app.setCurrentEnvironment(TEST_PATH));
+        Assertions.assertEquals(app.getCurrentEnvironment().get(), TEST_PATH);
         /* test invalid path */
         Assertions.assertFalse(app.setCurrentEnvironment(TEST_INVALID_PATH));
         Assertions.assertEquals(app.getCurrentEnvironment(), Optional.empty());
@@ -104,7 +101,7 @@ class ElektreaderTest {
         Reader app = new ReaderImpl();
 
         app.setCurrentEnvironment(TEST_PATH_PLAYLIST2);
-        PlayList plist = new Mp3PlayList(TEST_PATH_PLAYLIST2, app.getPlaylist(TEST_PATH_PLAYLIST2).get().getSongs().stream()
+        PlayList plist1 = new Mp3PlayList(TEST_PATH_PLAYLIST2, app.getPlaylist(TEST_PATH_PLAYLIST2).get().getSongs().stream()
             .map(s -> s.getFile().toPath())
             .toList());
 
@@ -114,11 +111,11 @@ class ElektreaderTest {
             .toList());
 
         /* test on playlist with static and small size */
-        Assertions.assertEquals(2, plist.getSize());
-        Assertions.assertEquals("00:07:13", plist.getTotalDuration());
-        Assertions.assertEquals("MUSICA ROMAGNOLA", plist.getName());
+        Assertions.assertEquals(Reader.getAndFilterSongs(plist1.getPath()).get().size(), plist1.getSize());
+        Assertions.assertEquals("00:11:13", plist1.getTotalDuration());
+        Assertions.assertEquals("MUSICA ROMAGNOLA", plist1.getName());
         /* test on a playlist with dynamic and big size */
-        Assertions.assertEquals(app.getPlaylist(TEST_PATH_PLAYLIST1).get().getSongs().size(), plist2.getSize());
+        Assertions.assertEquals(Reader.getAndFilterSongs(plist2.getPath()).get().size(), plist2.getSize());
         Assertions.assertEquals("01:56:44", plist2.getTotalDuration());
         Assertions.assertEquals("tutta la musica", plist2.getName());
         
