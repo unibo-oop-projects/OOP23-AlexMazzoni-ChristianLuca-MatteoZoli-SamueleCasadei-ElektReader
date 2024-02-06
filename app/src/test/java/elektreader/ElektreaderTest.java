@@ -148,6 +148,7 @@ class ElektreaderTest {
             .map(f -> f.toPath())
             .toList()));
 
+
         //Volume methods tests
         double volume = mC1.getVolume();
         Assertions.assertEquals(volume, mC1.getVolume());
@@ -160,16 +161,25 @@ class ElektreaderTest {
         mC1.getDuration();
         mC1.play();
         Thread.sleep(2000);
-        //mC1.loopSong();
         mC1.nextSong();
         Thread.sleep(2000);
         mC1.prevSong();
         Thread.sleep(2000);
-        mC1.setSong(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 1)));
+        mC1.mute();
+        //mC1.setSong(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 1)));
+        mC1.setSong(mC1.getPlaylist().get(1));
+        System.out.println(mC1.getCurrentSong().getName());
         Thread.sleep(2000);
-        //Reminder: setSong(final Song song) still to be tested successfully! Test that must pass here below (Still commented).
         Assertions.assertEquals(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 1)).getName(), mC1.getCurrentSong().getName());
-
+        mC1.prevSong();
+        Assertions.assertEquals(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 0)).getName(), mC1.getCurrentSong().getName());
+        mC1.nextSong();
+        Assertions.assertEquals(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 1)).getName(), mC1.getCurrentSong().getName());
+        //mC1.setSong(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 0)));
+        mC1.setSong(mC1.getPlaylist().get(0));
+        System.out.println(mC1.getCurrentSong().getName());
+        Thread.sleep(2000);
+        Assertions.assertEquals(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 0)).getName(), mC1.getCurrentSong().getName());
         //Changing reference of my mediaControl to another object of the same class.
         mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(getASong(TEST_PATH_PLAYLIST2, 0), getASong(TEST_PATH_PLAYLIST2, 1))));
         mC1.mute();

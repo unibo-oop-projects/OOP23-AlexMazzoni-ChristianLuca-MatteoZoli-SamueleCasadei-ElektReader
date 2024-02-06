@@ -1,5 +1,7 @@
 package elektreader.api;
 
+import java.util.List;
+
 import javafx.util.Duration;
 
 
@@ -14,6 +16,9 @@ public interface MediaControl {
      */
     public Song getCurrentSong();
     
+    //Only debug
+    public List<Song> getPlaylist();
+
     /**
      * Starts MediaPlayer execution.
      */
