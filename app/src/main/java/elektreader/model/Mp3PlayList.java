@@ -12,11 +12,16 @@ import java.util.Random;
 import elektreader.api.PlayList;
 import elektreader.api.Song;
 
+/**
+ * This class represents a playlist of only mp3 songs, is physical image is a directory
+ * contained in the environment
+ */
 public class Mp3PlayList implements PlayList{
 
     private final File playlistDir;
     private List<Song> songs;
     private List<Song> queue;
+
 
     public Mp3PlayList(final Path playlist, final Collection<Path> tracks) {
         playlistDir = playlist.toFile();
@@ -33,12 +38,13 @@ public class Mp3PlayList implements PlayList{
         return List.copyOf(this.songs);
     }
 
-    /* potrebbe essere rimosso */
+    /* could be removed soon */
     @Override
     public Iterable<Song> getQueue() {
         return this.queue;
     }
 
+    /* could be removed soon */
     @Override
     public void shuffleQueue() {
         Random rnd = new Random();
@@ -66,11 +72,13 @@ public class Mp3PlayList implements PlayList{
         return this.songs.size();
     }
 
+    /* needs further implementation */
     @Override
     public boolean addSong(Song song) {
         return this.songs.add(song);
     }
 
+    /* needs further implementation */
     @Override
     public boolean removeSong(Song song) {
         return this.songs.remove(song);
@@ -120,8 +128,8 @@ public class Mp3PlayList implements PlayList{
 
     public Optional<Song> getSong(Path path){
         return this.songs.stream()
-            .filter(s -> s.getFile().toPath().equals(path)) /* filtro tutte le canzoni che corrispondono al percorso */
-            .findAny(); /* dato che ci può essere solo un file con quel nome, se c'è lo trovo */
+            .filter(s -> s.getFile().toPath().equals(path)) /* filter all the songs that match with the specifed path */
+            .findAny(); /* since, in a directory, two files with the same name cannot exist i search for one*/
     }
 
 
@@ -155,21 +163,23 @@ public class Mp3PlayList implements PlayList{
     }
 
     private Path setIndex(Path p, int i) {
-        /* utilizzo un pattern per capire se l'indice di p va modificato o aggiunto */
+        /* i use pattern to know if the file name matches the pattern, if it does, it means that the index must be overwritten.
+         * otherwise it means that the index must be added
+         */
             Pattern pattern = Pattern.compile("\\d+\\s*-\\s*.+");
             Matcher match = pattern.matcher(p.toFile().getName());
 
             if(match.matches()){
-                /* se p rispetta il pattern del tipo "numero - nome" allora semplicemente rimpiazzo l'indice */
-                String newName = p.toFile().getName().replaceFirst("\\d+", Integer.toString(i));
+                /* in this case, p matches the pattern, so the index will be replaced */
+                String newName = p.toFile().getName().replaceFirst("\\d+", (i >= 100 ? String.valueOf(i) : String.format("%02d",i)));
                 File newFile = new File(p.toFile().getParent()+File.separator+newName);
                 p.toFile().renameTo(newFile);
                 return newFile.toPath();
                 
             }
             else{
-                /* se p non rispetta il pattern, semplicemente lo aggiungo all'inizio del nome */
-                File newFile = new File(p.toFile().getParent()+File.separator+i+" - "+p.toFile().getName());
+                /* here, the index is added to the start of the name */
+                File newFile = new File(p.toFile().getParent()+File.separator+ (i >= 100 ? String.valueOf(i) : String.format("%02d",i)) +" - "+p.toFile().getName());
                 p.toFile().renameTo(newFile);
                 return newFile.toPath();
             }
@@ -183,12 +193,13 @@ public class Mp3PlayList implements PlayList{
     private Optional<Integer> getIndexFromName(String name){
         Pattern pattern = Pattern.compile("\\d+\\s*-\\s*.+\\.mp3");
         Matcher match = pattern.matcher(name);
-        /* se il file rispetta il formato standard */
+        /* if the filename matches the standard pattern... */
         if(match.matches()){
-            /* ricava l'indice e lo ritorna */
+            /* the index can be picked and returned */
             return Optional.of(Integer.valueOf(name.split(" ")[0]));
         }
         else {
+            /* if it doesn't match, that means i can't read the index */
             return Optional.empty();
         }
     }
