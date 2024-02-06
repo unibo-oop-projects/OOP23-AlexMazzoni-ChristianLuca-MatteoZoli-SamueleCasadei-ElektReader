@@ -122,11 +122,9 @@ public interface Reader {
         try (Stream<Path> filesPaths = Files.list(playlist)) {
             var files = filesPaths.filter(Reader::isSupportedSong).toList();
             songs = files.stream().filter(t -> {
-                var newSong = new Mp3Song(t);
                 return files.stream()
-                        .map(Mp3Song::new)
-                        .map(Mp3Song::getName)
-                        .anyMatch(s -> s.equals(newSong.getName()));
+                        .map(Song::getTitle)
+                        .anyMatch(s -> s.equals(Song.getTitle(t)));
             }).toList();
         } catch (IOException e) { 
             System.out.println("the current environment can't handle this playlist, this is not a valid playlist");
