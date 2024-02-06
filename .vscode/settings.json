@@ -6,5 +6,13 @@
             "lib/**/*.jar",
             ".gradle/**/*.jar"
         ]
-    }
+    },
+    "liveSassCompile.settings.formats": [
+        {
+            "format": "expanded",
+            "extensionName": ".css",
+            "savePath": "/app/src/main/resources/layouts/style",
+            "savePathReplacementPairs": null
+        }
+    ],
 }

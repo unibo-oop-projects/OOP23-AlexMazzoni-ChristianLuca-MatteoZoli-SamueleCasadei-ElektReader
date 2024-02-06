@@ -3,7 +3,17 @@
  */
 package elektreader;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Optional;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import elektreader.api.MediaControl;
 import elektreader.api.PlayList;
@@ -15,25 +25,11 @@ import elektreader.model.Mp3Song;
 import elektreader.model.ReaderImpl;
 import javafx.application.Platform;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Optional;
-
-import org.junit.jupiter.api.Assertions;
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ElektreaderTest {
-    /*
-     * If you are using JavaFX components in a non-GUI application or a unit test,
-     *  you need to call the Platform.startup(Runnable) method with an empty runnable before using any JavaFX classes.
-     *  This will initialize the JavaFX toolkit without creating a stage or a scene.
-     */
-    private void notGUIToolkitInitialized() {
-        Platform.startup(() -> {});
-    }
 
-    /* TEST CONSTANT */
-
+    /* CONSTANT */
+    
     /* mi raccomando per i test posizionare la cartella nel percorso specificato */
     /* cartella: https://drive.google.com/file/d/1b5JAQ3Hc6FRwvO2BjIb7olaxOApJDrfp/view?usp=sharing */
     final Path TEST_PATH = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment");
@@ -42,21 +38,34 @@ class ElektreaderTest {
     final Path TEST_INVALID_PLAYLIST = Paths.get(TEST_PATH.toString(), "GENERI"); 
 
     final Path TEST_PATH_PLAYLIST1 = Paths.get(TEST_PATH.toString(), "tutta la musica");
-    final Path TEST_PATH_SONG4 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "04 - la bomba.mp3");
-    final Path TEST_PATH_SONG5 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "05 - ritmo vuelta.mp3");
-    final Path TEST_PATH_SONG1 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "01 - flashmob.mp3");
-    final Path TEST_PATH_SONG3 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "03 - despacito.mp3");
     
     final Path TEST_PATH_PLAYLIST2 = Paths.get(TEST_PATH.toString(), "GENERI", "MUSICA ROMAGNOLA");
-    final Path TEST_PATH_SONG2_15 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "15 - Bachata di Mengoni.mp3");
-    final Path TEST_PATH_SONG2_16 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "16 - valzer dell'usignolo.mp3");
 
     final Path TEST_INVALID_SONG = Paths.get(TEST_PATH_PLAYLIST1.toString(), "31 - video flashmob balla.mp4"); 
 
-    /* TESTS */
+    private Path getASong(final Path playlist, final int order) throws Exception {
+        try (var res = Files.list(playlist)) {
+            return res.filter(t -> ReaderImpl.isSong(t))
+            .filter(t -> t.getFileName().toString().matches("\\d+\\s*-\\s*.+\\.mp3"))
+            .toList().stream()
+                .sorted((o1, o2) -> (Integer.valueOf(o1.getFileName().toString().split(" ")[0]) >= Integer.valueOf(o2.getFileName().toString().split(" ")[0])) ? 1 : -1)
+                .toList()
+            .get(order);
+        } catch (Exception e) {throw e;}
+    }
     
-    @Test void testEnvironment() { /* test all the environment */
-        notGUIToolkitInitialized();
+    /*
+     * If you are using JavaFX components in a non-GUI application or a unit test,
+     *  you need to call the Platform.startup(Runnable) method with an empty runnable before using any JavaFX classes.
+     *  This will initialize the JavaFX toolkit without creating a stage or a scene.
+     */
+    @BeforeAll
+    private void setup() {
+        Platform.startup(() -> {});
+    }   
+
+    /* TESTS */
+    @Test void testEnvironment() throws Exception { /* test all the environment */
         Reader app = new ReaderImpl();
 
         /* test environment */
@@ -75,7 +84,7 @@ class ElektreaderTest {
         Assertions.assertEquals(app.getCurrentPlaylist().get().getPath(), TEST_PATH_PLAYLIST1);
         
         //test invalid song - current playlist 1
-        Assertions.assertFalse(app.setCurrentSong(app.getPlaylist(TEST_PATH_PLAYLIST2).get().getSong(TEST_PATH_SONG1)));
+        Assertions.assertFalse(app.setCurrentSong(app.getPlaylist(TEST_PATH_PLAYLIST2).get().getSong(getASong(TEST_PATH_PLAYLIST1, 0))));
         Assertions.assertEquals(app.getCurrentSong(), Optional.empty());
 
         //test valid playlist 2
@@ -83,8 +92,8 @@ class ElektreaderTest {
         Assertions.assertEquals(app.getCurrentPlaylist().get().getPath(), TEST_PATH_PLAYLIST2);
 
         //test valid song - current playlist 2
-        Assertions.assertTrue(app.setCurrentSong(app.getCurrentPlaylist().get().getSong(TEST_PATH_SONG2_15)));
-        Assertions.assertEquals(app.getCurrentSong().get().getFile().toPath(), TEST_PATH_SONG2_15);
+        Assertions.assertTrue(app.setCurrentSong(app.getCurrentPlaylist().get().getSong(getASong(TEST_PATH_PLAYLIST2, 0))));
+        Assertions.assertEquals(app.getCurrentSong().get().getFile().toPath(), getASong(TEST_PATH_PLAYLIST2, 0));
 
         // test invalid playlist
         Assertions.assertFalse(app.setCurrentPlaylist(app.getPlaylist(TEST_INVALID_PLAYLIST)));
@@ -115,30 +124,27 @@ class ElektreaderTest {
         
     }
 
-    @Test void testSongs() {
+    @Test void testSongs() throws Exception {
 
-        Song s1 = new Mp3Song(TEST_PATH_SONG1);
-        Song s3 = new Mp3Song(TEST_PATH_SONG3);
-        Song s5 = new Mp3Song(TEST_PATH_SONG5);
-        Song s4 = new Mp3Song(TEST_PATH_SONG4);
+        Song s1 = new Mp3Song(getASong(TEST_PATH_PLAYLIST1, 0));
+        Song s3 = new Mp3Song(getASong(TEST_PATH_PLAYLIST1, 2));
+        Song s5 = new Mp3Song(getASong(TEST_PATH_PLAYLIST1, 4));
+        Song s4 = new Mp3Song(getASong(TEST_PATH_PLAYLIST1, 3));
 
-        Assertions.assertEquals("00:03:21", s1.DurationStringRep());
         Assertions.assertEquals("flashmob", s1.getName());
+        Assertions.assertEquals("00:03:21", s1.DurationStringRep());
 
-        Assertions.assertEquals("00:03:38", s3.DurationStringRep());
         Assertions.assertEquals("despacito", s3.getName());
+        Assertions.assertEquals("00:03:38", s3.DurationStringRep());
 
-        Assertions.assertEquals("00:03:21", s4.DurationStringRep());
         Assertions.assertEquals("la bomba", s4.getName());
+        Assertions.assertEquals("00:03:21", s4.DurationStringRep());
 
-        Assertions.assertEquals("00:03:32", s5.DurationStringRep());
         Assertions.assertEquals("ritmo vuelta", s5.getName());
+        Assertions.assertEquals("00:03:32", s5.DurationStringRep());
     }
 
-    @Test void testMediaControl() {
-
-        notGUIToolkitInitialized(); //Method used to make possibile to run only this test method.
-
+    @Test void testMediaControl() throws Exception {
         //Declaring a new MediaControl instance
         MediaControl mC1;
         mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_PLAYLIST2.toFile().listFiles()).stream()
@@ -158,22 +164,22 @@ class ElektreaderTest {
         mC1.play();
         mC1.loopSong();
         mC1.prevSong();
-        mC1.setSong(new Mp3Song(TEST_PATH_SONG2_15));
+        mC1.setSong(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 0)));
         //Reminder: setSong(final Song song) still to be tested successfully! Test that must pass here below (Still commented).
         //Assertions.assertEquals(new Mp3Song(TEST_PATH_SONG2_15).getName(), mC1.getCurrentSong().getName());
-        mC1.setQueue(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16)).getQueue());
+        mC1.setQueue(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(getASong(TEST_PATH_PLAYLIST2, 0), getASong(TEST_PATH_PLAYLIST2, 1))).getQueue());
 
         //Changing reference of my mediaControl to another object of the same class.
-        mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16)));
+        mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(getASong(TEST_PATH_PLAYLIST2, 0), getASong(TEST_PATH_PLAYLIST2, 1))));
         mC1.mute();
         Assertions.assertEquals(0.0, mC1.getVolume());
         mC1.play();
 
         //Testing basic reproduction methods (GUI implementation will be still more accurate to be sure that everything works correctly.).
-        Assertions.assertEquals(new Mp3Song(TEST_PATH_SONG2_15).getName(), mC1.getCurrentSong().getName());
+        Assertions.assertEquals(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 0)).getName(), mC1.getCurrentSong().getName());
         mC1.nextSong();
-        Assertions.assertEquals(new Mp3Song(TEST_PATH_SONG2_16).getName(), mC1.getCurrentSong().getName());
+        Assertions.assertEquals(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 1)).getName(), mC1.getCurrentSong().getName());
         mC1.prevSong();
-        Assertions.assertEquals(new Mp3Song(TEST_PATH_SONG2_15).getName(), mC1.getCurrentSong().getName());
+        Assertions.assertEquals(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 0)).getName(), mC1.getCurrentSong().getName());
     }
 }

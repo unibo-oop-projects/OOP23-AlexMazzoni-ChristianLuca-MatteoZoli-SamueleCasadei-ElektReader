@@ -1,6 +1,5 @@
 package elektreader.model;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,11 +13,10 @@ import elektreader.api.MediaControl;
 import elektreader.api.PlayList;
 import elektreader.api.Reader;
 import elektreader.api.Song;
-import javafx.scene.media.Media;
 
 public class ReaderImpl implements Reader{
 
-    private final String SUPPORTED_FILE = "mp3"; 
+    private static final String SUPPORTED_FILE = "mp3"; 
 
     private Optional<Path> root = Optional.empty();
     private Optional<List<PlayList>> playlists = Optional.empty();
@@ -33,20 +31,21 @@ public class ReaderImpl implements Reader{
         this.playlists = Optional.empty();
         this.currentPlaylist = Optional.empty();
         this.currentSong = Optional.empty();
+        this.player = Optional.empty();
     }
 
-    private boolean isSong(final Path s) {
+    public static boolean isSong(final Path s) {
         return s.toString().matches(".*\\."+SUPPORTED_FILE);
     }
 
-    private boolean isPlaylist(final Path p) {
+    public static boolean isPlaylist(final Path p) {
         try (Stream<Path> paths = Files.list(p)) {
-            return paths.anyMatch(this::isSong);
+            return paths.anyMatch(ReaderImpl::isSong);
         } catch (Exception e) {}
         return false;
     }
 
-    private List<Path> getFiles(final Path playlist) {
+    public static List<Path> getFiles(final Path playlist) {
         List<Path> songs = new ArrayList<>(Collections.emptyList());
         try (Stream<Path> filesPaths = Files.list(playlist)) {
             songs = filesPaths.filter(t -> t.toString().matches(".*\\."+SUPPORTED_FILE)).toList();
@@ -58,7 +57,7 @@ public class ReaderImpl implements Reader{
     public boolean setCurrentEnvironment(final Path root) {
         try (Stream<Path> paths = Files.walk(root)) {
             var tmpPlaylist = paths.filter(Files::isDirectory)
-                .filter(this::isPlaylist)
+                .filter(ReaderImpl::isPlaylist)
                 .map(t -> new Mp3PlayList(t, getFiles(t)))
                 .map(PlayList.class::cast) // Cast the list of Mp3PlayList to a list of PlayList
                 .toList();
@@ -132,25 +131,7 @@ public class ReaderImpl implements Reader{
     }
 
     @Override
-    public boolean setPlayer(Media song) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPlayer'");
-    }
-
-    @Override
     public Optional<MediaControl> getPlayer() {
         return this.player;
-    }
-
-    @Override
-    public boolean getStatusPlay() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveCurrentEnvironment'");
-    }
-
-    @Override
-    public void saveCurrentEnvironment(final Path toModidy, final File modified) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveCurrentEnvironment'");
     }
 }

@@ -39,169 +39,206 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="root" prefHeight="600.0" prefWidth="900.0" stylesheets="@style/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elektreader.controller.GUIController">
-  <children>
-      <HBox prefHeight="25.0">
+<GridPane fx:id="root" minWidth="900.0" prefHeight="915.0" prefWidth="1411.0" styleClass="root" stylesheets="@style/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elektreader.controller.GUIController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="60.0" minHeight="60.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="4.0" minHeight="4.0" vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="20.0" minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="100.0" minHeight="100.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <HBox focusTraversable="true" minHeight="0.0" prefHeight="0.0" prefWidth="892.0">
          <children>
-            <BorderPane>
-               <right>
-                  <AnchorPane BorderPane.alignment="CENTER">
-                     <children>
-                        <HBox spacing="4.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane focusTraversable="true">
+               <children>
+                  <BorderPane focusTraversable="true" prefHeight="56.0" prefWidth="1403.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <right>
+                        <AnchorPane BorderPane.alignment="CENTER">
                            <children>
-                              <Button fx:id="btnDebug1" mnemonicParsing="false" onMouseClicked="#debug1" text="debug1">
-                                 <styleClass>
-                                    <String fx:value="btn" />
-                                    <String fx:value="dark" />
-                                 </styleClass>
-                              </Button>
-                              <Button fx:id="btnDebug2" mnemonicParsing="false" onMouseClicked="#debug2" text="debug2">
-                                 <styleClass>
-                                    <String fx:value="btn" />
-                                    <String fx:value="dark" />
-                                 </styleClass>
-                              </Button>
-                              <Button fx:id="btnDebug3" mnemonicParsing="false" onMouseClicked="#debug3" text="debug3">
-                                 <styleClass>
-                                    <String fx:value="btn" />
-                                    <String fx:value="dark" />
-                                 </styleClass>
-                              </Button>
-                              <Button fx:id="btnDebug4" mnemonicParsing="false" onMouseClicked="#debug4" text="mode">
-                                 <styleClass>
-                                    <String fx:value="btn" />
-                                    <String fx:value="dark" />
-                                 </styleClass>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </right>
-               <left>
-                  <AnchorPane BorderPane.alignment="CENTER">
-                     <children>
-                        <HBox prefHeight="25.0" spacing="4.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Button fx:id="btnFIle" mnemonicParsing="false" onMouseClicked="#importFiles" prefHeight="25.0" prefWidth="70.0" text="File" textAlignment="CENTER">
-                                 <styleClass>
-                                    <String fx:value="light" />
-                                    <String fx:value="btn" />
-                                 </styleClass>
-                              </Button>
-                              <Button fx:id="btnView" mnemonicParsing="false" onMouseClicked="#view" prefHeight="25.0" prefWidth="70.0" text="View">
-                                 <styleClass>
-                                    <String fx:value="btn" />
-                                    <String fx:value="light" />
-                                 </styleClass>
-                              </Button>
-                              <Button fx:id="btnFind" mnemonicParsing="false" onMouseClicked="#find" prefHeight="25.0" prefWidth="70.0" text="Find">
-                                 <styleClass>
-                                    <String fx:value="btn" />
-                                    <String fx:value="light" />
-                                 </styleClass>
-                              </Button>
-                              <Button fx:id="btnHelp" mnemonicParsing="false" onMouseClicked="#help" prefHeight="25.0" prefWidth="70.0" text="?">
-                                 <styleClass>
-                                    <String fx:value="btn" />
-                                    <String fx:value="light" />
-                                 </styleClass>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </left>
-               <center>
-                  <AnchorPane prefWidth="999.0" BorderPane.alignment="CENTER" />
-               </center>
-            </BorderPane>
-         </children>
-         <VBox.margin>
-            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-         </VBox.margin>
-      </HBox>
-      <Pane prefHeight="3.0" styleClass="dark" />
-      <HBox>
-         <children>
-        <AnchorPane minHeight="500.0" minWidth="280.0" prefWidth="280.0" style="-fx-border-width: 10px; -fx-background-color: blackk;">
-          <children>
-                  <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane focusTraversable="true" minHeight="60.0">
-                           <children>
-                        <Label fx:id="lblPlaylists" alignment="CENTER" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="14.0" layoutY="14.0" minHeight="60.0" minWidth="8.0" mouseTransparent="true" style="&#10;" text="Playlists" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="0.0">
-                                 <font>
-                                    <Font name="SansSerif Bold" size="30.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="NONE" />
-                                 </cursor>
-                        </Label>
-                              <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="187.0" layoutY="-1.0" maxHeight="70.0" maxWidth="84.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#showPlaylists" prefHeight="60.0" prefWidth="70.0" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <graphic>
-                                    <ImageView fx:id="imgPlaylistsShowPanel" fitHeight="52.0" fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/Dark/UI/HideSidepanel.png" />
-                                       </image>
-                                       <viewport>
-                                          <Rectangle2D />
-                                       </viewport>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
+                              <HBox alignment="CENTER" spacing="4.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button fx:id="btnDebug1" mnemonicParsing="false" onMouseClicked="#debug1" text="debug1">
+                                       <styleClass>
+                                          <String fx:value="btn" />
+                                          <String fx:value="dark" />
+                                       </styleClass>
+                                    </Button>
+                                    <Button fx:id="btnDebug2" mnemonicParsing="false" onMouseClicked="#debug2" text="debug2">
+                                       <styleClass>
+                                          <String fx:value="btn" />
+                                          <String fx:value="dark" />
+                                       </styleClass>
+                                    </Button>
+                                    <Button fx:id="btnDebug3" mnemonicParsing="false" onMouseClicked="#debug3" text="debug3">
+                                       <styleClass>
+                                          <String fx:value="btn" />
+                                          <String fx:value="dark" />
+                                       </styleClass>
+                                    </Button>
+                                    <Button fx:id="btnDebug4" mnemonicParsing="false" onMouseClicked="#debug4" text="mode">
+                                       <styleClass>
+                                          <String fx:value="btn" />
+                                          <String fx:value="dark" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </HBox>
                            </children>
                         </AnchorPane>
-                        <AnchorPane>
+                     </right>
+                     <left>
+                        <AnchorPane focusTraversable="true" BorderPane.alignment="CENTER">
                            <children>
-                              <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <content>
-                                  <AnchorPane>
-                                       <children>
-                                          <VBox fx:id="playlistsList" styleClass="list" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </ScrollPane>
+                              <HBox alignment="CENTER" focusTraversable="true" prefHeight="35.0" spacing="4.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Button fx:id="btnFIle" focusTraversable="false" maxWidth="100.0" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#importFiles" text="File" textAlignment="CENTER">
+                                       <styleClass>
+                                          <String fx:value="light" />
+                                          <String fx:value="btn" />
+                                       </styleClass>
+                                       <font>
+                                          <Font name="SansSerif Bold" size="22.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="btnView" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#view" text="View">
+                                       <styleClass>
+                                          <String fx:value="btn" />
+                                          <String fx:value="light" />
+                                       </styleClass>
+                                       <font>
+                                          <Font name="SansSerif Bold" size="22.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="btnFind" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#find" text="Find">
+                                       <styleClass>
+                                          <String fx:value="btn" />
+                                          <String fx:value="light" />
+                                       </styleClass>
+                                       <font>
+                                          <Font name="SansSerif Bold" size="22.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="btnHelp" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#help" text="?">
+                                       <styleClass>
+                                          <String fx:value="btn" />
+                                          <String fx:value="light" />
+                                       </styleClass>
+                                       <font>
+                                          <Font name="SansSerif Regular" size="22.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </left>
+                     <center>
+                        <AnchorPane prefHeight="42.0" prefWidth="1360.0" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </AnchorPane>
+         </children>
+         <GridPane.margin>
+            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+         </GridPane.margin>
+      </HBox>
+      <Pane minHeight="4.0" styleClass="dark" GridPane.rowIndex="1" />
+      <HBox prefWidth="900.0" GridPane.rowIndex="2">
+         <children>
+        <AnchorPane>
+          <children>
+                  <VBox layoutY="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane focusTraversable="true" minHeight="100.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" layoutX="14.0" AnchorPane.leftAnchor="0.0">
+                                 <children>
+                              <Label fx:id="lblPlaylists" alignment="CENTER" cacheShape="false" centerShape="false" focusTraversable="false" minWidth="0.0" mouseTransparent="true" prefWidth="300.0" text="Playlists">
+                                       <font>
+                                          <Font name="Century" size="60.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="NONE" />
+                                       </cursor>
+                              </Label>
+                                    <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="70.0" maxWidth="84.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#showPlaylists" prefHeight="60.0" prefWidth="70.0" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="WHITE">
+                                       <graphic>
+                                          <ImageView fx:id="imgPlaylistsShowPanel" fitHeight="64.0" fitWidth="70.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/Dark/UI/HideSidepanel.png" />
+                                             </image>
+                                             <viewport>
+                                                <Rectangle2D />
+                                             </viewport>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="20.0" />
+                           </padding>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="882.0">
+                           <children>
+                              <ScrollPane fx:id="playlistsList" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </children>
                   </VBox>
           </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
         </AnchorPane>
-            <Pane prefWidth="3.0" styleClass="dark" />
-      <AnchorPane id="Content" minHeight="500.0" minWidth="600.0" prefHeight="500.0">
+            <Pane minWidth="4.0" styleClass="dark" />
+      <AnchorPane id="Content" prefWidth="2000.0">
         <children>
-                  <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox layoutX="16.0" layoutY="34.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane minHeight="60.0" style="-fx-translate-x: none;">
+                        <AnchorPane minHeight="100.0" style="-fx-translate-x: none;">
                            <children>
                       <Label fx:id="lblSong" alignment="CENTER" layoutY="9.0" style="&#10;" text="Songs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="0.0">
                                  <font>
-                                    <Font name="SansSerif Bold" size="30.0" />
+                                    <Font name="SansSerif Bold" size="60.0" />
                                  </font>
                               </Label>
                            </children>
+                           <padding>
+                              <Insets bottom="20.0" />
+                           </padding>
                         </AnchorPane>
-                        <AnchorPane>
+                        <AnchorPane prefHeight="1000.0">
                            <children>
                               <ScrollPane hbarPolicy="NEVER" layoutX="-22.0" layoutY="-3.0" styleClass="list" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
-                                    <AnchorPane>
-                                       <children>
-                                          <TilePane fx:id="songsList" prefColumns="6" prefRows="6" prefTileHeight="0.0" prefTileWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
+                                    <TilePane fx:id="songsList" prefColumns="6" prefRows="6" prefTileHeight="0.0" prefTileWidth="0.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -209,18 +246,13 @@
                      </children>
                   </VBox>
         </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
       </AnchorPane>
          </children>
       </HBox>
-      <Pane prefHeight="3.0" styleClass="dark" />
-    <HBox id="HBox" fx:id="MediaControlPanel" alignment="CENTER_LEFT" spacing="5.0">
-      <padding>
-        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-      </padding>
-    </HBox>
-  </children>
-   <styleClass>
-      <String fx:value="light" />
-      <String fx:value="root" />
-   </styleClass>
-</VBox>
+      <Slider fx:id="progressBar" blockIncrement="1.0" max="2.0" GridPane.rowIndex="3" />
+      <HBox fx:id="MediaControlPanel" prefHeight="100.0" prefWidth="900.0" GridPane.rowIndex="4" />
+   </children>
+</GridPane>

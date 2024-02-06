@@ -1,0 +1,54 @@
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url(LemonMilk.otf) format('opentype');
+}
+
+
+$wallpaper: #ffffff;
+$counter: #fff;
+$text: rgb(255, 0, 0);
+$button: #ddd;
+$label: #fff;
+
+* {
+  -fx-font-family: 'sans-serif';
+  -fx-font-weight: bold;
+}
+
+
+.root {
+  -fx-background-color: $wallpaper;
+}
+
+.btn {
+  -fx-background-color: $button !important
+}
+  
+
+.list {
+
+}
+
+.label {
+  -fx-font-size: 60px;
+  -fx-mid-text-color: $text;
+  // -fx-alignment: left;
+}
+  
+.separator {
+
+}
+
+.light {
+  -fx-background-color: $wallpaper;
+  background-color: $counter; 
+  -fx-mid-text-color: $text;
+}
+
+.dark {
+  -fx-background-color: black;
+  background-color: black;
+  -fx-mid-text-color: white;
+}
+  

@@ -80,36 +80,23 @@ public interface Reader {
     */
     public boolean setCurrentSong(final Optional<Song> song);
 
-
     /**
-     * @param song create a MediaPlayer from a Media specified
-     * @return true if is created correctly, false otherwise. 
-    */
-    public boolean setPlayer(final Media song);
-
-
-    /**
-     * @return the MediaControl is running
+     * @return the MediaControl, optional because can be in a init state
     */
     public Optional<MediaControl> getPlayer();
 
-
-
     /**
-     * @return true if current song is playing, false otherwise.
-    */
-    public boolean getStatusPlay();
-
-
-
-
-
-    //Add - on
-
-    /**
-     * salva tutte le modifiche che sono state
-     * effettuate alle canzoni nel file system
+     * @param oldFile given the old file
+     * @param newFile given the new file
+     * rename the old file with the new
+     * @retur true if the File is renamed successfully, false otherwise
      */
-    public void saveCurrentEnvironment(final Path path, final File file);
-
+    public static boolean saveFiles(final File oldFile, final File newFile) {
+        try {
+            oldFile.renameTo(newFile);
+        } catch (Exception e) { 
+            return false;
+        }
+        return true;
+    }
 }

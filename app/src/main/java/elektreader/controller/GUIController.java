@@ -9,12 +9,14 @@ import java.util.ResourceBundle;
 
 import elektreader.api.Reader;
 import elektreader.model.ReaderImpl;
+import elektreader.view.GUI;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -22,6 +24,9 @@ import javafx.stage.DirectoryChooser;
 
 
 public class GUIController implements Initializable {
+
+	public static final double SCALE_PLAYLIST_SIZE = 0.3;
+	public static final double SCALE_SONG_SIZE = 0.7;
 
 	/* LOGICS */
 	private final static Reader reader = new ReaderImpl();
@@ -31,7 +36,7 @@ public class GUIController implements Initializable {
 
 	/* MAIN PARENT */
 	@FXML
-    private VBox root;
+    private GridPane root;
 
 	/* MENU */
 	@FXML
@@ -92,7 +97,7 @@ public class GUIController implements Initializable {
 			if(res.isPresent()) {
 				loadEnvironment(Optional.of(res.get().toPath()));
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) { throw e;}
 	}
 
 	@FXML
@@ -128,18 +133,18 @@ public class GUIController implements Initializable {
 
 	@FXML
 	private void debug4() { 
-		Group g = groupAll();
-		for (var element : g.getChildren()) {
+		// Group g = groupAll();
+		// for (var element : g.getChildren()) {
 			
-			//element.getStyleClass().
-		}
+		// 	//element.getStyleClass().
+		// }
 	}
 
 	/* only graphics */
 	@FXML
 	private void showPlaylists() {
-		if(this.lblPlaylists.getText().equals("")) { //is hidden
-			this.lblPlaylists.setText("Playlists");
+		if(this.lblPlaylists.getPrefWidth()==0.0) { //is hidden
+			this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE*GUI.scaleToScreenSize().getKey());
 			this.playlistsList.setVisible(true);
 		} else {
 			this.playlistsList.setVisible(false);
@@ -148,15 +153,16 @@ public class GUIController implements Initializable {
 	}
 
 	private void responsive() {
-		
+		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
 	}
 	
 	private Group groupAll() {
-		return new Group(this.btnFile, this.btnFind, this.btnView, this.btnHelp,
-			this.btnDebug1, this.btnDebug2, this.btnDebug3, this.btnDebug4, 
-			this.lblPlaylists, this.imgPlaylistsShowPanel, this.playlistsList,
-			this.lblSong, this.songsList,
-			this.MediaControlPanel);
+		return null;
+		// return new Group(this.btnFile, this.btnFind, this.btnView, this.btnHelp,
+		// 	this.btnDebug1, this.btnDebug2, this.btnDebug3, this.btnDebug4, 
+		// 	this.lblPlaylists, this.imgPlaylistsShowPanel, this.playlistsList,
+		// 	this.lblSong, this.songsList,
+		// 	this.MediaControlPanel);
 	}
 
 	/* PRIVATE METHODS */
@@ -191,5 +197,6 @@ public class GUIController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
+		responsive();
 	}
 }

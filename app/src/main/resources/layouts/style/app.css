@@ -1,34 +1,33 @@
-* {}
-
+@font-face {
+  font-family: "Open Sans";
+  src: url(LemonMilk.otf) format("opentype");
+}
+* {
+  -fx-font-family: "sans-serif";
+  -fx-font-weight: bold;
+}
 
 .root {
-    
+  -fx-background-color: #ffffff;
 }
 
 .btn {
-  -fx-background-color: rgb(210, 210, 210) !important;
-}
-
-.list {
-  /* CSS properties for the list class */
+  -fx-background-color: #ddd !important;
 }
 
 .label {
-  /* CSS properties for the label class */
-}
-
-.separator { 
-
+  -fx-font-size: 60px;
+  -fx-mid-text-color: rgb(255, 0, 0);
 }
 
 .light {
-    -fx-background-color:white;
-    background-color: white;
-    -fx-mid-text-color: black;
+  -fx-background-color: #ffffff;
+  background-color: #fff;
+  -fx-mid-text-color: rgb(255, 0, 0);
 }
 
-.dark { 
-    -fx-background-color:black;
-    background-color: black;
-    -fx-mid-text-color: white ;
+.dark {
+  -fx-background-color: black;
+  background-color: black;
+  -fx-mid-text-color: white;
 }
