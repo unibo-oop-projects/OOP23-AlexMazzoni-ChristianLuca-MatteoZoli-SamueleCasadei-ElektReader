@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import elektreader.api.PlayList;
+import elektreader.api.Reader;
 import elektreader.api.Song;
 
 /**
@@ -144,6 +145,7 @@ public class Mp3PlayList implements PlayList{
             .filter(p -> getIndexFromName(p.toFile().getName()).isPresent())
             .sorted((p1,p2) -> getIndexFromName(p1.toFile().getName()).get()-getIndexFromName(p2.toFile().getName()).get())
             .collect(Collectors.toList());
+
         /* i need to use a temporary list in order to avoid concurrent modification and mantain counter in the scope
          * which would be impossible using streams
          */
@@ -173,14 +175,14 @@ public class Mp3PlayList implements PlayList{
                 /* in this case, p matches the pattern, so the index will be replaced */
                 String newName = p.toFile().getName().replaceFirst("\\d+", (i >= 100 ? String.valueOf(i) : String.format("%02d",i)));
                 File newFile = new File(p.toFile().getParent()+File.separator+newName);
-                p.toFile().renameTo(newFile);
+                Reader.saveFile(p.toFile(), newFile);
                 return newFile.toPath();
                 
             }
             else{
                 /* here, the index is added to the start of the name */
                 File newFile = new File(p.toFile().getParent()+File.separator+ (i >= 100 ? String.valueOf(i) : String.format("%02d",i)) +" - "+p.toFile().getName());
-                p.toFile().renameTo(newFile);
+                Reader.saveFile(p.toFile(), newFile);
                 return newFile.toPath();
             }
     }

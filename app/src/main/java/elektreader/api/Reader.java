@@ -91,7 +91,7 @@ public interface Reader {
      * rename the old file with the new
      * @retur true if the File is renamed successfully, false otherwise
      */
-    public static boolean saveFiles(final File oldFile, final File newFile) {
+    public static boolean saveFile(final File oldFile, final File newFile) {
         try {
             oldFile.renameTo(newFile);
         } catch (Exception e) { 
