@@ -9,10 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
-
-import elektreader.model.Mp3Song;
 
 /**
  * This interface represents the logic of a 
@@ -121,11 +118,11 @@ public interface Reader {
         List<Path> songs = new ArrayList<>(Collections.emptyList());
         try (Stream<Path> filesPaths = Files.list(playlist)) {
             var files = filesPaths.filter(Reader::isSupportedSong).toList();
-            songs = files.stream().filter(t -> {
-                return files.stream()
-                        .map(Song::getTitle)
-                        .anyMatch(s -> s.equals(Song.getTitle(t)));
-            }).toList();
+            for (Path songPath : files) {
+                if(!songs.stream().map(Song::getTitle).anyMatch(t -> t.equals(Song.getTitle(songPath)))) {
+                    songs.add(songPath);
+                }
+            }
         } catch (IOException e) { 
             System.out.println("the current environment can't handle this playlist, this is not a valid playlist");
         }

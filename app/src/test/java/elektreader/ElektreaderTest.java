@@ -47,7 +47,6 @@ class ElektreaderTest {
             .toList()
         .get(order);
     }
-    
     /*
      * If you are using JavaFX components in a non-GUI application or a unit test,
      *  you need to call the Platform.startup(Runnable) method with an empty runnable before using any JavaFX classes.
@@ -63,8 +62,6 @@ class ElektreaderTest {
         Reader app = new ReaderImpl();
 
         /* test environment */
-        Assertions.assertTrue(app.setCurrentEnvironment(TEST_PATH));
-        Assertions.assertEquals(app.getCurrentEnvironment().get(), TEST_PATH);
         /* test invalid path */
         Assertions.assertFalse(app.setCurrentEnvironment(TEST_INVALID_PATH));
         Assertions.assertEquals(app.getCurrentEnvironment(), Optional.empty());

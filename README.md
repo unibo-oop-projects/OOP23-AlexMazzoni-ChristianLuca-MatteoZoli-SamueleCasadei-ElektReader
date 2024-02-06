@@ -16,6 +16,8 @@
 
 #### samuele:
 * controller -> improve PlayListsController, SongsController. 
+    sam attento allo split guarda la canzone in generi musica romagnola polka ha un -
+    devi assolutamente gestire e usare bene il regex
 
 #### christian: 
 * model.Mp3MediaControl -> devi cambiare l'implementazione 

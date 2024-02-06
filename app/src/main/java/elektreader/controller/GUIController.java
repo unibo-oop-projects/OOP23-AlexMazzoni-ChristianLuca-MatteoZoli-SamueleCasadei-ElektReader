@@ -118,7 +118,16 @@ public class GUIController implements Initializable {
 	/* DEBUG SECTION */
 	@FXML
 	private void debug1() { 
-		//TODO
+		/* codice per trovare le canzoni duplicate (inutile e poco efficente) */
+		// songs = files.stream().filter(t -> {
+        //     if((int)files.stream()
+        //             .map(Song::getTitle)
+        //             .filter(s -> s.equals(Song.getTitle(t))).count() > 1) {
+        //                 System.out.println("DUPLICATO DI "+Song.getTitle(t));
+        //         return false;
+        //     }
+        //     return true;
+        // }).toList();
 	}
 
 	@FXML
