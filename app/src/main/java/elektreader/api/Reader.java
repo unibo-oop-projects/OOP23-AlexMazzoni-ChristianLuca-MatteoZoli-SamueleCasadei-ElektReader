@@ -1,18 +1,29 @@
 package elektreader.api;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Stream;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import elektreader.model.Mp3Song;
 
 /**
  * This interface represents the logic of a 
  * media player 
 */
 public interface Reader {
+
+    /**
+     *  List of supported songs types
+     */
+    public static final Set<String> SUPPORTED_FILES = Set.of("mp3", "wav");
+
     /**
      * @return the path of the environment choosed
     */
@@ -20,15 +31,17 @@ public interface Reader {
 
 
     /**
-     * @param folder passed the path specified
+     * refresh always the current environment
+     * 
+     * @param root passed the path specified
      * the environment can only contain playlists (sub-directories),
      * playlists can only contain files, if a sub-directory contains a playlist
      * is not considered a playlist anymore and it can only be a container of playlists
      * (a sub-directory cannot contains playlists and files at the same time),
      * otherwise the whole environment is considered illegal.
      * 
-     * @return true if it can be used as current environment, 
-     * else wait for a valid folder and false is return (the program doesn't stop if is invalid).
+     * @return true if it can be used as current environment so if it contain at least 1 playlist,
+     * false otherwise (if the environment not contain any playlist)
     */
     public boolean setCurrentEnvironment(final Path root);
     
@@ -63,6 +76,7 @@ public interface Reader {
     /**
      * @param path given a specified path
      * @return return the specified PlayList
+     * Optional because if the path is invalid!
     */
     public Optional<PlayList> getPlaylist(final Path path);
     
@@ -84,6 +98,32 @@ public interface Reader {
      * @return the MediaControl, optional because can be in a init state
     */
     public Optional<MediaControl> getPlayer();
+
+    /**
+     * @param playlist given a playlist, filter all the songs:
+     * a songs need to be a supported file
+     * a song title need to be unique so it filter every song and considarate only 1 file per name.
+     * @return Optional: can be:
+     *  empty       -> if the playlist is invalid (no songs found).
+     *  List<Path>  -> if the playlist contain at least 1 song, so the playlist is valid. 
+    */
+    public static Optional<List<Path>> getAndFilterSongs(final Path playlist) {
+        /* given a playlist path filter all the possible songs: */
+        List<Path> songs = new ArrayList<>(Collections.emptyList());
+        try (Stream<Path> filesPaths = Files.list(playlist)) {
+            var files = filesPaths.filter(t -> SUPPORTED_FILES.stream().anyMatch(type -> t.toString().matches(".*\\."+type))).toList();
+            songs = files.stream().filter(t -> {
+                var newSong = new Mp3Song(t);
+                return files.stream()
+                        .map(Mp3Song::new)
+                        .map(Mp3Song::getName)
+                        .anyMatch(s -> s.equals(newSong.getName()));
+            }).toList();
+        } catch (IOException e) { 
+            System.out.println("the current environment can't handle this playlist, this is not a valid playlist");
+        }
+        return !songs.isEmpty() ? Optional.of(songs) : Optional.empty();
+    }
 
     /**
      * @param oldFile given the old file

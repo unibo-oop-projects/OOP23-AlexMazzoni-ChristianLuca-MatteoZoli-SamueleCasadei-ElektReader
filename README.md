@@ -15,7 +15,7 @@
 * FXML -> improve app.fxml, app.css
 
 #### samuele:
-* controller -> improve PlayListsController, SongsController
+* controller -> improve PlayListsController, SongsController. 
 
 #### christian: 
 * model.Mp3MediaControl -> devi cambiare l'implementazione 

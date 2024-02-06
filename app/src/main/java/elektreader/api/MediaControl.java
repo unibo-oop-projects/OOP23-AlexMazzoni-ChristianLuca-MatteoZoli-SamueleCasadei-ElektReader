@@ -34,7 +34,7 @@ public interface MediaControl {
      * Plays current song selected.
      */
     public void currentSong();
-    
+
     /**
      * Changes current played song to the next in the queue.
      */
@@ -49,11 +49,6 @@ public interface MediaControl {
      * Creates a playing loop with the current song played by our mediaPLayer.
      */
     public void loopSong();
-
-    /**
-     * @param queue the queue to be set as the current one.
-     */
-    public void setQueue(final Iterable<Song> queue);
 
     /**
      * @param song the song to be set as the current one. Internal implementation works with the 
