@@ -24,12 +24,12 @@ import elektreader.model.ReaderImpl;
 import javafx.application.Platform;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class ElektreaderTest {
-
-    /* CONSTANT */
+class ElektreaderTest { 
+    /* mi raccomando per i test posizionare le cartelle nel percorso specificato "user.home/elektreaderTEST/${ENVIRONMENT}" */
+    /* il piu leggero 'environment'     : https://drive.google.com/file/d/1uBXdstyfyjMbIammjAUBZFu0ValKGgZ0/view?usp=sharing */
+    /* quello realistico 'MUSICA'       : https://drive.google.com/file/d/1b5JAQ3Hc6FRwvO2BjIb7olaxOApJDrfp/view?usp=sharing */
+    /* quello impossibile 'ECCEZIONI'   : https://drive.google.com/file/d/1U2SonHpTJBXvDkQoKqstOUcsMyCoXOku/view?usp=sharing */
     
-    /* mi raccomando per i test posizionare la cartella nel percorso specificato */
-    /* cartella: https://drive.google.com/file/d/1b5JAQ3Hc6FRwvO2BjIb7olaxOApJDrfp/view?usp=sharing */
     final Path TEST_PATH = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment");
     final Path TEST_INVALID_PATH = Paths.get(System.getProperty("user.home"),"Desktop", "Musica");
 
@@ -41,7 +41,11 @@ class ElektreaderTest {
 
     final Path TEST_INVALID_SONG = Paths.get(TEST_PATH_PLAYLIST1.toString(), "31 - video flashmob balla.mp4"); 
 
-    private Path getASong(final Path playlist, final int order) throws Exception {
+    private Path getAPlaylist(final Path envirnment, final int order) throws Exception {
+        return null; //TODO
+    }
+    
+    private Path getASong(final Path playlist, final int order) { //TODO
         return Reader.getAndFilterSongs(playlist).get().stream()
             .sorted((o1, o2) -> (Integer.valueOf(o1.getFileName().toString().split(" ")[0]) >= Integer.valueOf(o2.getFileName().toString().split(" ")[0])) ? 1 : -1)
             .toList()

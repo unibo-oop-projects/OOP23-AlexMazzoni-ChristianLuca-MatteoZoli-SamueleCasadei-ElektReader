@@ -7,10 +7,8 @@
 
 * UML -> interfacce
 
-* 
-
 #### alex:
-* api.Reader, model.ReaderImpl -> adds field Mp3MediaControl 
+* api.Reader, model.ReaderImpl -> adds field Mp3MediaControl, and normalizeFilesName
 * controller.GUIController -> to create: find
 * FXML -> improve app.fxml, app.css
 
