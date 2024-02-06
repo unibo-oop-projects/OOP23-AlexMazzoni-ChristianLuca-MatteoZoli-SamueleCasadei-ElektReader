@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import elektreader.api.MediaControl;
@@ -35,21 +36,29 @@ public class ReaderImpl implements Reader{
     }
 
     public static boolean isSong(final Path s) {
+        /* is a song, if is a supported file */
         return s.toString().matches(".*\\."+SUPPORTED_FILE);
     }
 
-    public static boolean isPlaylist(final Path p) {
-        try (Stream<Path> paths = Files.list(p)) {
-            return paths.anyMatch(ReaderImpl::isSong);
-        } catch (Exception e) {}
-        return false;
-    }
-
-    public static List<Path> getFiles(final Path playlist) {
+    public static List<Path> getAndFilterSongs(final Path playlist) {
+        /* given a playlist path filter all the possible songs: */
         List<Path> songs = new ArrayList<>(Collections.emptyList());
         try (Stream<Path> filesPaths = Files.list(playlist)) {
-            songs = filesPaths.filter(t -> t.toString().matches(".*\\."+SUPPORTED_FILE)).toList();
-        } catch (IOException e) { throw new IllegalStateException("class doesn't support it or invalid state"); }
+            /*
+             * a songs need to be a supported file
+             * a song title need to be unique so it filter every song and considarate only 1 file per name
+             */
+            var files = filesPaths.filter(ReaderImpl::isSong).toList();
+            songs = files.stream().filter(t -> {
+                var newSong = new Mp3Song(t);
+                return files.stream()
+                        .map(Mp3Song::new)
+                        .map(Mp3Song::getName)
+                        .anyMatch(s -> s.equals(newSong.getName()));
+            }).toList();
+        } catch (IOException e) { 
+            System.out.println("the current environment can't handle this playlist, this is not a valid playlist");
+        }
         return songs;
     }
 
@@ -57,9 +66,16 @@ public class ReaderImpl implements Reader{
     public boolean setCurrentEnvironment(final Path root) {
         try (Stream<Path> paths = Files.walk(root)) {
             var tmpPlaylist = paths.filter(Files::isDirectory)
-                .filter(ReaderImpl::isPlaylist)
-                .map(t -> new Mp3PlayList(t, getFiles(t)))
-                .map(PlayList.class::cast) // Cast the list of Mp3PlayList to a list of PlayList
+                .map(t -> {
+                    var songs = getAndFilterSongs(t);
+                    if(!songs.isEmpty()) {
+                        return Optional.of(new Mp3PlayList(t, songs));
+                    }
+                    return Optional.empty();
+                })
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(PlayList.class::cast) // Cast the list of Mp3PlayList to a list of PlayList (because is Object)
                 .toList();
             this.playlists = tmpPlaylist.isEmpty() ? Optional.empty() : Optional.of(tmpPlaylist);
         } catch (IOException e) {
