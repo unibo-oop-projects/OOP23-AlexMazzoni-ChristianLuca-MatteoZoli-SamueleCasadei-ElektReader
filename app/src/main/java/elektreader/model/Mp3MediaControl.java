@@ -11,7 +11,7 @@ import javafx.util.Duration;
 public class Mp3MediaControl implements MediaControl{
 
     private MediaPlayer mediaPlayer;
-    private List<Song> playlist;
+    private List<Song> playlist = new ArrayList<>();
     private int index;
     static private final double SET_ZERO_VOLUME = 0.0;
 
@@ -38,6 +38,11 @@ public class Mp3MediaControl implements MediaControl{
 
     private int getPlaylistSize() {
         return this.playlist.size();
+    }
+
+    //Only debug
+    public List<Song> getPlaylist() {
+        return this.playlist;
     }
 
     @Override
@@ -98,7 +103,7 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void setSong(final Song song) {
-        this.index = playlist.indexOf(song) + playlist.size();
+        this.index = playlist.indexOf(song);
         this.currentSong();
     }
 

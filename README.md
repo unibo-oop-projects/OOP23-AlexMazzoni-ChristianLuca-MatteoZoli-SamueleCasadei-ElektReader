@@ -29,6 +29,8 @@
 
     !perchè questo -> ovviamente perchè nell'implementazione generale del lettore il lettore avrà sempre il campo per riprodurre inizializzato io non voglio che lui si resetta ogni volta che cambio playlist, ma semplicemente cambi il cmapo quando richiamo la determinata funzione
 
+    Osservazione: ottenere le canzoni usando il metodo di Mazzo (getASong) non capisco il perché ma non mi fa ottenere il corretto inidice della canzone che  va impostata. Il test passa correttamente se mi recupero la playlist attraverso un getter!
+
 #### matteo:
 * ancora non é pronto il lavoro per te
 
