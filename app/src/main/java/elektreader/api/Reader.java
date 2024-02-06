@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import elektreader.model.Mp3Song;
@@ -100,6 +101,14 @@ public interface Reader {
     public Optional<MediaControl> getPlayer();
 
     /**
+     * @param song passed a song path
+     * @return true if is a supported song, false otherwise.
+     */
+    public static boolean isSupportedSong(final Path song) {
+        return SUPPORTED_FILES.stream().anyMatch(type -> song.toString().matches(".*\\."+type));
+    }
+
+    /**
      * @param playlist given a playlist, filter all the songs:
      * a songs need to be a supported file
      * a song title need to be unique so it filter every song and considarate only 1 file per name.
@@ -111,13 +120,11 @@ public interface Reader {
         /* given a playlist path filter all the possible songs: */
         List<Path> songs = new ArrayList<>(Collections.emptyList());
         try (Stream<Path> filesPaths = Files.list(playlist)) {
-            var files = filesPaths.filter(t -> SUPPORTED_FILES.stream().anyMatch(type -> t.toString().matches(".*\\."+type))).toList();
+            var files = filesPaths.filter(Reader::isSupportedSong).toList();
             songs = files.stream().filter(t -> {
-                var newSong = new Mp3Song(t);
                 return files.stream()
-                        .map(Mp3Song::new)
-                        .map(Mp3Song::getName)
-                        .anyMatch(s -> s.equals(newSong.getName()));
+                        .map(Song::getTitle)
+                        .anyMatch(s -> s.equals(Song.getTitle(t)));
             }).toList();
         } catch (IOException e) { 
             System.out.println("the current environment can't handle this playlist, this is not a valid playlist");
@@ -131,7 +138,7 @@ public interface Reader {
      * rename the old file with the new
      * @retur true if the File is renamed successfully, false otherwise
      */
-    public static boolean saveFiles(final File oldFile, final File newFile) {
+    public static boolean saveFile(final File oldFile, final File newFile) {
         try {
             oldFile.renameTo(newFile);
         } catch (Exception e) { 

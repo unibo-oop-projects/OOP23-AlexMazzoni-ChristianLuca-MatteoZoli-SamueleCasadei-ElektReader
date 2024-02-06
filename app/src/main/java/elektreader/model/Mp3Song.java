@@ -42,7 +42,7 @@ public class Mp3Song implements Song{
 
     @Override
     public String getName() {
-        return getPlainName(this.songFile.getName());
+        return Song.getTitle(this.songFile.toPath());
     }
 
     @Override
@@ -99,20 +99,6 @@ public class Mp3Song implements Song{
         } else if (!data.equals(other.data))
             return false;
         return true;
-    }
-
-    /**
-     * @param name the actual file name of the song
-     * @return the actual name, knowing that every song file name format is
-     * "index - actual name.mp3"
-     */
-    private String getPlainName(String name){
-        Pattern pattern = Pattern.compile("\\d+\\s-\\s(.*?)\\.\\w+");
-        Matcher matcher = pattern.matcher(name);
-        if (matcher.find()) {
-            return matcher.group(1);
-        }
-        return "";
     }
 
     @Override
