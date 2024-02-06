@@ -143,9 +143,6 @@ public interface Reader {
     public static boolean saveFiles(final File oldFile, final File newFile) {
         try {
             oldFile.renameTo(newFile);
-            if(newFile.exists()) {
-                newFile.delete();
-            }
         } catch (Exception e) { 
             return false;
         }
