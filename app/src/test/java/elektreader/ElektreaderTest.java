@@ -6,6 +6,7 @@ package elektreader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -158,12 +159,19 @@ class ElektreaderTest {
         //Testing various void method useful for reproduction, song choice, queue gestion ecc.
         mC1.getDuration();
         mC1.play();
-        mC1.loopSong();
+        Thread.sleep(2000);
+        mC1.pause();
+        Thread.sleep(2000);
+        mC1.play();
+        //mC1.loopSong();
+        mC1.nextSong();
+        Thread.sleep(2000);
         mC1.prevSong();
-        mC1.setSong(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 0)));
+        Thread.sleep(2000);
+        mC1.setSong(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 1)));
+        Thread.sleep(2000);
         //Reminder: setSong(final Song song) still to be tested successfully! Test that must pass here below (Still commented).
-        //Assertions.assertEquals(new Mp3Song(TEST_PATH_SONG2_15).getName(), mC1.getCurrentSong().getName());
-        mC1.setQueue(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(getASong(TEST_PATH_PLAYLIST2, 0), getASong(TEST_PATH_PLAYLIST2, 1))).getQueue());
+        Assertions.assertEquals(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 1)).getName(), mC1.getCurrentSong().getName());
 
         //Changing reference of my mediaControl to another object of the same class.
         mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(getASong(TEST_PATH_PLAYLIST2, 0), getASong(TEST_PATH_PLAYLIST2, 1))));

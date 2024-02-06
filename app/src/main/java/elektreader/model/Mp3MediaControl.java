@@ -11,18 +11,14 @@ import javafx.util.Duration;
 public class Mp3MediaControl implements MediaControl{
 
     private MediaPlayer mediaPlayer;
-    private Mp3PlayList myPlayList;
     private List<Song> playlist;
-    private Iterable<Song> queue;
-    private int queueIndex;
+    private int index;
     static private final double SET_ZERO_VOLUME = 0.0;
 
 
     public Mp3MediaControl(final Mp3PlayList myPlayList) {
-        this.myPlayList = myPlayList;
         this.playlist = myPlayList.getSongs();          //Taking a copy of entire playlist.
-        this.queue = this.playlist;        //Starting queue, given directly via playlist.
-        this.queueIndex = 0;                            //internal index useful to check currentSong.
+        this.index = 0;                            //internal index useful to check currentSong.
         this.initMediaPlayer();
     }
 
@@ -33,20 +29,16 @@ public class Mp3MediaControl implements MediaControl{
     }
 
     public Song getCurrentSong() {
-        int tempIndex = Math.min(Math.max(queueIndex, 0), this.getQueueSize() - 1);
+        int tempIndex = Math.min(Math.max(index, 0), this.getQueueSize() - 1);
         return this.getSongAtCertainIndex(tempIndex);
     }
 
     private Song getSongAtCertainIndex(final int index) {
-        return this.myPlayList.getSong(index).get();
+        return this.playlist.get(index);
     }
 
     private int getQueueSize() {
-        int queueSize = 0;
-        for (@SuppressWarnings("unused") Song elem : this.queue) {
-            queueSize++;
-        }
-        return queueSize;
+        return this.playlist.size();
     }
 
     @Override
@@ -69,18 +61,30 @@ public class Mp3MediaControl implements MediaControl{
         Song currSong = this.getCurrentSong();
         this.mediaPlayer = new MediaPlayer(new Media(currSong.getFile().toURI().toString()));
         this.play();
+        this.mediaPlayer.setOnReady(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+        });
         this.mediaPlayer.setOnEndOfMedia(this::nextSong);   //If media ends, the next song in the queue will be played.
     }
 
     @Override
     public void nextSong() {
-        this.queueIndex = (this.queueIndex + 1 + this.getQueueSize()) % this.getQueueSize();
+        this.index = (this.index + 1 + this.getQueueSize()) % this.getQueueSize();
         this.currentSong();
     }
 
     @Override
     public void prevSong() {
-        this.queueIndex = (this.queueIndex - 1 + this.getQueueSize()) % this.getQueueSize();
+        this.index = (this.index - 1 + this.getQueueSize()) % this.getQueueSize();
         this.currentSong();
     }
 
@@ -93,29 +97,9 @@ public class Mp3MediaControl implements MediaControl{
     }
 
     @Override
-    public void setQueue(final Iterable<Song> queue) {
-        this.queue = queue;
-    }
-
-    @Override
     public void setSong(final Song song) {
-        if (!(this.playlist.contains(song))) {
-            return;
-        }
-        List<Song> tempList = new ArrayList<>();
-        boolean flag = false;
-        for (Song elem : this.playlist) {
-            if (elem.equals(song)) {
-                flag = true;
-            }
-            if (flag) {
-                tempList.add(elem);
-            }
-        }
-        this.setQueue(tempList);
-        this.mediaPlayer = new MediaPlayer(new Media(song.getFile().toURI().toString()));
-        this.play();
-        this.mediaPlayer.setOnEndOfMedia(this::nextSong);
+        this.index = playlist.indexOf(song);
+        this.currentSong();
     }
 
     @Override
