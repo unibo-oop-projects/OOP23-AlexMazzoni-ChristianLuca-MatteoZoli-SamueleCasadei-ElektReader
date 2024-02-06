@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Queue;
 import java.util.Optional;
 import java.util.Random;
 import elektreader.api.PlayList;
@@ -17,7 +16,7 @@ public class Mp3PlayList implements PlayList{
 
     private final File playlistDir;
     private List<Song> songs;
-    private Queue<Song> queue;
+    private List<Song> queue;
 
     public Mp3PlayList(final Path playlist, final Collection<Path> tracks) {
         playlistDir = playlist.toFile();
@@ -26,7 +25,7 @@ public class Mp3PlayList implements PlayList{
             .map(Song.class::cast)
             .toList();
         this.songs = convertedMp3;
-        //this.queue.addAll(convertedMp3);
+        this.queue = convertedMp3;
     }
 
     @Override

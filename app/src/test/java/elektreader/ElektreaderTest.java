@@ -48,8 +48,8 @@ class ElektreaderTest {
     final Path TEST_PATH_SONG3 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "03 - despacito.mp3");
     
     final Path TEST_PATH_PLAYLIST2 = Paths.get(TEST_PATH.toString(), "GENERI", "MUSICA ROMAGNOLA");
-    final Path TEST_PATH_SONG2_15 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "1 - Bachata di Mengoni.mp3");
-    final Path TEST_PATH_SONG2_16 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "2 - valzer dell'usignolo.mp3");
+    final Path TEST_PATH_SONG2_15 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "15 - Bachata di Mengoni.mp3");
+    final Path TEST_PATH_SONG2_16 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "16 - valzer dell'usignolo.mp3");
 
     final Path TEST_INVALID_SONG = Paths.get(TEST_PATH_PLAYLIST1.toString(), "31 - video flashmob balla.mp4"); 
 
@@ -94,7 +94,11 @@ class ElektreaderTest {
     @Test void testPlaylists() {
         Reader app = new ReaderImpl();
 
-        PlayList plist = new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16));
+        app.setCurrentEnvironment(TEST_PATH_PLAYLIST2);
+        PlayList plist = new Mp3PlayList(TEST_PATH_PLAYLIST2, app.getPlaylist(TEST_PATH_PLAYLIST2).get().getSongs().stream()
+            .map(s -> s.getFile().toPath())
+            .toList());
+
         app.setCurrentEnvironment(TEST_PATH_PLAYLIST1);
         PlayList plist2 = new Mp3PlayList(TEST_PATH_PLAYLIST1, app.getPlaylist(TEST_PATH_PLAYLIST1).get().getSongs().stream()
             .map(s -> s.getFile().toPath())
@@ -103,9 +107,11 @@ class ElektreaderTest {
         /* test on playlist with static and small size */
         Assertions.assertEquals(2, plist.getSize());
         Assertions.assertEquals("00:07:13", plist.getTotalDuration());
+        Assertions.assertEquals("MUSICA ROMAGNOLA", plist.getName());
         /* test on a playlist with dynamic and big size */
         Assertions.assertEquals(app.getPlaylist(TEST_PATH_PLAYLIST1).get().getSongs().size(), plist2.getSize());
-        Assertions.assertEquals("01:56:44", plist2.getTotalDuration()); 
+        Assertions.assertEquals("01:56:44", plist2.getTotalDuration());
+        Assertions.assertEquals("tutta la musica", plist2.getName());
         
     }
 
@@ -135,7 +141,9 @@ class ElektreaderTest {
 
         //Declaring a new MediaControl instance
         MediaControl mC1;
-        mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_SONG2_15, TEST_PATH_SONG2_16)));
+        mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_PLAYLIST2.toFile().listFiles()).stream()
+            .map(f -> f.toPath())
+            .toList()));
 
         //Volume methods tests
         double volume = mC1.getVolume();
