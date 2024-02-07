@@ -10,22 +10,22 @@ import javafx.util.Duration;
 
 public class Mp3MediaControl implements MediaControl{
 
-    private MediaPlayer mediaPlayer;
-    private List<Song> playlist = new ArrayList<>();
+    private Optional<MediaPlayer> mediaPlayer;
+    private Optional<List<Song>> playlist;
     private int index;
     static private final double SET_ZERO_VOLUME = 0.0;
 
 
-    public Mp3MediaControl(final Mp3PlayList myPlayList) {
-        this.playlist = myPlayList.getSongs();          //Taking a copy of entire playlist.
-        this.index = 0;                            //internal index useful to check currentSong.
-        this.initMediaPlayer();
+    public Mp3MediaControl() {
+        this.mediaPlayer = Optional.empty();
+        this.playlist = Optional.empty();
+        this.index = 0;
     }
 
-    private void initMediaPlayer() {
-        Song initSong = this.getCurrentSong();
-        this.mediaPlayer = new MediaPlayer(new Media(initSong.getFile().toURI().toString()));
-        this.mediaPlayer.setOnEndOfMedia(this::nextSong);
+    public void setPlaylist(Mp3PlayList playList) {
+        this.playlist = Optional.of(playList.getSongs());
+        this.mediaPlayer = Optional.of(new MediaPlayer(new Media(this.getCurrentSong().getFile().toURI().toString())));
+        this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);
     }
 
     public Song getCurrentSong() {
@@ -33,39 +33,39 @@ public class Mp3MediaControl implements MediaControl{
     }
 
     private Song getSongAtCertainIndex(final int index) {
-        return this.playlist.get(index);
+        return this.playlist.get().get(index);
     }
 
     private int getPlaylistSize() {
-        return this.playlist.size();
+        return this.playlist.get().size();
     }
 
     //Only debug
     public List<Song> getPlaylist() {
-        return this.playlist;
+        return this.playlist.get();
     }
 
     @Override
     public void play() {
-        this.mediaPlayer.play();     //At this moment, mediaPlayer status will be set to status.PLAYING
+        this.mediaPlayer.get().play();     //At this moment, mediaPlayer status will be set to status.PLAYING
     }
 
     @Override
     public void pause() {
-        this.mediaPlayer.pause();   //At this moment, mediaPlayer status will be set to status.PAUSED
+        this.mediaPlayer.get().pause();   //At this moment, mediaPlayer status will be set to status.PAUSED
     }
 
     @Override
     public void stop() {
-        this.mediaPlayer.stop();    //At this moment, mediaPlayer status will be set to status.STOPPED 
+        this.mediaPlayer.get().stop();    //At this moment, mediaPlayer status will be set to status.STOPPED 
     }
 
     public void currentSong() {
         this.stop();
         Song currSong = this.getCurrentSong();
-        this.mediaPlayer = new MediaPlayer(new Media(currSong.getFile().toURI().toString()));
+        this.mediaPlayer = Optional.of(new MediaPlayer(new Media(currSong.getFile().toURI().toString())));
         this.play();
-        this.mediaPlayer.setOnReady(new Runnable() {
+        this.mediaPlayer.get().setOnReady(new Runnable() {
 
             @Override
             public void run() {
@@ -77,7 +77,7 @@ public class Mp3MediaControl implements MediaControl{
             }
             
         });
-        this.mediaPlayer.setOnEndOfMedia(this::nextSong);   //If media ends, the next song in the queue will be played.
+        this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);   //If media ends, the next song in the queue will be played.
     }
 
     @Override
@@ -101,49 +101,49 @@ public class Mp3MediaControl implements MediaControl{
     @Override
     public void loopSong() {
         this.stop();
-        Media media = this.mediaPlayer.getMedia();
-        this.mediaPlayer = new MediaPlayer(media);
-        this.mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        Media media = this.mediaPlayer.get().getMedia();
+        this.mediaPlayer = Optional.of(new MediaPlayer(media));
+        this.mediaPlayer.get().setCycleCount(MediaPlayer.INDEFINITE);
         this.play();
     }
 
     @Override
     public void setSong(final Song song) {
-        if (!(this.playlist.contains(song))) {
+        if (!(this.playlist.get().contains(song))) {
             return;
         }
-        this.index = playlist.indexOf(song);
+        this.index = playlist.get().indexOf(song);
         this.currentSong();
     }
 
     @Override
     public void setRepSpeed(final double rate) {
-        this.mediaPlayer.setRate(rate);
+        this.mediaPlayer.get().setRate(rate);
     }
 
     @Override
     public void setProgress(final Duration duration) {
-        this.mediaPlayer.seek(duration);
+        this.mediaPlayer.get().seek(duration);
     }
 
     @Override
     public Duration getDuration() {
-        return this.mediaPlayer.getMedia().getDuration();
+        return this.mediaPlayer.get().getMedia().getDuration();
     }
 
     @Override
     public void setVolume(double volume) {
-        this.mediaPlayer.setVolume(volume);
+        this.mediaPlayer.get().setVolume(volume);
     }
 
     @Override
     public double getVolume() {
-        return this.mediaPlayer.getVolume();
+        return this.mediaPlayer.get().getVolume();
     }
 
     @Override
     public void mute() {
-        this.mediaPlayer.setVolume(SET_ZERO_VOLUME);
+        this.mediaPlayer.get().setVolume(SET_ZERO_VOLUME);
     }
     
 }
