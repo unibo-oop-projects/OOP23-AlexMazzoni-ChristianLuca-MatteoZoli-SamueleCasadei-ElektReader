@@ -3,6 +3,8 @@ package elektreader.model;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -16,16 +18,15 @@ public class ReaderImpl implements Reader{
 
     private Optional<Path> root = Optional.empty();
     private Optional<List<PlayList>> playlists = Optional.empty();
+    private Optional<MediaControl> player = Optional.empty();
 
     private Optional<PlayList> currentPlaylist = Optional.empty();
     private Optional<Song> currentSong = Optional.empty();
 
-    private Optional<MediaControl> player = Optional.empty();
-
     private void resetEnvironment() {
         setCurrentPlaylist(Optional.empty());
         setCurrentSong(Optional.empty());
-        this.player = this.root.isEmpty() ? Optional.empty() : new Mp3MediaControl();
+        this.player = this.root.isEmpty() ? Optional.empty() : Optional.of(new Mp3MediaControl());
     }
 
     @Override
@@ -72,13 +73,16 @@ public class ReaderImpl implements Reader{
         }
         this.currentPlaylist = this.playlists.get().stream().filter(t -> t.equals(playlist.get())).findFirst();
         if(this.currentPlaylist.isPresent()) {
-            this.player.get().setPlaylist(this.currentPlaylist);
+            this.player.get().setPlaylist(this.currentPlaylist.get());
         }
         return this.currentPlaylist.isPresent();
     }
 
     @Override
     public List<PlayList> getPlaylists() {
+        if(this.playlists.isEmpty()) {
+            return new ArrayList<>(Collections.emptyList());
+        }
         return this.playlists.get();
     }
 
@@ -100,7 +104,7 @@ public class ReaderImpl implements Reader{
 
     @Override
     public boolean setCurrentSong(final Optional<Song> song) {
-        if(!song.isPresent() || !this.playlists.isPresent() || !this.currentPlaylist.isPresent()) {
+        if(!this.playlists.isPresent() || !this.currentPlaylist.isPresent() || !song.isPresent()) {
             this.currentSong = Optional.empty();
             return false;
         } 
@@ -110,7 +114,7 @@ public class ReaderImpl implements Reader{
             .filter(t -> t.equals(song.get()))
             .findFirst();
         if(this.currentSong.isPresent()) {
-            this.player.get().setSong(this.currentSong);
+            this.player.get().setSong(this.currentSong.get());
         }
         return this.currentSong.isPresent();
     }

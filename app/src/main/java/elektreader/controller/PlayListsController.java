@@ -7,10 +7,8 @@ import java.util.Optional;
 import elektreader.api.PlayList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 
 /* this class represent the controller to the Playlist view, which is controlled
  * by the GUI controller class

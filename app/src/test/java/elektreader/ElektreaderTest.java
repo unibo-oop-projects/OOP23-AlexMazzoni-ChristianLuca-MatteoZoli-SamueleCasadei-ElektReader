@@ -73,37 +73,40 @@ class ElektreaderTest {
         Assertions.assertFalse(app.setCurrentEnvironment(TEST_INVALID_PATH));
         Assertions.assertEquals(app.getCurrentEnvironment(), Optional.empty());
         
-        /* test valid */
+        /* test valid path */
         Assertions.assertTrue(app.setCurrentEnvironment(TEST_PATH));
         Assertions.assertEquals(app.getCurrentEnvironment().get(), TEST_PATH);
         
 
         /* test playlist - song */ 
-        //test valid playlist 1
+        // test valid playlist 1
         Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST1)));
         Assertions.assertEquals(app.getCurrentPlaylist().get().getPath(), TEST_PATH_PLAYLIST1);
         
-        //test invalid song - current playlist 1
+        // test invalid song - current playlist 1
         Assertions.assertFalse(app.setCurrentSong(app.getPlaylist(TEST_PATH_PLAYLIST2).get().getSong(getASong(TEST_PATH_PLAYLIST1, 0))));
         Assertions.assertEquals(app.getCurrentSong(), Optional.empty());
 
-        //test valid playlist 2
+        // test invalid playlist 
+        Assertions.assertFalse(app.setCurrentPlaylist(app.getPlaylist(TEST_INVALID_PLAYLIST)));
+        Assertions.assertEquals(app.getCurrentPlaylist(), Optional.empty());
+        
+        // test valid playlist 2
         Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2)));
         Assertions.assertEquals(app.getCurrentPlaylist().get().getPath(), TEST_PATH_PLAYLIST2);
 
         //test valid song - current playlist 2
         Assertions.assertTrue(app.setCurrentSong(app.getCurrentPlaylist().get().getSong(getASong(TEST_PATH_PLAYLIST2, 0))));
         Assertions.assertEquals(app.getCurrentSong().get().getFile().toPath(), getASong(TEST_PATH_PLAYLIST2, 0));
+    
 
-        // test invalid playlist
-        Assertions.assertFalse(app.setCurrentPlaylist(app.getPlaylist(TEST_INVALID_PLAYLIST)));
-        Assertions.assertEquals(app.getCurrentPlaylist(), Optional.empty());
+        /* test player - playlist 2 */
     }
 
     @Test void testPlaylists() {
         Reader app = new ReaderImpl();
-
         app.setCurrentEnvironment(TEST_PATH_PLAYLIST2);
+
         PlayList plist1 = new Mp3PlayList(TEST_PATH_PLAYLIST2, app.getPlaylist(TEST_PATH_PLAYLIST2).get().getSongs().stream()
             .map(s -> s.getFile().toPath())
             .toList());
@@ -157,8 +160,8 @@ class ElektreaderTest {
         Assertions.assertEquals(volume, mC1.getVolume());
         mC1.mute();
         Assertions.assertEquals(0.0, mC1.getVolume());
-        mC1.setVolume(1.0);
-        Assertions.assertEquals(1.0, mC1.getVolume());
+        mC1.setVolume(0.2);
+        Assertions.assertEquals(0.2, mC1.getVolume());
 
         //Testing various void method useful for reproduction, song choice, queue gestion ecc.
         mC1.getDuration();
