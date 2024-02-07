@@ -144,10 +144,10 @@ class ElektreaderTest {
     @Test void testMediaControl() throws Exception {
         //Declaring a new MediaControl instance
         MediaControl mC1;
-        mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_PLAYLIST2.toFile().listFiles()).stream()
-            .map(f -> f.toPath())
-            .toList()));
-
+        mC1 = new Mp3MediaControl();
+        mC1.setPlaylist(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_PLAYLIST2.toFile().listFiles()).stream()
+        .map(f -> f.toPath())
+        .toList()));
 
         //Volume methods tests
         double volume = mC1.getVolume();
@@ -181,7 +181,8 @@ class ElektreaderTest {
         Thread.sleep(2000);
         Assertions.assertEquals(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 0)).getName(), mC1.getCurrentSong().getName());
         //Changing reference of my mediaControl to another object of the same class.
-        mC1 = new Mp3MediaControl(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(getASong(TEST_PATH_PLAYLIST2, 0), getASong(TEST_PATH_PLAYLIST2, 1))));
+        mC1 = new Mp3MediaControl();
+        mC1.setPlaylist(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(getASong(TEST_PATH_PLAYLIST2, 0), getASong(TEST_PATH_PLAYLIST2, 1))));
         mC1.mute();
         Assertions.assertEquals(0.0, mC1.getVolume());
         mC1.setVolume(0.5);

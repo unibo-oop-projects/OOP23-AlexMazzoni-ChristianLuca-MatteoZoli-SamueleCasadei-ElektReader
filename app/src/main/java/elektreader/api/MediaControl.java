@@ -2,6 +2,7 @@ package elektreader.api;
 
 import java.util.List;
 
+import elektreader.model.Mp3PlayList;
 import javafx.util.Duration;
 
 
@@ -10,6 +11,11 @@ import javafx.util.Duration;
  * are useful about retrieving data, manipulating reproduction, eccetera.
  */
 public interface MediaControl {
+
+    /**
+     * @param playList the playlist to be set as the current one.
+     */
+    public void setPlaylist(Mp3PlayList playList);
 
     /**
      * @return current played song by our MediaPlayer.
