@@ -58,11 +58,27 @@ public interface Song {
      * @return the raw title of the file (name)
      */
     static String getTitle(Path filename){
-        Matcher matcher = Pattern.compile("\\d+\\s-\\s(.*?)\\.\\w+").matcher(filename.toFile().getName());
+        String tmp = filename.toFile().getName();
+        Matcher matcher = Pattern.compile("(.*?)\\.\\w+$").matcher(tmp);
+        /* a file must certainly have the extension, this part removes it,
+         * this regex researches the pattern (alphanumeric_string.something)
+         */
+        if(matcher.find()) {
+            /* tmp will now be (alphanumeric_string) */
+            tmp = matcher.group(1);
+        }
+        matcher = Pattern.compile("\\d+ - (.+)").matcher(tmp);
+        /* this second pattern can tell if has an index in it,
+         * researches for the pattern (index - name)
+         */
         if (matcher.find()) {
+            /* if there's an index it will be removed
+             * tmp will now be (name)
+             */
             return matcher.group(1);
         }
-        return "";
+        /* if there's no index, that means we already got the plain name */
+        return tmp;
     }
 
 }
