@@ -1,6 +1,7 @@
 package elektreader.api;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -77,20 +78,6 @@ public interface Reader {
      * Optional because if the path is invalid!
     */
     public Optional<PlayList> getPlaylist(final Path path);
-    
-    
-    /**
-     * @return the current song is selected
-     * (it can be empty)
-    */
-    public Optional<Song> getCurrentSong();
-
-
-    /**
-     * @param song given a song if is valid
-     * @return true if is set ad surrent, false otherwise
-    */
-    public boolean setCurrentSong(final Optional<Song> song);
 
     /**
      * @return the MediaControl, optional because can be in a init state (if the root miss)
@@ -100,9 +87,18 @@ public interface Reader {
     /**
      * @param song passed a song path
      * @return true if is a supported song, false otherwise.
+     * song is valid only if:
+     *  its format is SUPPORTED (check if is in SUPPORTED_FILES)
+     *  its size is more of 100KB
      */
     public static boolean isSupportedSong(final Path song) {
-        return SUPPORTED_FILES.stream().anyMatch(type -> song.toString().matches(".*\\."+type));
+        try (FileInputStream ris = new FileInputStream(song.toFile())) {
+            final int MINIMUM_SIZE = 100*1024; // 100KB
+             return SUPPORTED_FILES.stream().anyMatch(type -> song.toString().matches(".*\\."+type)) &&
+                song.toFile().length() > MINIMUM_SIZE;
+        } catch (Exception e) {}
+        System.out.println("la canzone "+ song + " non e supportata");
+        return false;
     }
 
     /**
@@ -116,7 +112,7 @@ public interface Reader {
     public static Optional<List<Path>> getAndFilterSongs(final Path playlist) {
         /* given a playlist path filter all the possible songs: */
         List<Path> songs = new ArrayList<>(Collections.emptyList());
-        try (Stream<Path> filesPaths = Files.list(playlist)) {
+        try (Stream<Path> filesPaths = Files.list(playlist).filter(Files::isRegularFile)) {
             var files = filesPaths.filter(Reader::isSupportedSong).toList();
             for (Path songPath : files) {
                 if(!songs.stream().map(Song::getTitle).anyMatch(t -> t.equals(Song.getTitle(songPath)))) {

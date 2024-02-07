@@ -26,8 +26,8 @@ import javafx.stage.DirectoryChooser;
 public class GUIController implements Initializable {
 
 	public static final double SIZE_ZERO = 0.0;
-	public static final double SCALE_PLAYLIST_SIZE = 0.2;
-	public static final double SCALE_SONG_SIZE = 0.8;
+	public static final double SCALE_PLAYLIST_SIZE = 0.3;
+	public static final double SCALE_SONG_SIZE = 0.7;
 	
 
 	/* LOGICS */
@@ -172,7 +172,7 @@ public class GUIController implements Initializable {
 	}
 
 	private void responsive() {
-		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
+		
 	}
 	
 	private Group groupAll() {
@@ -215,7 +215,16 @@ public class GUIController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
+
+		this.root.heightProperty().addListener((observable, oldHeight, newHeight) -> {
+			System.out.println("resized from "+ oldHeight + " to "+ newHeight);
+		});
+
+		this.root.widthProperty().addListener((observable, oldWidth, newWidth) -> {
+			System.out.println("resized from "+ oldWidth + " to "+ newWidth);
+		});
+
 		loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
-		responsive();
 	}
 }

@@ -58,11 +58,15 @@ public interface Song {
      * @return the raw title of the file (name)
      */
     static String getTitle(Path filename){
-        Matcher matcher = Pattern.compile("\\d+\\s-\\s(.*?)\\.\\w+").matcher(filename.toFile().getName());
+        String tmp = filename.toFile().getName();
+        Matcher matcher = Pattern.compile("(.*?)\\.\\w+$").matcher(tmp);
+        if(matcher.find()) {
+            tmp = matcher.group(1);
+        }
+        matcher = Pattern.compile("\\d+ - (.+)").matcher(tmp);
         if (matcher.find()) {
             return matcher.group(1);
         }
-        return "";
+        return tmp;
     }
-
 }

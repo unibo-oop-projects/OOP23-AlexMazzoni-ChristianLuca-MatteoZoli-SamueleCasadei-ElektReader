@@ -12,20 +12,19 @@ import java.util.stream.Stream;
 import elektreader.api.MediaControl;
 import elektreader.api.PlayList;
 import elektreader.api.Reader;
-import elektreader.api.Song;
 
 public class ReaderImpl implements Reader{
 
     private Optional<Path> root = Optional.empty();
+
     private Optional<List<PlayList>> playlists = Optional.empty();
-    private Optional<MediaControl> player = Optional.empty();
 
     private Optional<PlayList> currentPlaylist = Optional.empty();
-    private Optional<Song> currentSong = Optional.empty();
+
+    private Optional<MediaControl> player = Optional.empty();
 
     private void resetEnvironment() {
         setCurrentPlaylist(Optional.empty());
-        setCurrentSong(Optional.empty());
         this.player = this.root.isEmpty() ? Optional.empty() : Optional.of(new Mp3MediaControl());
     }
 
@@ -95,28 +94,6 @@ public class ReaderImpl implements Reader{
     public Optional<PlayList> getPlaylist(final Path path) {
         if(!this.playlists.isPresent()) return Optional.empty();
         return this.playlists.get().stream().filter(t -> t.getPath().equals(path)).findFirst();
-    }
-
-    @Override
-    public Optional<Song> getCurrentSong() {
-        return this.currentSong;
-    }
-
-    @Override
-    public boolean setCurrentSong(final Optional<Song> song) {
-        if(!this.playlists.isPresent() || !this.currentPlaylist.isPresent() || !song.isPresent()) {
-            this.currentSong = Optional.empty();
-            return false;
-        } 
-        this.currentSong = this.playlists.get().stream()
-            .filter(p -> p.equals(this.currentPlaylist.get()))
-            .flatMap(p -> p.getSongs().stream())
-            .filter(t -> t.equals(song.get()))
-            .findFirst();
-        if(this.currentSong.isPresent()) {
-            this.player.get().setSong(this.currentSong.get());
-        }
-        return this.currentSong.isPresent();
     }
 
     @Override
