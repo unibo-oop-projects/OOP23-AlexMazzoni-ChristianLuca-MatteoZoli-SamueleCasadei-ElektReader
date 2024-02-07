@@ -78,11 +78,15 @@ public class GUIController implements Initializable {
     private Label lblSong;
 
 	@FXML
+    private Label lblSongDesc;
+
+	@FXML
     private ScrollPane songsIcon;
 	
 	@FXML
     private ScrollPane songsList;
 
+	
 	/* MEDIA CONTROL */
 	@FXML
 	private Slider progressBar;

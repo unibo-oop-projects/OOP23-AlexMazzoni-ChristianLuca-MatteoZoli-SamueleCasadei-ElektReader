@@ -1,29 +1,35 @@
-@font-face {
-  font-family: "Open Sans";
-  src: url(LemonMilk.otf) format("opentype");
-}
 * {
   -fx-font-family: "sans-serif";
-  -fx-font-weight: bold;
 }
 
 .root {
-  -fx-background-color: #ffffff;
+  -fx-background-color: #000000;
 }
 
 .btn {
-  -fx-background-color: #ddd !important;
+  -fx-background-color: #b9b9b9 !important;
+}
+
+.scroll-pane {
+  -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+  -fx-background-color: #000000;
+}
+
+.title {
+  -fx-mid-text-color: #0088ff !important;
+  -fx-font-size: 60px;
+  -fx-font-weight: bold;
 }
 
 .label {
-  -fx-font-size: 60px;
-  -fx-mid-text-color: rgb(255, 0, 0);
+  -fx-mid-text-color: rgb(193, 193, 193);
 }
 
-.light {
-  -fx-background-color: #ffffff;
-  background-color: #fff;
-  -fx-mid-text-color: rgb(255, 0, 0);
+.separator {
+  -fx-background-color: #0088ff !important;
 }
 
 .dark {

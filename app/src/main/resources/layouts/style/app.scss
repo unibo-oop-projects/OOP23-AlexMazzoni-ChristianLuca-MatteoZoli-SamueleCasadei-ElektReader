@@ -1,19 +1,20 @@
 
-@font-face {
-  font-family: 'Open Sans';
-  src: url(LemonMilk.otf) format('opentype');
-}
+// @font-face {
+//   font-family: 'Open Sans';
+//   src: url(LemonMilk.otf) format('opentype');
+// }
 
 
-$wallpaper: #ffffff;
+$wallpaper: #000000;
 $counter: #fff;
-$text: rgb(255, 0, 0);
-$button: #ddd;
-$label: #fff;
+$text: rgb(193, 193, 193);
+$button: #b9b9b9;
+$label: #3274e4;
+$separator: #0088ff;
 
 * {
   -fx-font-family: 'sans-serif';
-  -fx-font-weight: bold;
+  
 }
 
 
@@ -25,25 +26,40 @@ $label: #fff;
   -fx-background-color: $button !important
 }
   
+.scroll-pane {
+  -fx-background-color: transparent;
+}
 
-.list {
+.scroll-pane .viewport {
+  -fx-background-color: $wallpaper;
+}
 
+.title {
+  -fx-mid-text-color: $separator !important;
+  -fx-font-size: 60px;
+  -fx-font-weight: bold;
+  // -fx-alignment: left;
 }
 
 .label {
-  -fx-font-size: 60px;
   -fx-mid-text-color: $text;
   // -fx-alignment: left;
 }
   
 .separator {
+  -fx-background-color: $separator !important
+}
+
+.slider {
 
 }
 
-.light {
-  -fx-background-color: $wallpaper;
-  background-color: $counter; 
-  -fx-mid-text-color: $text;
+.slider .track {
+  // -progress : 0.2;
+  // -fx-background-color: linear-gradient(to right, #2D819D -progress, #969696 -progress);
+  // -fx-background-insets: 0 0 -1 0, 0, 1;
+  // -fx-background-radius: 0.25em, 0.25em, 0.166667em; /* 3 3 2 */
+  // -fx-padding: 0.25em; /* 3 */
 }
 
 .dark {

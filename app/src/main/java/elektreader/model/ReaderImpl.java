@@ -25,7 +25,7 @@ public class ReaderImpl implements Reader{
     private void resetEnvironment() {
         setCurrentPlaylist(Optional.empty());
         setCurrentSong(Optional.empty());
-        //this.player = Optional.empty(); BOH
+        this.player = this.root.isEmpty() ? Optional.empty() : new Mp3MediaControl();
     }
 
     @Override
@@ -66,11 +66,14 @@ public class ReaderImpl implements Reader{
 
     @Override
     public boolean setCurrentPlaylist(final Optional<PlayList> playlist) {
-        if(!playlist.isPresent() || !this.playlists.isPresent()) {
+        if(!this.playlists.isPresent() || !playlist.isPresent()) {
             this.currentPlaylist = Optional.empty();
             return false;
         }
         this.currentPlaylist = this.playlists.get().stream().filter(t -> t.equals(playlist.get())).findFirst();
+        if(this.currentPlaylist.isPresent()) {
+            this.player.get().setPlaylist(this.currentPlaylist);
+        }
         return this.currentPlaylist.isPresent();
     }
 
@@ -106,6 +109,9 @@ public class ReaderImpl implements Reader{
             .flatMap(p -> p.getSongs().stream())
             .filter(t -> t.equals(song.get()))
             .findFirst();
+        if(this.currentSong.isPresent()) {
+            this.player.get().setSong(this.currentSong);
+        }
         return this.currentSong.isPresent();
     }
 

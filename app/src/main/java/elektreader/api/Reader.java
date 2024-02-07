@@ -93,7 +93,7 @@ public interface Reader {
     public boolean setCurrentSong(final Optional<Song> song);
 
     /**
-     * @return the MediaControl, optional because can be in a init state
+     * @return the MediaControl, optional because can be in a init state (if the root miss)
     */
     public Optional<MediaControl> getPlayer();
 

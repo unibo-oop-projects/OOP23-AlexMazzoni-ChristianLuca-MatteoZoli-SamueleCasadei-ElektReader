@@ -58,7 +58,7 @@
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints maxHeight="60.0" minHeight="60.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="60.0" minHeight="60.0" vgrow="NEVER" />
       <RowConstraints maxHeight="4.0" minHeight="4.0" vgrow="SOMETIMES" />
       <RowConstraints vgrow="SOMETIMES" />
       <RowConstraints maxHeight="20.0" minHeight="10.0" vgrow="SOMETIMES" />
@@ -107,7 +107,7 @@
                      <left>
                         <AnchorPane focusTraversable="true" BorderPane.alignment="CENTER">
                            <children>
-                              <HBox alignment="CENTER" focusTraversable="true" prefHeight="35.0" spacing="4.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <HBox alignment="CENTER" focusTraversable="true" prefHeight="35.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <Button fx:id="btnFIle" focusTraversable="false" maxWidth="100.0" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#importFiles" text="File" textAlignment="CENTER">
                                        <styleClass>
@@ -164,7 +164,7 @@
             <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
          </GridPane.margin>
       </HBox>
-      <Pane minHeight="4.0" styleClass="dark" GridPane.rowIndex="1" />
+      <Pane minHeight="4.0" styleClass="separator" GridPane.rowIndex="1" />
       <HBox prefWidth="900.0" GridPane.rowIndex="2">
          <children>
         <AnchorPane maxWidth="400.0">
@@ -173,21 +173,28 @@
                      <children>
                         <AnchorPane focusTraversable="true" minHeight="100.0">
                            <children>
-                              <HBox alignment="CENTER_LEFT" layoutX="14.0" AnchorPane.leftAnchor="0.0">
+                              <HBox alignment="CENTER" layoutX="14.0" maxHeight="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                              <Label fx:id="lblPlaylists" alignment="CENTER" cacheShape="false" centerShape="false" focusTraversable="false" minWidth="0.0" mouseTransparent="true" prefWidth="300.0" text="Playlists">
+                              <Label fx:id="lblPlaylists" alignment="CENTER" cacheShape="false" centerShape="false" focusTraversable="false" maxHeight="70.0" minHeight="70.0" minWidth="0.0" mouseTransparent="true" text="Playlists">
                                        <font>
                                           <Font name="Century" size="60.0" />
                                        </font>
                                        <cursor>
                                           <Cursor fx:constant="NONE" />
                                        </cursor>
+                                       <padding>
+                                          <Insets right="60.0" />
+                                       </padding>
+                                       <styleClass>
+                                          <String fx:value="lbl" />
+                                          <String fx:value="title" />
+                                       </styleClass>
                               </Label>
-                                    <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="70.0" maxWidth="84.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#showPlaylists" prefHeight="60.0" prefWidth="70.0" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="WHITE">
+                                    <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="70.0" maxWidth="70.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#showPlaylists" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="WHITE">
                                        <graphic>
                                           <ImageView fx:id="imgPlaylistsShowPanel" fitHeight="64.0" fitWidth="70.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../icons/Dark/UI/HideSidepanel.png" />
+                                                <Image url="@../icons/Light/UI/HideSidepanel.png" />
                                              </image>
                                              <viewport>
                                                 <Rectangle2D />
@@ -201,45 +208,51 @@
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
-                           <padding>
-                              <Insets bottom="20.0" />
-                           </padding>
                         </AnchorPane>
                         <AnchorPane prefHeight="882.0">
                            <children>
-                              <ScrollPane fx:id="playlistsList" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ScrollPane fx:id="playlistsList" styleClass="viewport" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </children>
                   </VBox>
           </children>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                </padding>
         </AnchorPane>
-            <Pane minWidth="4.0" styleClass="dark" />
+            <Pane minWidth="4.0" styleClass="separator" />
       <AnchorPane id="Content" prefWidth="2000.0">
         <children>
                   <VBox layoutX="16.0" layoutY="34.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane minHeight="100.0" style="-fx-translate-x: none;">
                            <children>
-                      <Label fx:id="lblSong" alignment="CENTER" layoutY="9.0" style="&#10;" text="Songs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="0.0">
-                                 <font>
-                                    <Font name="SansSerif Bold" size="60.0" />
-                                 </font>
-                              </Label>
+                              <HBox alignment="CENTER" layoutX="14.0" maxHeight="87.0" prefHeight="87.0" prefWidth="531.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                            <Label fx:id="lblSong" alignment="CENTER" maxHeight="70.0" minHeight="70.0" style="&#10;" styleClass="title" text="Song">
+                                       <font>
+                                          <Font name="SansSerif Bold" size="60.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lblSongDesc" alignment="CENTER" maxHeight="70.0" minHeight="70.0" style="&#10;" text=" - 10 - gino pasticcino">
+                                       <font>
+                                          <Font name="SansSerif Regular" size="40.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
                            </children>
-                           <padding>
-                              <Insets bottom="20.0" />
-                           </padding>
                         </AnchorPane>
                         <AnchorPane prefHeight="1000.0">
                            <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <ScrollPane fx:id="songsIcon" hbarPolicy="NEVER" styleClass="list" />
-                                    <ScrollPane fx:id="songsList" prefHeight="200.0" prefWidth="200.0" />
+                                    <ScrollPane fx:id="songsList" prefHeight="200.0" prefWidth="200.0" styleClass="viewport" />
                                  </children>
                               </StackPane>
                            </children>
@@ -248,7 +261,7 @@
                   </VBox>
         </children>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                </padding>
       </AnchorPane>
          </children>
