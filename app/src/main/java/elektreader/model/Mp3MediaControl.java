@@ -3,6 +3,7 @@ package elektreader.model;
 import java.util.*;
 
 import elektreader.api.MediaControl;
+import elektreader.api.PlayList;
 import elektreader.api.Song;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -22,7 +23,7 @@ public class Mp3MediaControl implements MediaControl{
         this.index = 0;
     }
 
-    public void setPlaylist(Mp3PlayList playList) {
+    public void setPlaylist(PlayList playList) {
         this.playlist = Optional.of(playList.getSongs());
         this.mediaPlayer = Optional.of(new MediaPlayer(new Media(this.getCurrentSong().getFile().toURI().toString())));
         this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);
