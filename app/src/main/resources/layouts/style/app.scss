@@ -4,54 +4,120 @@
 //   src: url(LemonMilk.otf) format('opentype');
 // }
 
-
-$wallpaper: #000000;
-$counter: #fff;
-$text: rgb(193, 193, 193);
-$button: #b9b9b9;
-$label: #3274e4;
-$separator: #ff0000;
+/* COLORS: */
+$primary: #000000;
+$secondary: #ffffff;
+$tertiary: #9900ff;
+$background: #373737;
+$selected: #3274e4;
 
 * {
   -fx-font-family: 'sans-serif';
-  
 }
 
 
 .root {
-  -fx-background-color: $wallpaper;
+  -fx-background-color: $primary;
+  -fx-mid-text-color: $secondary;
 }
 
-.btn {
-  -fx-background-color: $button !important;
+.button {
+    -fx-background-color: transparent;
 }
 
-.playlistbtn {
-  -fx-background-color: $button !important;
-}
-  
-.scroll-pane {
-  -fx-background-color: transparent;
+.button:hover {
+  -fx-mid-text-color: $selected;
 }
 
-.scroll-pane .viewport {
-  -fx-background-color: $wallpaper;
+.label {
+  -fx-mid-text-color: $secondary;
+  -fx-font-size: 20px;
+}
+
+.selected {
+  -fx-mid-text-color: $selected !important;
+  -fx-border-color: $selected !important;
+}
+
+
+.separator {
+  -fx-background-color: $tertiary;
+}
+
+.menubutton {
+  -fx-mid-text-color: $secondary;
+  -fx-font-weight: bold;
+  -fx-font-size: 22px;
+}
+
+.menubutton:hover {
+  -fx-background-color: $background;
+  -fx-mid-text-color: $secondary;
 }
 
 .title {
-  -fx-mid-text-color: $separator !important;
+  -fx-mid-text-color: $secondary;
   -fx-font-size: 60px;
   -fx-font-weight: bold;
   // -fx-alignment: left;
 }
 
-.label {
-  -fx-mid-text-color: $text;
+.subtitle {
+  -fx-mid-text-color: $secondary;
+  -fx-font-size: 40px;
   // -fx-alignment: left;
 }
-  
-.separator {
-  -fx-background-color: $separator !important
+
+.playlistbtn {
+  -fx-font-size: 20px;
+  -fx-border-width: 3px;
+  -fx-border-color: $secondary;
+}
+
+.playlistbtn:hover {
+  -fx-border-width: 3px;
+  -fx-border-color: $selected;
+  -fx-mid-text-color: $secondary;
+}
+ 
+.selectedplaylist {
+  -fx-mid-text-color: $selected;
+}
+
+.scroll-pane {
+  -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+  -fx-background-color: $primary;
+}
+
+.songcontainer {
+  -fx-alignment: center;
+  -fx-background-color: transparent;
+  -fx-border-width: 3px;
+  -fx-border-color: $primary;
+} 
+.songcontainer:hover {
+  -fx-alignment: center;
+  -fx-background-color: transparent;
+  -fx-border-width: 3px;
+  -fx-border-color: $secondary;
+  -fx-mid-text-color: $secondary;
+}
+
+.songbtn {
+  -fx-border-width: 2px;
+  -fx-border-radius: 2px;
+  -fx-border-color: $tertiary ;
+}
+
+.songduration {
+  -fx-font-size: 14px;
+}
+
+.songtitle {
+  -fx-font-size: 20px;
 }
 
 .slider {
@@ -65,10 +131,3 @@ $separator: #ff0000;
   // -fx-background-radius: 0.25em, 0.25em, 0.166667em; /* 3 3 2 */
   // -fx-padding: 0.25em; /* 3 */
 }
-
-.dark {
-  -fx-background-color: black;
-  background-color: black;
-  -fx-mid-text-color: white;
-}
-  

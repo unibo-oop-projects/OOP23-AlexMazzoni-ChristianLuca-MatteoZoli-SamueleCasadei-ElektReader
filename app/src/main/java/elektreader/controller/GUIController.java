@@ -47,6 +47,7 @@ public class GUIController implements Initializable {
 
 	PlayListsController controllerPlayLists;
 	SongsController controllerSongs;
+	MediaControlsController controllerMediaControls;
 
 	/* MAIN PARENT */
 	@FXML
@@ -110,7 +111,7 @@ public class GUIController implements Initializable {
 	private Slider progressBar;
 
 	@FXML
-	private HBox MediaControlPanel;
+	private HBox mediaControlPanel;
 
 
 	/* EVENTS */
@@ -153,10 +154,8 @@ public class GUIController implements Initializable {
 			songsListView.getColumns().addAll(Arrays.asList(nameColumn, artistColumn, durationColumn));
 			songsListView.setOnMouseClicked(e -> {
 				var selectedSong = songsListView.getSelectionModel().getSelectedItem();
-				if (reader.getPlayer().isPresent()) {
-					reader.getPlayer().get().setSong(selectedSong);
-					reader.getPlayer().get().play();
-				}
+				reader.getPlayer().setSong(selectedSong);
+				reader.getPlayer().play();
 			});
 		}
 		//Switching the pane that is been shown in the StackPane
@@ -238,26 +237,20 @@ public class GUIController implements Initializable {
 	private void loadEnvironment(final Optional<Path> root) {
 		if(reader.setCurrentEnvironment(root.get())) {
 			System.out.println("environment loaded: " + reader.getCurrentEnvironment().get());
+			loadPlayer();
 			loadPlaylists();
 		}
+	}
+
+	private void loadPlayer() {
+		this.mediaControlPanel.getChildren().clear();
+		this.controllerMediaControls = new MediaControlsController(this.mediaControlPanel);
 	}
 
 	private void loadPlaylists() {
 		this.playlistsList.setContent(null);
 		this.controllerPlayLists = new PlayListsController(this.playlistsList, this.songsIcon);
 	}
-
-	/* probabilmente il song va nel controller playlist */
-	// private void loadSongs() {
-	// 	if (this.reader.getCurrentPlaylist().isPresent()) {
-	// 		this.controllerSongs = new SongsController(this.reader);
-	// 	}
-	// }
-
-	/* probabilmente il media va nel controller song */
-	// private void loadMediaControls() {
-	// 	this.controllerMediaControls = new MediaControlsController();
-	// }
 
 	public static Reader getReader() {
 		return reader;

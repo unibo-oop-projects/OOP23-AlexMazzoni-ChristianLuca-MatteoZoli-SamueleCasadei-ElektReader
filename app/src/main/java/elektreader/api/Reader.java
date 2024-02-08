@@ -80,9 +80,11 @@ public interface Reader {
     public Optional<PlayList> getPlaylist(final Path path);
 
     /**
-     * @return the MediaControl, optional because can be in a init state (if the root miss)
+     * @return the MediaControl
+     * can throw an IllegalStateException, because a player
+     * is always present if the root is present
     */
-    public Optional<MediaControl> getPlayer();
+    public MediaControl getPlayer();
 
     /**
      * @param song passed a song path

@@ -8,24 +8,15 @@
 * UML -> interfacce
 
 #### alex:
-* api.Reader, model.ReaderImpl -> adds field Mp3MediaControl, and normalizeFilesName
-* controller.GUIController -> to create: find
-* FXML -> improve app.fxml, app.css
+* controller.GUIController -> to create: find, and rersponsive panels adjust
+* FXML -> improve app.fxml, app.css -> playlist and songs | all the media controls
 
 #### samuele:
 * controller -> improve PlayListsController, SongsController. 
 
 #### christian: 
-* model.Mp3MediaControl -> devi cambiare l'implementazione 
-    nel costruttore devi inizializzare tutti i campi per definire uno stato di inizializzazione
-    abbiamo bisogno di una funzione setPlaylist(), che effettivamente ti carica tutti i campi che 
-    stai gestendo ora nel costruttore.
-    sicuramente avrai bisogno di un optional per il MediaPlayer dato che inizialmente nel costruttore non
-    hai nessuna canzone da riprodurre, verrà creato nuovo ad ogni setPlaylist, deve essere un po la tua funzione di inizializzazione.
-
-    !perchè questo -> ovviamente perchè nell'implementazione generale del lettore il lettore avrà sempre il campo per riprodurre inizializzato io non voglio che lui si resetta ogni volta che cambio playlist, ma semplicemente cambi il cmapo quando richiamo la determinata funzione
-
-    Osservazione: ottenere le canzoni usando il metodo di Mazzo (getASong) non capisco il perché ma non mi fa ottenere il corretto inidice della canzone che  va impostata. Il test passa correttamente se mi recupero la playlist attraverso un getter!
+* model.Mp3MediaControl -> attento con tutti qugli opzionali, guardando la classe singolarmente e dandola impasto a chi lo state non lo conosce devi un attimo iniziare a gestire i get che potrebbero ditruggere le cose, metti caso che io ti ho costruto la classe e non ti richiamo un set playlist, se rtichiamo qualsiasi altro metodo (dove i get hanno problemi), tu mi devi tirare un IllegalStateException, perche ovviamente prima bisogna settare una playlist.
+te lo dico perche si parla di buona implementazione ovvio che nel programma la gui fa premere pulsanti in ordine quindi le eccezioni non verranno mai tirate.
 
 #### matteo:
 * ancora non é pronto il lavoro per te
