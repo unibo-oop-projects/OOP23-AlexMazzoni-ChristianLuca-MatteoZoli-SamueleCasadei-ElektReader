@@ -10,7 +10,7 @@ $counter: #fff;
 $text: rgb(193, 193, 193);
 $button: #b9b9b9;
 $label: #3274e4;
-$separator: #0088ff;
+$separator: #ff0000;
 
 * {
   -fx-font-family: 'sans-serif';
@@ -23,7 +23,11 @@ $separator: #0088ff;
 }
 
 .btn {
-  -fx-background-color: $button !important
+  -fx-background-color: $button !important;
+}
+
+.playlistbtn {
+  -fx-background-color: $button !important;
 }
   
 .scroll-pane {

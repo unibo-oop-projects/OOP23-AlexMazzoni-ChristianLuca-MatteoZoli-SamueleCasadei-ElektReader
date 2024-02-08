@@ -10,6 +10,10 @@
   -fx-background-color: #b9b9b9 !important;
 }
 
+.playlistbtn {
+  -fx-background-color: #b9b9b9 !important;
+}
+
 .scroll-pane {
   -fx-background-color: transparent;
 }
@@ -19,7 +23,7 @@
 }
 
 .title {
-  -fx-mid-text-color: #0088ff !important;
+  -fx-mid-text-color: #ff0000 !important;
   -fx-font-size: 60px;
   -fx-font-weight: bold;
 }
@@ -29,7 +33,7 @@
 }
 
 .separator {
-  -fx-background-color: #0088ff !important;
+  -fx-background-color: #ff0000 !important;
 }
 
 .dark {

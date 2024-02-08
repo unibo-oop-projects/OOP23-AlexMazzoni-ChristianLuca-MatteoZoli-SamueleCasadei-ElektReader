@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 
 /* this class represent the controller to the Playlist view, which is controlled
  * by the GUI controller class
@@ -29,15 +30,24 @@ public class PlayListsController {
      */
     public PlayListsController(final ScrollPane playlistsPane, final ScrollPane songsPane) {
         this.btnPlaylists = new ArrayList<>(Collections.emptyList());
+        TilePane songContainer = new TilePane();
+        VBox plistContainer = new VBox();
+        /* 
         for (var playlist : GUIController.getReader().getPlaylists()) {
-            //btnPlaylists.add(createButton(playlist, songsPane, playlistsPane.getWidth()));
+            btnPlaylists.add(createButton(playlist,container, playlistsPane.getWidth()));
         }
-        // playlistsPane.setContent(btnPlaylists);
+        */
+        GUIController.getReader().getPlaylists().stream()
+            .map(playlist -> createButton(playlist,songContainer, playlistsPane.getWidth()))
+            .filter(button -> btnPlaylists.add(button))
+            .forEach(button -> plistContainer.getChildren().add(button));
+        playlistsPane.setContent(plistContainer);
+        songsPane.setContent(songContainer);
     }
 
     private Button createButton(final PlayList p, final TilePane songsList, final double resizeFactor) {
         Button btnPlaylist = new Button("#"+p.getName());
-        btnPlaylist.setMinSize(resizeFactor, 15);
+        btnPlaylist.setMinSize(resizeFactor, 25);
         btnPlaylist.setStyle("-fx-background-color: transparent;");
         btnPlaylist.setStyle("-fx-border-color: black;");
         btnPlaylist.setStyle("-fx-border-width: 4px;");
@@ -45,6 +55,13 @@ public class PlayListsController {
         btnPlaylist.setStyle("-fx-font-size: 18;");
         btnPlaylist.setAlignment(Pos.TOP_LEFT);
         btnPlaylist.setOnMouseClicked(event -> {
+                    this.btnPlaylists.stream()
+                        .forEach(btn -> {
+                                btn.setStyle("-fx-border-color: black;");
+                            } 
+                        );
+                    btnPlaylist.setStyle("-fx-border-color: blue;");
+                    btnPlaylist.setStyle("-fx-font-color: blue;");
 					if(GUIController.getReader().setCurrentPlaylist(Optional.of(p))); {
                         songsList.getChildren().clear();
                         this.controllerSongs = new SongsController(songsList, p);

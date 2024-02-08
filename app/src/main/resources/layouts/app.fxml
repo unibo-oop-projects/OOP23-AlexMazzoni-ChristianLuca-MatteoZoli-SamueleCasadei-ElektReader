@@ -53,7 +53,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="root" minWidth="900.0" prefHeight="915.0" prefWidth="1195.0" styleClass="root" stylesheets="@style/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elektreader.controller.GUIController">
+<GridPane fx:id="root" minWidth="900.0" prefHeight="716.0" prefWidth="1195.0" styleClass="root" stylesheets="@style/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elektreader.controller.GUIController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -65,7 +65,7 @@
       <RowConstraints maxHeight="100.0" minHeight="100.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <HBox focusTraversable="true" minHeight="0.0" prefHeight="0.0" prefWidth="892.0">
+      <HBox focusTraversable="true">
          <children>
             <AnchorPane focusTraversable="true">
                <children>
@@ -109,11 +109,7 @@
                            <children>
                               <HBox alignment="CENTER" focusTraversable="true" prefHeight="35.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Button fx:id="btnFIle" focusTraversable="false" maxWidth="100.0" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#importFiles" text="File" textAlignment="CENTER">
-                                       <styleClass>
-                                          <String fx:value="light" />
-                                          <String fx:value="btn" />
-                                       </styleClass>
+                                    <Button fx:id="btnFIle" focusTraversable="false" maxWidth="100.0" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#importFiles" styleClass="btn" text="File" textAlignment="CENTER">
                                        <font>
                                           <Font name="SansSerif Bold" size="22.0" />
                                        </font>
@@ -211,7 +207,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="882.0">
                            <children>
-                              <ScrollPane fx:id="playlistsList" styleClass="viewport" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ScrollPane fx:id="playlistsList" hbarPolicy="NEVER" scaleShape="false" styleClass="viewport" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -261,12 +257,12 @@
                   </VBox>
         </children>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                </padding>
       </AnchorPane>
          </children>
       </HBox>
       <Slider fx:id="progressBar" blockIncrement="1.0" max="2.0" GridPane.rowIndex="3" />
-      <HBox fx:id="MediaControlPanel" prefHeight="100.0" prefWidth="900.0" GridPane.rowIndex="4" />
+      <HBox fx:id="MediaControlPanel" prefHeight="100.0" prefWidth="1195.0" GridPane.rowIndex="4" />
    </children>
 </GridPane>
