@@ -61,7 +61,7 @@
       <RowConstraints maxHeight="60.0" minHeight="60.0" vgrow="NEVER" />
       <RowConstraints maxHeight="4.0" minHeight="4.0" vgrow="SOMETIMES" />
       <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="20.0" minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="50.0" minHeight="10.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="100.0" minHeight="100.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
@@ -197,7 +197,17 @@
                            <children>
                               <ScrollPane fx:id="playlistsList" hbarPolicy="NEVER" prefHeight="422.0" prefWidth="516.0" scaleShape="false" styleClass="viewport" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
-                                    <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="372.0" styleClass="playlistbtn" text="#Saggio EXPLORA" />
+                                    <VBox spacing="15.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="372.0" text="#Saggio EXPLORA">
+                                             <styleClass>
+                                                <String fx:value="playlistbtn" />
+                                                <String fx:value="selected" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="372.0" styleClass="playlistbtn" text="#italiani" />
+                                       </children>
+                                    </VBox>
                                  </content></ScrollPane>
                            </children>
                         </AnchorPane>
@@ -238,10 +248,61 @@
                            <children>
                               <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <ScrollPane fx:id="songsIcon" hbarPolicy="NEVER" styleClass="list" />
-                                    <ScrollPane fx:id="songsList" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="viewport">
+                                    <ScrollPane fx:id="songsList" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="viewport" />
+                                    <ScrollPane fx:id="songsIcon" hbarPolicy="NEVER" styleClass="viewport">
                                        <content>
-                                          <Button mnemonicParsing="false" prefHeight="132.0" prefWidth="129.0" styleClass="songbtn" text="Button" />
+                                          <HBox spacing="15.0">
+                                             <children>
+                                                <VBox fx:id="track" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button fx:id="trackButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#playOrPause" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label fx:id="duration" styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label fx:id="titleAndArtist" styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                </VBox>
+                                                <VBox fx:id="track1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0">
+                                                   <children>
+                                                      <Button fx:id="trackButton1" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#playOrPause" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label fx:id="duration1" styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label fx:id="titleAndArtist1" styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <styleClass>
+                                                      <String fx:value="songcontainer" />
+                                                      <String fx:value="selected" />
+                                                   </styleClass>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
                                        </content></ScrollPane>
                                  </children>
                               </StackPane>
@@ -256,7 +317,7 @@
       </AnchorPane>
          </children>
       </HBox>
-      <Slider fx:id="progressBar" blockIncrement="1.0" max="2.0" GridPane.rowIndex="3" />
-      <HBox fx:id="MediaControlPanel" prefHeight="100.0" prefWidth="1325.0" GridPane.rowIndex="4" />
+      <Slider fx:id="progressBar" blockIncrement="1.0" max="2.0" prefHeight="137.0" prefWidth="1340.0" GridPane.rowIndex="3" />
+      <HBox fx:id="mediaControlPanel" prefHeight="100.0" prefWidth="1325.0" GridPane.rowIndex="4" />
    </children>
 </GridPane>

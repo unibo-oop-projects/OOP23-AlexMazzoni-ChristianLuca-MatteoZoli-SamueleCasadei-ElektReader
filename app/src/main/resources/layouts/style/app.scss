@@ -4,29 +4,21 @@
 //   src: url(LemonMilk.otf) format('opentype');
 // }
 
-
+/* COLORS: */
 $primary: #000000;
-$counter: #ffffff;
-$secondary: #ff0000;
-
-$text: rgb(193, 193, 193);
-
-$button_background: #373737;
-$button_text: #ff0000;
-
+$secondary: #ffffff;
+$tertiary: #9900ff;
+$background: #373737;
 $selected: #3274e4;
-$selected_background: #858585;
 
 * {
   -fx-font-family: 'sans-serif';
-  
 }
 
 
 .root {
   -fx-background-color: $primary;
-  background-color: $primary;
-  -fx-mid-text-color: $counter;
+  -fx-mid-text-color: $secondary;
 }
 
 .button {
@@ -38,36 +30,40 @@ $selected_background: #858585;
 }
 
 .label {
-  -fx-mid-text-color: $counter;
+  -fx-mid-text-color: $secondary;
   -fx-font-size: 20px;
 }
 
-/* no default node */
+.selected {
+  -fx-mid-text-color: $selected !important;
+  -fx-border-color: $selected !important;
+}
+
 
 .separator {
-  -fx-background-color: $counter !important
+  -fx-background-color: $tertiary;
 }
 
 .menubutton {
-  -fx-mid-text-color: $counter;
+  -fx-mid-text-color: $secondary;
   -fx-font-weight: bold;
   -fx-font-size: 22px;
 }
 
 .menubutton:hover {
-  -fx-background-color: $button_background;
-  -fx-mid-text-color: $counter;
+  -fx-background-color: $background;
+  -fx-mid-text-color: $secondary;
 }
 
 .title {
-  -fx-mid-text-color: $selected  !important;
+  -fx-mid-text-color: $secondary;
   -fx-font-size: 60px;
   -fx-font-weight: bold;
   // -fx-alignment: left;
 }
 
 .subtitle {
-  -fx-mid-text-color: $counter  !important;
+  -fx-mid-text-color: $secondary;
   -fx-font-size: 40px;
   // -fx-alignment: left;
 }
@@ -75,13 +71,13 @@ $selected_background: #858585;
 .playlistbtn {
   -fx-font-size: 20px;
   -fx-border-width: 3px;
-  -fx-border-color: $counter;
+  -fx-border-color: $secondary;
 }
 
 .playlistbtn:hover {
   -fx-border-width: 3px;
   -fx-border-color: $selected;
-  -fx-mid-text-color: $counter;
+  -fx-mid-text-color: $secondary;
 }
  
 .selectedplaylist {
@@ -96,24 +92,32 @@ $selected_background: #858585;
   -fx-background-color: $primary;
 }
 
-.songbtn {
+.songcontainer {
+  -fx-alignment: center;
+  -fx-background-color: transparent;
   -fx-border-width: 3px;
   -fx-border-color: $primary;
-}
-
-.songbtn:hover {
-  -fx-background-color: $button_background;
+} 
+.songcontainer:hover {
+  -fx-alignment: center;
+  -fx-background-color: transparent;
   -fx-border-width: 3px;
-  -fx-border-color: $selected;
-  -fx-mid-text-color: $counter;
+  -fx-border-color: $secondary;
+  -fx-mid-text-color: $secondary;
 }
 
-.songlabel {
-
+.songbtn {
+  -fx-border-width: 2px;
+  -fx-border-radius: 2px;
+  -fx-border-color: $tertiary ;
 }
 
-.selectedsong {
-  -fx-mid-text-color: $selected;
+.songduration {
+  -fx-font-size: 14px;
+}
+
+.songtitle {
+  -fx-font-size: 20px;
 }
 
 .slider {
