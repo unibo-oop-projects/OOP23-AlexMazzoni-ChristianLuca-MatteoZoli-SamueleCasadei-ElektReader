@@ -14,6 +14,7 @@ public class Mp3MediaControl implements MediaControl{
     private Optional<MediaPlayer> mediaPlayer;
     private Optional<List<Song>> playlist;
     private int index;
+    private double CurrentVolume;
     static private final double SET_ZERO_VOLUME = 0.0;
 
     public Mp3MediaControl() {
@@ -22,7 +23,7 @@ public class Mp3MediaControl implements MediaControl{
         this.index = 0;
     }
 
-    public void setPlaylist(PlayList playList) {
+    public void setPlaylist(final PlayList playList) {
         this.index = 0;
         this.playlist = Optional.of(playList.getSongs());
         this.mediaPlayer = Optional.of(new MediaPlayer(new Media(this.getCurrentSong().getFile().toURI().toString())));
@@ -71,64 +72,83 @@ public class Mp3MediaControl implements MediaControl{
         this.stop();
         Song currSong = this.getCurrentSong();
         this.mediaPlayer = Optional.of(new MediaPlayer(new Media(currSong.getFile().toURI().toString())));
+        this.mediaPlayer.get().setVolume(this.CurrentVolume);
         this.play();
         this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);   //If media ends, the next song in the queue will be played.
     }
 
     @Override
     public void nextSong() {
-        if (this.index == (this.getPlaylistSize()-1)) {
-            return;
+        if (this.mediaPlayer.isPresent()) {
+            if (this.index == (this.getPlaylistSize()-1)) {
+                return;
+            }
+            this.index++;
+            this.currentSong();
         }
-        this.index++;
-        this.currentSong();
     }
 
     @Override
     public void prevSong() {
+        if (this.mediaPlayer.isPresent()) {
         if (this.index == 0) {
             return;
         }
         this.index--;
         this.currentSong();
+        }
     }
 
     @Override
     public void loopSong() {
-        this.stop();
-        Media media = this.mediaPlayer.get().getMedia();
-        this.mediaPlayer = Optional.of(new MediaPlayer(media));
-        this.mediaPlayer.get().setCycleCount(MediaPlayer.INDEFINITE);
-        this.play();
+        if (this.mediaPlayer.isPresent()) {
+            this.stop();
+            Media media = this.mediaPlayer.get().getMedia();
+            this.mediaPlayer = Optional.of(new MediaPlayer(media));
+            this.mediaPlayer.get().setCycleCount(MediaPlayer.INDEFINITE);
+            this.play();
+        }
     }
 
     @Override
     public void setSong(final Song song) {
-        if (!(this.playlist.get().contains(song))) {
-            return;
+        if (this.mediaPlayer.isPresent()) {
+            if (!(this.playlist.get().contains(song))) {
+                return;
+            }
+            this.index = playlist.get().indexOf(song);
+            this.currentSong();
         }
-        this.index = playlist.get().indexOf(song);
-        this.currentSong();
     }
 
     @Override
     public void setRepSpeed(final double rate) {
-        this.mediaPlayer.get().setRate(rate);
+        if (this.mediaPlayer.isPresent()) {
+            this.mediaPlayer.get().setRate(rate);
+        }
     }
 
     @Override
     public void setProgress(final Duration duration) {
-        this.mediaPlayer.get().seek(duration);
+        if (this.mediaPlayer.isPresent()) {
+            this.mediaPlayer.get().seek(duration);
+        }
     }
 
     @Override
     public double getDuration() {
-        return this.mediaPlayer.get().getMedia().getDuration().toSeconds();
+        if (this.mediaPlayer.isPresent()) {
+            return this.mediaPlayer.get().getMedia().getDuration().toSeconds();
+        }
+        return MediaPlayer.INDEFINITE;
     }
 
     @Override
-    public void setVolume(double volume) {
-        this.mediaPlayer.get().setVolume(volume);
+    public void setVolume(final double volume) {
+        if (this.mediaPlayer.isPresent()) {
+            this.mediaPlayer.get().setVolume(volume);
+            this.CurrentVolume = volume;
+        }
     }
 
     @Override
@@ -138,7 +158,9 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void mute() {
-        this.mediaPlayer.get().setVolume(SET_ZERO_VOLUME);
+        if (this.mediaPlayer.isPresent()) {
+            this.mediaPlayer.get().setVolume(SET_ZERO_VOLUME);
+        }
     }
     
 }
