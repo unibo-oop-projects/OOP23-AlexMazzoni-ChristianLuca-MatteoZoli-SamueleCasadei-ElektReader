@@ -39,11 +39,17 @@ public class Mp3MediaControl implements MediaControl{
     }
 
     private int getPlaylistSize() {
+        if (this.playlist.isEmpty()) {
+            throw new IllegalStateException("Playlist is currently empty.");
+        }
         return this.playlist.get().size();
     }
 
     //Only debug
     public List<Song> getPlaylist() {
+        if (this.playlist.isEmpty()) {
+            throw new IllegalStateException("Playlist is currently empty.");
+        }
         return this.playlist.get();
     }
 
@@ -91,11 +97,11 @@ public class Mp3MediaControl implements MediaControl{
     @Override
     public void prevSong() {
         if (this.mediaPlayer.isPresent()) {
-        if (this.index == 0) {
-            return;
-        }
-        this.index--;
-        this.currentSong();
+            if (this.index == 0) {
+                return;
+            }
+            this.index--;
+            this.currentSong();
         }
     }
 
@@ -112,12 +118,14 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void setSong(final Song song) {
-        if (this.mediaPlayer.isPresent()) {
+        if (this.playlist.isPresent()) {
             if (!(this.playlist.get().contains(song))) {
                 return;
             }
             this.index = playlist.get().indexOf(song);
             this.currentSong();
+        } else {
+            throw new IllegalStateException("Playlist is currently empty.");
         }
     }
 
