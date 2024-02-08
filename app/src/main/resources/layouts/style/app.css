@@ -8,16 +8,22 @@
   -fx-mid-text-color: #ffffff;
 }
 
-.separator {
-  -fx-background-color: #ffffff !important;
-}
-
 .button {
   -fx-background-color: transparent;
 }
 
 .button:hover {
   -fx-mid-text-color: #3274e4;
+}
+
+.label {
+  -fx-mid-text-color: #ffffff;
+  -fx-font-size: 20px;
+}
+
+/* no default node */
+.separator {
+  -fx-background-color: #ffffff !important;
 }
 
 .menubutton {
@@ -37,12 +43,25 @@
   -fx-font-weight: bold;
 }
 
-.label {
-  -fx-mid-text-color: #ffffff;
+.subtitle {
+  -fx-mid-text-color: #ffffff !important;
+  -fx-font-size: 40px;
 }
 
 .playlistbtn {
-  -fx-background-color: #373737;
+  -fx-font-size: 20px;
+  -fx-border-width: 3px;
+  -fx-border-color: #ffffff;
+}
+
+.playlistbtn:hover {
+  -fx-border-width: 3px;
+  -fx-border-color: #3274e4;
+  -fx-mid-text-color: #ffffff;
+}
+
+.selectedplaylist {
+  -fx-mid-text-color: #3274e4;
 }
 
 .scroll-pane {
@@ -51,4 +70,20 @@
 
 .scroll-pane .viewport {
   -fx-background-color: #000000;
+}
+
+.songbtn {
+  -fx-border-width: 3px;
+  -fx-border-color: #000000;
+}
+
+.songbtn:hover {
+  -fx-background-color: #373737;
+  -fx-border-width: 3px;
+  -fx-border-color: #3274e4;
+  -fx-mid-text-color: #ffffff;
+}
+
+.selectedsong {
+  -fx-mid-text-color: #3274e4;
 }

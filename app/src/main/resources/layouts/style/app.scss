@@ -28,10 +28,6 @@ $selected_background: #858585;
   background-color: $primary;
   -fx-mid-text-color: $counter;
 }
-  
-.separator {
-  -fx-background-color: $counter !important
-}
 
 .button {
     -fx-background-color: transparent;
@@ -39,6 +35,17 @@ $selected_background: #858585;
 
 .button:hover {
   -fx-mid-text-color: $selected;
+}
+
+.label {
+  -fx-mid-text-color: $counter;
+  -fx-font-size: 20px;
+}
+
+/* no default node */
+
+.separator {
+  -fx-background-color: $counter !important
 }
 
 .menubutton {
@@ -59,14 +66,28 @@ $selected_background: #858585;
   // -fx-alignment: left;
 }
 
-.label {
-  -fx-mid-text-color: $counter;
+.subtitle {
+  -fx-mid-text-color: $counter  !important;
+  -fx-font-size: 40px;
+  // -fx-alignment: left;
 }
 
 .playlistbtn {
-  -fx-background-color: $button_background;
+  -fx-font-size: 20px;
+  -fx-border-width: 3px;
+  -fx-border-color: $counter;
 }
-  
+
+.playlistbtn:hover {
+  -fx-border-width: 3px;
+  -fx-border-color: $selected;
+  -fx-mid-text-color: $counter;
+}
+ 
+.selectedplaylist {
+  -fx-mid-text-color: $selected;
+}
+
 .scroll-pane {
   -fx-background-color: transparent;
 }
@@ -76,7 +97,15 @@ $selected_background: #858585;
 }
 
 .songbtn {
+  -fx-border-width: 3px;
+  -fx-border-color: $primary;
+}
 
+.songbtn:hover {
+  -fx-background-color: $button_background;
+  -fx-border-width: 3px;
+  -fx-border-color: $selected;
+  -fx-mid-text-color: $counter;
 }
 
 .songlabel {
@@ -84,7 +113,7 @@ $selected_background: #858585;
 }
 
 .selectedsong {
-
+  -fx-mid-text-color: $selected;
 }
 
 .slider {

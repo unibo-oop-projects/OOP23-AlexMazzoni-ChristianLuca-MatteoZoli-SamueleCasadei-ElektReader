@@ -53,7 +53,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="root" minWidth="900.0" prefHeight="716.0" prefWidth="1195.0" styleClass="root" stylesheets="@style/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elektreader.controller.GUIController">
+<GridPane fx:id="root" minWidth="900.0" prefHeight="716.0" prefWidth="1340.0" styleClass="root" stylesheets="@style/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elektreader.controller.GUIController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -151,7 +151,7 @@
       <Pane minHeight="4.0" styleClass="separator" GridPane.rowIndex="1" />
       <HBox prefWidth="900.0" GridPane.rowIndex="2">
          <children>
-        <AnchorPane maxWidth="400.0">
+        <AnchorPane>
           <children>
                   <VBox layoutY="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -174,7 +174,7 @@
                                           <String fx:value="title" />
                                        </styleClass>
                               </Label>
-                                    <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="70.0" maxWidth="70.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#showPlaylists" textAlignment="CENTER" textFill="WHITE">
+                                    <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="72.0" maxWidth="70.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#showPlaylists" prefHeight="72.0" prefWidth="71.0" textAlignment="CENTER" textFill="WHITE">
                                        <graphic>
                                           <ImageView fx:id="imgPlaylistsShowPanel" fitHeight="64.0" fitWidth="70.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -193,9 +193,12 @@
                               <Insets />
                            </VBox.margin>
                         </AnchorPane>
-                        <AnchorPane prefHeight="882.0">
+                        <AnchorPane prefHeight="1000.0">
                            <children>
-                              <ScrollPane fx:id="playlistsList" hbarPolicy="NEVER" scaleShape="false" styleClass="viewport" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ScrollPane fx:id="playlistsList" hbarPolicy="NEVER" prefHeight="422.0" prefWidth="516.0" scaleShape="false" styleClass="viewport" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <content>
+                                    <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="372.0" styleClass="playlistbtn" text="#Saggio EXPLORA" />
+                                 </content></ScrollPane>
                            </children>
                         </AnchorPane>
                      </children>
@@ -212,14 +215,14 @@
                      <children>
                         <AnchorPane minHeight="100.0" style="-fx-translate-x: none;">
                            <children>
-                              <HBox alignment="CENTER" layoutX="14.0" maxHeight="87.0" prefHeight="87.0" prefWidth="531.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="0.0">
+                              <HBox alignment="CENTER" layoutX="28.0" maxHeight="100.0" prefHeight="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="0.0">
                                  <children>
                             <Label fx:id="lblSong" alignment="CENTER" maxHeight="70.0" minHeight="70.0" style="&#10;" styleClass="title" text="Song">
                                        <font>
                                           <Font name="SansSerif Bold" size="60.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lblSongDesc" alignment="CENTER" maxHeight="70.0" minHeight="70.0" style="&#10;" text=" - 10 - gino pasticcino">
+                                    <Label fx:id="lblSongDesc" alignment="CENTER" maxHeight="70.0" minHeight="70.0" style="&#10;" styleClass="subtitle" text=" - 10 - gino pasticcino">
                                        <font>
                                           <Font name="SansSerif Regular" size="40.0" />
                                        </font>
@@ -236,7 +239,10 @@
                               <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <ScrollPane fx:id="songsIcon" hbarPolicy="NEVER" styleClass="list" />
-                                    <ScrollPane fx:id="songsList" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="viewport" />
+                                    <ScrollPane fx:id="songsList" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="viewport">
+                                       <content>
+                                          <Button mnemonicParsing="false" prefHeight="132.0" prefWidth="129.0" styleClass="songbtn" text="Button" />
+                                       </content></ScrollPane>
                                  </children>
                               </StackPane>
                            </children>
@@ -251,6 +257,6 @@
          </children>
       </HBox>
       <Slider fx:id="progressBar" blockIncrement="1.0" max="2.0" GridPane.rowIndex="3" />
-      <HBox fx:id="MediaControlPanel" prefHeight="100.0" prefWidth="1195.0" GridPane.rowIndex="4" />
+      <HBox fx:id="MediaControlPanel" prefHeight="100.0" prefWidth="1325.0" GridPane.rowIndex="4" />
    </children>
 </GridPane>
