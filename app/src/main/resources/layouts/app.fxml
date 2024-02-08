@@ -40,6 +40,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -245,10 +247,17 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="1000.0">
                            <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <StackPane fx:id="songsContainer" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <ScrollPane fx:id="songsIcon" hbarPolicy="NEVER" styleClass="list" />
-                                    <ScrollPane fx:id="songsList" prefHeight="200.0" prefWidth="200.0" styleClass="viewport" />
+                                    <ScrollPane fx:id="songsList" prefHeight="200.0" prefWidth="200.0" styleClass="viewport">
+                                       <content>
+                                          <TableView fx:id="songsListView" prefHeight="422.0" prefWidth="735.0">
+                                            <columns>
+                                              
+                                            </columns>
+                                          </TableView>
+                                       </content></ScrollPane>
                                  </children>
                               </StackPane>
                            </children>

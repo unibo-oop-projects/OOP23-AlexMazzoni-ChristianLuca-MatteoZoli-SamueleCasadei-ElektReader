@@ -6,20 +6,31 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.List;
+import java.util.ArrayList;
 
+import elektreader.api.MediaControl;
 import elektreader.api.Reader;
+import elektreader.api.Song;
 import elektreader.model.ReaderImpl;
 import elektreader.view.GUI;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 
 
@@ -81,10 +92,16 @@ public class GUIController implements Initializable {
     private Label lblSongDesc;
 
 	@FXML
+	private StackPane songsContainer;
+	
+	@FXML
     private ScrollPane songsIcon;
 	
 	@FXML
     private ScrollPane songsList;
+
+	@FXML
+	private TableView<Song> songsListView;
 
 	
 	/* MEDIA CONTROL */
@@ -111,8 +128,43 @@ public class GUIController implements Initializable {
 	}
 
 	@FXML
-	private void view() { 
-		//TODO - Matteo
+	private void view() {
+		if (getReader().getCurrentPlaylist().isPresent()){
+			var currentPlaylist = getReader().getCurrentPlaylist().get();
+			List<Song> songsListData = new ArrayList<>();
+			currentPlaylist.getSongs().stream()
+				.forEach(s -> songsListData.add(s));
+			ObservableList<Song> listaCoda = FXCollections.observableArrayList(songsListData);
+			TableColumn<Song, String> nameColumn = new TableColumn<>("Song Name");
+			nameColumn.setCellValueFactory(cellData -> {
+				var name = cellData.getValue().getName();
+				return new SimpleStringProperty(name);
+			});
+			TableColumn<Song, String> artistColumn = new TableColumn<>("Artist");
+			artistColumn.setCellValueFactory(cellData -> {
+				var artist = cellData.getValue().getArtist();
+				return new SimpleStringProperty(artist.isPresent() ? artist.get() : "");
+			});
+			TableColumn<Song, String> durationColumn = new TableColumn<>("Duration");
+			durationColumn.setCellValueFactory(cellData -> {
+				var duration = cellData.getValue().DurationStringRep();
+				return new SimpleStringProperty(duration);
+			});
+			songsListView.setItems(listaCoda);
+			songsListView.getColumns().addAll(nameColumn, artistColumn, durationColumn);
+			songsListView.setOnMouseClicked(e -> {
+				var selectedSong = songsListView.getSelectionModel().getSelectedItem();
+				if (reader.getPlayer().isPresent()) {
+					reader.getPlayer().get().setSong(selectedSong);
+					reader.getPlayer().get().play();
+				}
+			});
+		}
+		
+
+		var tmp = songsContainer.getChildren().get(0);
+		songsContainer.getChildren().remove(0);
+		songsContainer.getChildren().add(tmp);
 	}
 
 	@FXML
