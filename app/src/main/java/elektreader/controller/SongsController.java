@@ -19,16 +19,8 @@ public class SongsController {
     private final double CONTAINER_W = 100, CONTAINER_H = 125, BTN_W = 90, BTN_H = 80,
         IMGFIT_W = 75, IMGFIT_H = 85, DEF_SPACING = 5;
 
-    public SongsController(final TilePane songPane, PlayList selected) {
-        this.songPane = songPane;
-        this.btnSongs = selected.getSongs().stream()
-            .map(s -> createButton(s))
-            .toList();
-
-        // GUIController.getReader().getCurrentPlaylist().get().getSongs().stream()
-        //     .forEach(s -> this.btnSongs.add(createButton(s)));
-
-        this.songPane.getChildren().addAll(btnSongs);
+    public SongsController(TilePane songContainer) {
+        this.songPane = songContainer;
     }
     
     private VBox createButton(final Song song) {
@@ -37,23 +29,37 @@ public class SongsController {
         ImageView img = new ImageView(ClassLoader.getSystemResource("icons/Dark/Media/AudioWave.png").toString());
         Label duration = new Label(song.DurationStringRep());
         Label title = new Label(song.getName());
+        System.out.println(song.getName());
         container.setSpacing(DEF_SPACING);
-        container.setPrefSize(CONTAINER_W, CONTAINER_H);
-        container.setStyle("-fx-alignment: center;");
-        container.setStyle("-fx-background-color: d3d3d3;");
+        container.setMinSize(CONTAINER_W, CONTAINER_H);
+        container.getStyleClass().add("songcontainer");
+
         btn.setAlignment(Pos.CENTER);
         btn.setPrefSize(BTN_W, BTN_H);
         btn.setStyle("-fx-background-color: transparent;");
         btn.setTextAlignment(TextAlignment.JUSTIFY);
+        btn.setOnMouseClicked(event -> {
+            var player = GUIController.getReader().getPlayer();
+            if(player.isPresent()){
+                player.get().setSong(song);
+            }
+        });
+
         img.setFitHeight(IMGFIT_W);
         img.setFitWidth(IMGFIT_H);
         img.setPreserveRatio(true);
         btn.setGraphic(img);
+
         container.getChildren().addAll(btn, duration, title);
+        container.setVisible(true);
         return container;
     }
 
-    public List<VBox> getBtnSongs() {
-        return this.btnSongs;
+    public void load(PlayList playlist){
+        songPane.getChildren().clear();
+        this.btnSongs = playlist.getSongs().stream()
+            .map(s -> createButton(s))
+            .toList();
+        songPane.getChildren().addAll(btnSongs);
     }
 }
