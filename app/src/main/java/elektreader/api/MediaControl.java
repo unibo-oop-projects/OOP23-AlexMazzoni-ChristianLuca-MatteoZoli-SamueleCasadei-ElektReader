@@ -13,15 +13,18 @@ public interface MediaControl {
 
     /**
      * @param playList the playlist to be set as the current one.
+     * @return true if the playlist is set as the current one correctly, false otherwise.
      */
-    public void setPlaylist(PlayList playList);
+    public boolean setPlaylist(PlayList playList);
 
     /**
      * @return current played song by our MediaPlayer.
      */
     public Song getCurrentSong();
     
-    //Only debug
+    /**
+     * @return Playlist currently set as the current one. ONLY DEBUG!
+     */
     public List<Song> getPlaylist();
 
     /**
@@ -39,12 +42,6 @@ public interface MediaControl {
      */
     public void stop();
 
-
-    /**
-     * Plays current song selected.
-     */
-    public void currentSong();
-
     /**
      * Changes current played song with the next in the playlist.
      */
@@ -61,9 +58,10 @@ public interface MediaControl {
     public void loopSong();
 
     /**
-     * @param song the song to be set as the current one. Look at the implementation for further details.
+     * @param song the song to be set as the current one.
+     * @return true if the operation ends with a success, false otherwise.
      */
-    public void setSong(final Song song);
+    public boolean setSong(final Song song);
 
     /**
      * @param rate the speed rate to be assigned to our mediaPlayer.

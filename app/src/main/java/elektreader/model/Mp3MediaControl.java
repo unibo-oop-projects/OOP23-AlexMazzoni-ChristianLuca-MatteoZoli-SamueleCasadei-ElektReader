@@ -23,21 +23,22 @@ public class Mp3MediaControl implements MediaControl{
         this.index = 0;
     }
 
-    public void setPlaylist(final PlayList playList) {
-        this.index = 0;
-        this.playlist = Optional.of(playList.getSongs());
-        this.mediaPlayer = Optional.of(new MediaPlayer(new Media(this.getCurrentSong().getFile().toURI().toString())));
-        this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);
+    //This method set the current song as the Media given to our Mediaplyer.
+    private void currentSong() {
+        this.stop();
+        Song currSong = this.getCurrentSong();
+        this.mediaPlayer = Optional.of(new MediaPlayer(new Media(currSong.getFile().toURI().toString())));
+        this.mediaPlayer.get().setVolume(this.CurrentVolume);
+        this.play();
+        this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);   //If media ends, the next song in the queue will be played.
     }
 
-    public Song getCurrentSong() {
-        return this.getSongAtCertainIndex(this.index);
-    }
-
+    //This method return the Song found at the index passed as a parameter, in the current playlist. 
     private Song getSongAtCertainIndex(final int index) {
         return this.playlist.get().get(index);
     }
 
+    //This method returns the size of the current playlist.
     private int getPlaylistSize() {
         if (this.playlist.isEmpty()) {
             throw new IllegalStateException("Playlist is currently empty.");
@@ -45,7 +46,22 @@ public class Mp3MediaControl implements MediaControl{
         return this.playlist.get().size();
     }
 
-    //Only debug
+    public boolean setPlaylist(final PlayList playList) {
+        if (this.mediaPlayer.isPresent()) {
+            this.stop();
+        }
+        this.index = 0;
+        this.playlist = Optional.of(playList.getSongs());
+        this.mediaPlayer = Optional.of(new MediaPlayer(new Media(this.getCurrentSong().getFile().toURI().toString())));
+        this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);
+        return this.playlist.isPresent() ? true : false;
+    }
+
+    public Song getCurrentSong() {
+        return this.getSongAtCertainIndex(this.index);
+    }
+
+    //ONLY DEBUG VIA TEST!
     public List<Song> getPlaylist() {
         if (this.playlist.isEmpty()) {
             throw new IllegalStateException("Playlist is currently empty.");
@@ -72,15 +88,6 @@ public class Mp3MediaControl implements MediaControl{
         if (this.mediaPlayer.isPresent()) {
             this.mediaPlayer.get().stop(); //At this moment, mediaPlayer status will be set to status.STOPPED
         }
-    }
-
-    public void currentSong() {
-        this.stop();
-        Song currSong = this.getCurrentSong();
-        this.mediaPlayer = Optional.of(new MediaPlayer(new Media(currSong.getFile().toURI().toString())));
-        this.mediaPlayer.get().setVolume(this.CurrentVolume);
-        this.play();
-        this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);   //If media ends, the next song in the queue will be played.
     }
 
     @Override
@@ -117,13 +124,14 @@ public class Mp3MediaControl implements MediaControl{
     }
 
     @Override
-    public void setSong(final Song song) {
+    public boolean setSong(final Song song) {
         if (this.playlist.isPresent()) {
-            if (!(this.playlist.get().contains(song))) {
-                return;
+            if (!(this.playlist.get().stream().anyMatch(t -> t.equals(song)))) {
+                return false;
             }
             this.index = playlist.get().indexOf(song);
             this.currentSong();
+            return true;
         } else {
             throw new IllegalStateException("Playlist is currently empty.");
         }
