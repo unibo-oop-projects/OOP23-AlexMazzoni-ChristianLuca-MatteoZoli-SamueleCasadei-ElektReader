@@ -49,9 +49,9 @@ class ElektreaderTest {
 
     final Path TEST_PATH_PLAYLIST2 = Paths.get(TEST_PATH.toString(), "Saggio EXPLORA");
 
-    final Path TEST_PATH_PLAYLIST2_SONG10 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "10 - farfalle.mp3");
+    final Path TEST_PATH_PLAYLIST2_SONG10 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "10 - farfalle.mp3");
 
-    final Path TEST_PATH_PLAYLIST2_SONG18 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "18 - latinos.mp3");
+    final Path TEST_PATH_PLAYLIST2_SONG18 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "18 - latinos.mp3");
 
     final Path TEST_INVALID_SONG = Paths.get(TEST_PATH_PLAYLIST1.toString(), "05 - Lo Stato Sociale - Una Vita In Vacanza (Sanremo 2018).mp3");
     
