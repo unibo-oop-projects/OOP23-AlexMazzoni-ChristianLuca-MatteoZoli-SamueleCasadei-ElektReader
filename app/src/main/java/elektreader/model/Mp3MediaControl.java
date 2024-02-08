@@ -16,7 +16,6 @@ public class Mp3MediaControl implements MediaControl{
     private int index;
     static private final double SET_ZERO_VOLUME = 0.0;
 
-
     public Mp3MediaControl() {
         this.mediaPlayer = Optional.empty();
         this.playlist = Optional.empty();
@@ -24,6 +23,7 @@ public class Mp3MediaControl implements MediaControl{
     }
 
     public void setPlaylist(PlayList playList) {
+        this.index = 0;
         this.playlist = Optional.of(playList.getSongs());
         this.mediaPlayer = Optional.of(new MediaPlayer(new Media(this.getCurrentSong().getFile().toURI().toString())));
         this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);
@@ -48,17 +48,23 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void play() {
-        this.mediaPlayer.get().play();     //At this moment, mediaPlayer status will be set to status.PLAYING
+        if (this.mediaPlayer.isPresent()) {
+            this.mediaPlayer.get().play(); //At this moment, mediaPlayer status will be set to status.PLAYING
+        }
     }
 
     @Override
     public void pause() {
-        this.mediaPlayer.get().pause();   //At this moment, mediaPlayer status will be set to status.PAUSED
+        if (this.mediaPlayer.isPresent()) {
+            this.mediaPlayer.get().pause(); //At this moment, mediaPlayer status will be set to status.PAUSED
+        }
     }
 
     @Override
     public void stop() {
-        this.mediaPlayer.get().stop();    //At this moment, mediaPlayer status will be set to status.STOPPED 
+        if (this.mediaPlayer.isPresent()) {
+            this.mediaPlayer.get().stop(); //At this moment, mediaPlayer status will be set to status.STOPPED
+        }
     }
 
     public void currentSong() {
