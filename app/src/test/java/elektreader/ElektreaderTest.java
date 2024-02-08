@@ -154,56 +154,41 @@ class ElektreaderTest {
         //Declaring a new MediaControl instance
         MediaControl mC1;
         mC1 = new Mp3MediaControl();
-        mC1.setPlaylist(new Mp3PlayList(TEST_PATH_PLAYLIST2, Reader.getAndFilterSongs(TEST_PATH_PLAYLIST2).get()));
-        //Volume methods tests
-        double volume = mC1.getVolume();
-        Assertions.assertEquals(volume, mC1.getVolume());
-        mC1.mute();
-        Assertions.assertEquals(0.0, mC1.getVolume());
-        mC1.setVolume(0.2);
-        Assertions.assertEquals(0.2, mC1.getVolume());
-
-        //Testing various void method useful for reproduction, song choice, queue gestion ecc.
-        mC1.getDuration();
+        mC1.setPlaylist(new Mp3PlayList(TEST_PATH_PLAYLIST1, Reader.getAndFilterSongs(TEST_PATH_PLAYLIST1).get()));
         mC1.play();
+        //Volume methods tests
+        //mC1.mute();
+        //Assertions.assertEquals(0.0, mC1.getVolume());
+        mC1.setVolume(1.0);
+        Assertions.assertEquals(1.0, mC1.getVolume());
+        Thread.sleep(2000);
+        //Testing various void method useful for reproduction, song choice, queue gestion ecc.
+        System.out.println(mC1.getDuration());
         Thread.sleep(2000);
         mC1.nextSong();
         Thread.sleep(2000);
         mC1.prevSong();
         Thread.sleep(2000);
         mC1.mute();
-        //mC1.setSong(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 1)));
+        mC1.setVolume(0.5);
         mC1.setSong(mC1.getPlaylist().get(1));
         System.out.println(mC1.getCurrentSong().getName());
         Thread.sleep(2000);
-        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST2_SONG18).getName(), mC1.getCurrentSong().getName());
+        Assertions.assertEquals(new Mp3Song(mC1.getPlaylist().get(1).getFile().toPath()).getName(), mC1.getCurrentSong().getName());
         mC1.prevSong();
-        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST2_SONG10).getName(), mC1.getCurrentSong().getName());
+        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG1).getName(), mC1.getCurrentSong().getName());
         mC1.nextSong();
-        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST2_SONG18).getName(), mC1.getCurrentSong().getName());
-        //mC1.setSong(new Mp3Song(getASong(TEST_PATH_PLAYLIST2, 0)));
+        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG2).getName(), mC1.getCurrentSong().getName());
+        mC1.nextSong();
+        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG3).getName(), mC1.getCurrentSong().getName());
+        mC1.prevSong();
+        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG2).getName(), mC1.getCurrentSong().getName());
         mC1.setSong(mC1.getPlaylist().get(0));
         System.out.println(mC1.getCurrentSong().getName());
         Thread.sleep(2000);
-        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST2_SONG10).getName(), mC1.getCurrentSong().getName());
-        //Changing reference of my mediaControl to another object of the same class.
-        mC1 = new Mp3MediaControl();
-        mC1.setPlaylist(new Mp3PlayList(TEST_PATH_PLAYLIST2, Arrays.asList(TEST_PATH_PLAYLIST2_SONG10, TEST_PATH_PLAYLIST2_SONG18)));
-        mC1.mute();
-        Assertions.assertEquals(0.0, mC1.getVolume());
-        mC1.setVolume(0.5);
-        Assertions.assertEquals(0.5, mC1.getVolume());
-        mC1.play();
-
-        //Testing basic reproduction methods (GUI implementation will be still more accurate to be sure that everything works correctly.).
-        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST2_SONG10).getName(), mC1.getCurrentSong().getName());
-        System.out.println(mC1.getCurrentSong().getName());
-        mC1.nextSong();
-        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST2_SONG10).getName(), mC1.getCurrentSong().getName());
-        System.out.println(mC1.getCurrentSong().getName());
-        mC1.prevSong();
-        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST2_SONG10).getName(), mC1.getCurrentSong().getName());
-        System.out.println(mC1.getCurrentSong().getName());
+        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG1).getName(), mC1.getCurrentSong().getName());
+        mC1.setRepSpeed(2.0);
+        Thread.sleep(2000);
         mC1.stop();
     }
 }

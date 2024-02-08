@@ -72,18 +72,6 @@ public class Mp3MediaControl implements MediaControl{
         Song currSong = this.getCurrentSong();
         this.mediaPlayer = Optional.of(new MediaPlayer(new Media(currSong.getFile().toURI().toString())));
         this.play();
-        this.mediaPlayer.get().setOnReady(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            
-        });
         this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);   //If media ends, the next song in the queue will be played.
     }
 
@@ -134,8 +122,8 @@ public class Mp3MediaControl implements MediaControl{
     }
 
     @Override
-    public Duration getDuration() {
-        return this.mediaPlayer.get().getMedia().getDuration();
+    public double getDuration() {
+        return this.mediaPlayer.get().getMedia().getDuration().toSeconds();
     }
 
     @Override

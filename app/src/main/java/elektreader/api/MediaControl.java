@@ -78,7 +78,7 @@ public interface MediaControl {
     /**
      * @return the Duration of song currently played by our mediaPlayer.
      */
-    public Duration getDuration();
+    public double getDuration();
 
     /**
      * @param volume the Volume that must be assigned to our mediaPlayer. 
