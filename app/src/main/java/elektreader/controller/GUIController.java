@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import elektreader.api.MediaControl;
 import elektreader.api.Reader;
@@ -129,12 +130,10 @@ public class GUIController implements Initializable {
 
 	@FXML
 	private void view() {
+		//Setting the TableView for the current playlist (if one has been selected)
 		if (getReader().getCurrentPlaylist().isPresent()){
 			var currentPlaylist = getReader().getCurrentPlaylist().get();
-			List<Song> songsListData = new ArrayList<>();
-			currentPlaylist.getSongs().stream()
-				.forEach(s -> songsListData.add(s));
-			ObservableList<Song> listaCoda = FXCollections.observableArrayList(songsListData);
+			ObservableList<Song> listaCoda = FXCollections.observableArrayList(currentPlaylist.getSongs());
 			TableColumn<Song, String> nameColumn = new TableColumn<>("Song Name");
 			nameColumn.setCellValueFactory(cellData -> {
 				var name = cellData.getValue().getName();
@@ -151,7 +150,7 @@ public class GUIController implements Initializable {
 				return new SimpleStringProperty(duration);
 			});
 			songsListView.setItems(listaCoda);
-			songsListView.getColumns().addAll(nameColumn, artistColumn, durationColumn);
+			songsListView.getColumns().addAll(Arrays.asList(nameColumn, artistColumn, durationColumn));
 			songsListView.setOnMouseClicked(e -> {
 				var selectedSong = songsListView.getSelectionModel().getSelectedItem();
 				if (reader.getPlayer().isPresent()) {
@@ -160,8 +159,7 @@ public class GUIController implements Initializable {
 				}
 			});
 		}
-		
-
+		//Switching the pane that is been shown in the StackPane
 		var tmp = songsContainer.getChildren().get(0);
 		songsContainer.getChildren().remove(0);
 		songsContainer.getChildren().add(tmp);
