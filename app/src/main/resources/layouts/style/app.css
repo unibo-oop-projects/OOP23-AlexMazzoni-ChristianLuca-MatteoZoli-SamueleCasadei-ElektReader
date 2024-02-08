@@ -4,14 +4,45 @@
 
 .root {
   -fx-background-color: #000000;
+  background-color: #000000;
+  -fx-mid-text-color: #ffffff;
 }
 
-.btn {
-  -fx-background-color: #b9b9b9 !important;
+.separator {
+  -fx-background-color: #ffffff !important;
+}
+
+.button {
+  -fx-background-color: transparent;
+}
+
+.button:hover {
+  -fx-mid-text-color: #3274e4;
+}
+
+.menubutton {
+  -fx-mid-text-color: #ffffff;
+  -fx-font-weight: bold;
+  -fx-font-size: 22px;
+}
+
+.menubutton:hover {
+  -fx-background-color: #373737;
+  -fx-mid-text-color: #ffffff;
+}
+
+.title {
+  -fx-mid-text-color: #3274e4 !important;
+  -fx-font-size: 60px;
+  -fx-font-weight: bold;
+}
+
+.label {
+  -fx-mid-text-color: #ffffff;
 }
 
 .playlistbtn {
-  -fx-background-color: #b9b9b9 !important;
+  -fx-background-color: #373737;
 }
 
 .scroll-pane {
@@ -20,24 +51,4 @@
 
 .scroll-pane .viewport {
   -fx-background-color: #000000;
-}
-
-.title {
-  -fx-mid-text-color: #ff0000 !important;
-  -fx-font-size: 60px;
-  -fx-font-weight: bold;
-}
-
-.label {
-  -fx-mid-text-color: rgb(193, 193, 193);
-}
-
-.separator {
-  -fx-background-color: #ff0000 !important;
-}
-
-.dark {
-  -fx-background-color: black;
-  background-color: black;
-  -fx-mid-text-color: white;
 }

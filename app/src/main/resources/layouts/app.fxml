@@ -109,36 +109,24 @@
                            <children>
                               <HBox alignment="CENTER" focusTraversable="true" prefHeight="35.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Button fx:id="btnFIle" focusTraversable="false" maxWidth="100.0" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#importFiles" styleClass="btn" text="File" textAlignment="CENTER">
+                                    <Button fx:id="btnFIle" focusTraversable="false" maxWidth="100.0" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#importFiles" styleClass="menubutton" text="File" textAlignment="CENTER">
                                        <font>
                                           <Font name="SansSerif Bold" size="22.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnView" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#view" text="View">
-                                       <styleClass>
-                                          <String fx:value="btn" />
-                                          <String fx:value="light" />
-                                       </styleClass>
+                                    <Button fx:id="btnView" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#view" styleClass="menubutton" text="View" textFill="WHITE">
                                        <font>
                                           <Font name="SansSerif Bold" size="22.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnFind" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#find" text="Find">
-                                       <styleClass>
-                                          <String fx:value="btn" />
-                                          <String fx:value="light" />
-                                       </styleClass>
+                                    <Button fx:id="btnFind" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#find" styleClass="menubutton" text="Find">
                                        <font>
                                           <Font name="SansSerif Bold" size="22.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnHelp" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#help" text="?">
-                                       <styleClass>
-                                          <String fx:value="btn" />
-                                          <String fx:value="light" />
-                                       </styleClass>
+                                    <Button fx:id="btnHelp" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#help" styleClass="menubutton" text="?">
                                        <font>
-                                          <Font name="SansSerif Regular" size="22.0" />
+                                          <Font name="SansSerif Bold" size="22.0" />
                                        </font>
                                     </Button>
                                  </children>
@@ -157,7 +145,7 @@
             </AnchorPane>
          </children>
          <GridPane.margin>
-            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+            <Insets bottom="4.0" left="10.0" right="10.0" top="4.0" />
          </GridPane.margin>
       </HBox>
       <Pane minHeight="4.0" styleClass="separator" GridPane.rowIndex="1" />
@@ -186,7 +174,7 @@
                                           <String fx:value="title" />
                                        </styleClass>
                               </Label>
-                                    <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="70.0" maxWidth="70.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#showPlaylists" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="WHITE">
+                                    <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="70.0" maxWidth="70.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#showPlaylists" textAlignment="CENTER" textFill="WHITE">
                                        <graphic>
                                           <ImageView fx:id="imgPlaylistsShowPanel" fitHeight="64.0" fitWidth="70.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -248,7 +236,7 @@
                               <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <ScrollPane fx:id="songsIcon" hbarPolicy="NEVER" styleClass="list" />
-                                    <ScrollPane fx:id="songsList" prefHeight="200.0" prefWidth="200.0" styleClass="viewport" />
+                                    <ScrollPane fx:id="songsList" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="viewport" />
                                  </children>
                               </StackPane>
                            </children>

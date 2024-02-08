@@ -5,12 +5,17 @@
 // }
 
 
-$wallpaper: #000000;
-$counter: #fff;
+$primary: #000000;
+$counter: #ffffff;
+$secondary: #ff0000;
+
 $text: rgb(193, 193, 193);
-$button: #b9b9b9;
-$label: #3274e4;
-$separator: #ff0000;
+
+$button_background: #373737;
+$button_text: #ff0000;
+
+$selected: #3274e4;
+$selected_background: #858585;
 
 * {
   -fx-font-family: 'sans-serif';
@@ -19,15 +24,47 @@ $separator: #ff0000;
 
 
 .root {
-  -fx-background-color: $wallpaper;
+  -fx-background-color: $primary;
+  background-color: $primary;
+  -fx-mid-text-color: $counter;
+}
+  
+.separator {
+  -fx-background-color: $counter !important
 }
 
-.btn {
-  -fx-background-color: $button !important;
+.button {
+    -fx-background-color: transparent;
+}
+
+.button:hover {
+  -fx-mid-text-color: $selected;
+}
+
+.menubutton {
+  -fx-mid-text-color: $counter;
+  -fx-font-weight: bold;
+  -fx-font-size: 22px;
+}
+
+.menubutton:hover {
+  -fx-background-color: $button_background;
+  -fx-mid-text-color: $counter;
+}
+
+.title {
+  -fx-mid-text-color: $selected  !important;
+  -fx-font-size: 60px;
+  -fx-font-weight: bold;
+  // -fx-alignment: left;
+}
+
+.label {
+  -fx-mid-text-color: $counter;
 }
 
 .playlistbtn {
-  -fx-background-color: $button !important;
+  -fx-background-color: $button_background;
 }
   
 .scroll-pane {
@@ -35,23 +72,19 @@ $separator: #ff0000;
 }
 
 .scroll-pane .viewport {
-  -fx-background-color: $wallpaper;
+  -fx-background-color: $primary;
 }
 
-.title {
-  -fx-mid-text-color: $separator !important;
-  -fx-font-size: 60px;
-  -fx-font-weight: bold;
-  // -fx-alignment: left;
+.songbtn {
+
 }
 
-.label {
-  -fx-mid-text-color: $text;
-  // -fx-alignment: left;
+.songlabel {
+
 }
-  
-.separator {
-  -fx-background-color: $separator !important
+
+.selectedsong {
+
 }
 
 .slider {
@@ -65,10 +98,3 @@ $separator: #ff0000;
   // -fx-background-radius: 0.25em, 0.25em, 0.166667em; /* 3 3 2 */
   // -fx-padding: 0.25em; /* 3 */
 }
-
-.dark {
-  -fx-background-color: black;
-  background-color: black;
-  -fx-mid-text-color: white;
-}
-  
