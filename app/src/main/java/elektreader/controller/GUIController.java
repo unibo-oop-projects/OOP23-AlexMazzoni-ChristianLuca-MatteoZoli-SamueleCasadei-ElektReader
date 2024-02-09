@@ -6,20 +6,32 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
+import elektreader.api.MediaControl;
 import elektreader.api.Reader;
+import elektreader.api.Song;
 import elektreader.model.ReaderImpl;
 import elektreader.view.GUI;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 
 
@@ -35,6 +47,7 @@ public class GUIController implements Initializable {
 
 	PlayListsController controllerPlayLists;
 	SongsController controllerSongs;
+	MediaControlsController controllerMediaControls;
 
 	/* MAIN PARENT */
 	@FXML
@@ -81,10 +94,16 @@ public class GUIController implements Initializable {
     private Label lblSongDesc;
 
 	@FXML
+	private StackPane songsContainer;
+	
+	@FXML
     private ScrollPane songsIcon;
 	
 	@FXML
     private ScrollPane songsList;
+
+	@FXML
+	private TableView<Song> songsListView;
 
 	
 	/* MEDIA CONTROL */
@@ -92,7 +111,7 @@ public class GUIController implements Initializable {
 	private Slider progressBar;
 
 	@FXML
-	private HBox MediaControlPanel;
+	private HBox mediaControlPanel;
 
 
 	/* EVENTS */
@@ -111,8 +130,38 @@ public class GUIController implements Initializable {
 	}
 
 	@FXML
-	private void view() { 
-		//TODO - Matteo
+	private void view() {
+		//Setting the TableView for the current playlist (if one has been selected)
+		if (getReader().getCurrentPlaylist().isPresent()){
+			var currentPlaylist = getReader().getCurrentPlaylist().get();
+			ObservableList<Song> listaCoda = FXCollections.observableArrayList(currentPlaylist.getSongs());
+			TableColumn<Song, String> nameColumn = new TableColumn<>("Song Name");
+			nameColumn.setCellValueFactory(cellData -> {
+				var name = cellData.getValue().getName();
+				return new SimpleStringProperty(name);
+			});
+			TableColumn<Song, String> artistColumn = new TableColumn<>("Artist");
+			artistColumn.setCellValueFactory(cellData -> {
+				var artist = cellData.getValue().getArtist();
+				return new SimpleStringProperty(artist.isPresent() ? artist.get() : "");
+			});
+			TableColumn<Song, String> durationColumn = new TableColumn<>("Duration");
+			durationColumn.setCellValueFactory(cellData -> {
+				var duration = cellData.getValue().DurationStringRep();
+				return new SimpleStringProperty(duration);
+			});
+			songsListView.setItems(listaCoda);
+			songsListView.getColumns().addAll(Arrays.asList(nameColumn, artistColumn, durationColumn));
+			songsListView.setOnMouseClicked(e -> {
+				var selectedSong = songsListView.getSelectionModel().getSelectedItem();
+				reader.getPlayer().setSong(selectedSong);
+				reader.getPlayer().play();
+			});
+		}
+		//Switching the pane that is been shown in the StackPane
+		var tmp = songsContainer.getChildren().get(0);
+		songsContainer.getChildren().remove(0);
+		songsContainer.getChildren().add(tmp);
 	}
 
 	@FXML
@@ -188,26 +237,20 @@ public class GUIController implements Initializable {
 	private void loadEnvironment(final Optional<Path> root) {
 		if(reader.setCurrentEnvironment(root.get())) {
 			System.out.println("environment loaded: " + reader.getCurrentEnvironment().get());
+			loadPlayer();
 			loadPlaylists();
 		}
+	}
+
+	private void loadPlayer() {
+		this.mediaControlPanel.getChildren().clear();
+		this.controllerMediaControls = new MediaControlsController(this.mediaControlPanel);
 	}
 
 	private void loadPlaylists() {
 		this.playlistsList.setContent(null);
 		this.controllerPlayLists = new PlayListsController(this.playlistsList, this.songsIcon);
 	}
-
-	/* probabilmente il song va nel controller playlist */
-	// private void loadSongs() {
-	// 	if (this.reader.getCurrentPlaylist().isPresent()) {
-	// 		this.controllerSongs = new SongsController(this.reader);
-	// 	}
-	// }
-
-	/* probabilmente il media va nel controller song */
-	// private void loadMediaControls() {
-	// 	this.controllerMediaControls = new MediaControlsController();
-	// }
 
 	public static Reader getReader() {
 		return reader;

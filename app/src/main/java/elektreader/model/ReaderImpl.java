@@ -97,7 +97,10 @@ public class ReaderImpl implements Reader{
     }
 
     @Override
-    public Optional<MediaControl> getPlayer() {
-        return this.player;
+    public MediaControl getPlayer() {
+        if(this.root.isEmpty()) {
+            throw new IllegalStateException("need to set an environment");
+        }
+        return this.player.get();
     }
 }
