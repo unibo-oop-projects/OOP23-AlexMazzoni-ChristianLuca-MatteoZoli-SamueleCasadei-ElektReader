@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -49,6 +50,8 @@ public class SongsController {
             player.setSong(song);
             player.play();
         });
+
+        title.setTooltip(new Tooltip(duration.getText()+"\n"+title.getText()));
 
         btn.setPrefSize(BTN_W, BTN_H);
         btn.getStyleClass().add("songbtn");
