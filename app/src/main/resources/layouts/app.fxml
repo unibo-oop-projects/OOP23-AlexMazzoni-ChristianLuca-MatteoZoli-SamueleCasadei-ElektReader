@@ -40,7 +40,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -250,21 +249,17 @@
                            <children>
                               <StackPane fx:id="songsContainer" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <ScrollPane fx:id="songsList" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="viewport" />
+                                    <ScrollPane fx:id="songsList" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="viewport">
                                        <content>
-                                          <TableView fx:id="songsListView" prefHeight="422.0" prefWidth="735.0">
-                                            <columns>
-                                              
-                                            </columns>
-                                          </TableView>
+                                          <TableView fx:id="songsListView" prefHeight="200.0" prefWidth="882.0" />
                                        </content></ScrollPane>
                                     <ScrollPane fx:id="songsIcon" hbarPolicy="NEVER" styleClass="viewport">
                                        <content>
                                           <HBox spacing="15.0">
                                              <children>
-                                                <VBox fx:id="track" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
                                                    <children>
-                                                      <Button fx:id="trackButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#playOrPause" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
                                                          <graphic>
                                                             <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
@@ -273,20 +268,20 @@
                                                             </ImageView>
                                                          </graphic>
                                                       </Button>
-                                                      <Label fx:id="duration" styleClass="songduration" text="Duration" textFill="WHITE">
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
                                                          <VBox.margin>
                                                             <Insets bottom="5.0" top="5.0" />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <Label fx:id="titleAndArtist" styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
                                                    </children>
                                                    <padding>
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                    </padding>
                                                 </VBox>
-                                                <VBox fx:id="track1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0">
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0">
                                                    <children>
-                                                      <Button fx:id="trackButton1" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#playOrPause" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
                                                          <graphic>
                                                             <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
@@ -295,12 +290,12 @@
                                                             </ImageView>
                                                          </graphic>
                                                       </Button>
-                                                      <Label fx:id="duration1" styleClass="songduration" text="Duration" textFill="WHITE">
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
                                                          <VBox.margin>
                                                             <Insets bottom="5.0" top="5.0" />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <Label fx:id="titleAndArtist1" styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
                                                    </children>
                                                    <padding>
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
