@@ -40,7 +40,6 @@ public class PlayListsController {
     
         GUIController.getReader().getPlaylists().stream()
             .map(playlist -> createButton(playlist,songContainer))
-            .peek(b -> System.out.println(b.getText()))
             .forEach(button -> {
                 plistContainer.getChildren().add(button);
                 btnPlaylists.add(button);
@@ -59,10 +58,10 @@ public class PlayListsController {
         btnPlaylist.setOnMouseClicked(event -> {
             this.btnPlaylists.stream()
                 .forEach(btn -> {
-                    btn.getStyleClass().removeIf(style -> style.equals("selectedplaylist"));
+                    btn.getStyleClass().removeIf(style -> style.equals("selected"));
                 });
             var btn = (Button)event.getSource();
-            btn.getStyleClass().add("selectedplaylist");
+            btn.getStyleClass().add("selected");
 			if(GUIController.getReader().setCurrentPlaylist(Optional.of(p))); {
                 songsController.load(p);
                 responsive();
@@ -77,6 +76,10 @@ public class PlayListsController {
 
     public void responsive(){
         this.plistContainer.setPrefSize(this.pane.getWidth(), this.pane.getHeight());
+
+        this.btnPlaylists.stream()
+            .forEach(btn -> btn.setPrefWidth(this.pane.getWidth()));
+        
         this.songsController.responsive();
     }
 }
