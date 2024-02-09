@@ -12,12 +12,12 @@ import elektreader.api.Reader;
 import elektreader.api.Song;
 import elektreader.model.ReaderImpl;
 import elektreader.view.GUI;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -43,7 +43,6 @@ public class GUIController implements Initializable {
 	private final static Reader reader = new ReaderImpl();
 
 	PlayListsController controllerPlayLists;
-	SongsController controllerSongs;
 	MediaControlsController controllerMediaControls;
 
 	/* MAIN PARENT */
@@ -207,26 +206,21 @@ public class GUIController implements Initializable {
 	/* only graphics */
 	@FXML
 	private void showPlaylists() {
-		if(this.lblPlaylists.getPrefWidth()==SIZE_ZERO) { //is hidden
-			this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE*GUI.scaleToScreenSize().getKey());
-			this.playlistsList.setVisible(true);
-		} else {
-			this.playlistsList.setVisible(false);
-			this.lblPlaylists.setPrefWidth(SIZE_ZERO);
-		}
+		Platform.runLater(() -> {
+			if(this.lblPlaylists.getPrefWidth()==SIZE_ZERO) { //is hidden
+				this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE*this.root.getWidth());
+				//this.playlistsList.setVisible(true);
+			} else {
+				//this.playlistsList.setVisible(false);
+				this.lblPlaylists.setPrefWidth(SIZE_ZERO);
+			}
+			responsive();
+		});
 	}
 
 	private void responsive() {
-		
-	}
-	
-	private Group groupAll() {
-		return null;
-		// return new Group(this.btnFile, this.btnFind, this.btnView, this.btnHelp,
-		// 	this.btnDebug1, this.btnDebug2, this.btnDebug3, this.btnDebug4, 
-		// 	this.lblPlaylists, this.imgPlaylistsShowPanel, this.playlistsList,
-		// 	this.lblSong, this.songsList,
-		// 	this.MediaControlPanel);
+		//ci andra' la root rsponsive
+		this.controllerPlayLists.responsive();
 	}
 
 	/* PRIVATE METHODS */
@@ -240,12 +234,15 @@ public class GUIController implements Initializable {
 
 	private void loadPlayer() {
 		this.mediaControlPanel.getChildren().clear();
-		this.controllerMediaControls = new MediaControlsController(this.mediaControlPanel);
+		this.controllerMediaControls = new MediaControlsController(this.mediaControlPanel, this.progressBar);
 	}
 
 	private void loadPlaylists() {
-		this.playlistsList.setContent(null);
-		this.controllerPlayLists = new PlayListsController(this.playlistsList, this.songsIcon);
+		Platform.runLater(()-> {
+			this.playlistsList.setContent(null);
+			this.controllerPlayLists = new PlayListsController(this.playlistsList, this.songsIcon);
+			responsive();
+		});
 	}
 
 	public static Reader getReader() {
@@ -257,13 +254,14 @@ public class GUIController implements Initializable {
 		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
 
 		this.root.heightProperty().addListener((observable, oldHeight, newHeight) -> {
-			System.out.println("resized from "+ oldHeight + " to "+ newHeight);
+			responsive();
 		});
 
 		this.root.widthProperty().addListener((observable, oldWidth, newWidth) -> {
-			System.out.println("resized from "+ oldWidth + " to "+ newWidth);
+			responsive();
 		});
 
-		loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
+		//loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
+		Platform.runLater(()->responsive());
 	}
 }

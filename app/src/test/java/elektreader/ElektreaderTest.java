@@ -97,7 +97,7 @@ class ElektreaderTest {
         app.getPlayer().setVolume(0.2);
         app.getPlayer().play();
         Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2)));
-        //Assertions.assertTrue(app.getPlayer().setSong(new Mp3Song(TEST_PATH_PLAYLIST2_SONG18)));
+        Assertions.assertTrue(app.getPlayer().setSong(app.getCurrentPlaylist().get().getSong(TEST_PATH_PLAYLIST2_SONG18).get()));
         Assertions.assertEquals(TEST_PATH_PLAYLIST2_SONG18, app.getPlayer().getCurrentSong().getFile().toPath());
         app.getPlayer().play();
         Thread.sleep(6000);
@@ -161,22 +161,22 @@ class ElektreaderTest {
         //Assertions.assertEquals(0.0, mC1.getVolume());
         mC1.setVolume(0.015);
         Assertions.assertEquals(0.015, mC1.getVolume());
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         //Testing various void method useful for reproduction, song choice, queue gestion ecc.
         System.out.println(mC1.getDuration());
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         mC1.nextSong();
         System.out.println(mC1.getCurrentSong().getName());
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         mC1.prevSong();
         System.out.println(mC1.getCurrentSong().getName());
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         mC1.mute();
         mC1.setVolume(0.015);
         flag = mC1.setSong(mC1.getPlaylist().get(1));
         Assertions.assertEquals(true, flag);
         System.out.println(mC1.getCurrentSong().getName());
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         Assertions.assertEquals(new Mp3Song(mC1.getPlaylist().get(1).getFile().toPath()).getName(), mC1.getCurrentSong().getName());
         mC1.prevSong();
         System.out.println(mC1.getCurrentSong().getName());
@@ -192,10 +192,10 @@ class ElektreaderTest {
         flag = mC1.setSong(mC1.getPlaylist().get(0));
         System.out.println(mC1.getCurrentSong().getName());
         Assertions.assertEquals(true, flag);
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG1).getName(), mC1.getCurrentSong().getName());
         mC1.setRepSpeed(2.0);
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         mC1.stop();
     }
 }
