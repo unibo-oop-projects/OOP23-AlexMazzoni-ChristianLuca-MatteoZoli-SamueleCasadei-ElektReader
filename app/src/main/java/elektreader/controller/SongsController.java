@@ -16,23 +16,24 @@ public class SongsController {
     private List<VBox> btnSongs;
     private final FlowPane songPane;
     private final ScrollPane pane;
-    private final double CONTAINER_W = 100, CONTAINER_H = 125, BTN_W = 90, BTN_H = 80,
-        IMGFIT_W = 75, IMGFIT_H = 85, DEF_SPACING = 5;
+    private final double CONTAINER_W = 120, CONTAINER_H = 140, BTN_W = 90, BTN_H = 80,
+        IMGFIT_W = 75, IMGFIT_H = 85, DEF_SPACING = 15;
 
     public SongsController(final FlowPane songContainer, final ScrollPane pane) {
         this.songPane = songContainer;
+        songPane.setPrefWidth(pane.getWidth());
         this.pane = pane;
     }
     
     private VBox createButton(final Song song) {
         VBox container = new VBox();
         Button btn = new Button();
-        ImageView img = new ImageView(ClassLoader.getSystemResource("icons/Dark/Media/AudioWave.png").toString());
+        ImageView img = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/AudioWave.png").toString());
         Label duration = new Label(song.DurationStringRep());
         Label title = new Label(song.getName());
         System.out.println(song.getName());
         container.setSpacing(DEF_SPACING);
-        container.setMinSize(CONTAINER_W, CONTAINER_H);
+        container.setPrefSize(CONTAINER_W, CONTAINER_H);
         container.getStyleClass().add("songcontainer");
 
         btn.setPrefSize(BTN_W, BTN_H);

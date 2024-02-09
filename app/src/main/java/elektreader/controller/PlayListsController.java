@@ -65,6 +65,7 @@ public class PlayListsController {
             btn.getStyleClass().add("selectedplaylist");
 			if(GUIController.getReader().setCurrentPlaylist(Optional.of(p))); {
                 songsController.load(p);
+                responsive();
             }
 		});
         return btnPlaylist;
@@ -76,5 +77,6 @@ public class PlayListsController {
 
     public void responsive(){
         this.plistContainer.setPrefSize(this.pane.getWidth(), this.pane.getHeight());
+        this.songsController.responsive();
     }
 }
