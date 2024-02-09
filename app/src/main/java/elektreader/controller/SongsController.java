@@ -43,7 +43,7 @@ public class SongsController {
             this.btnSongs.stream()
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
             
-            var button = (Button)event.getSource();
+            var button = (VBox)event.getSource();
             button.getStyleClass().add("selected");
             var player = GUIController.getReader().getPlayer();
             player.setSong(song);

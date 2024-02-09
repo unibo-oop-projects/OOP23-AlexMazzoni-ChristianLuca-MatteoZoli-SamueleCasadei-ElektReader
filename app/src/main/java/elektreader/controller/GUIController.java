@@ -253,15 +253,14 @@ public class GUIController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
 
-		this.root.heightProperty().addListener((observable, oldHeight, newHeight) -> {
-			responsive();
-		});
+		//this.root.heightProperty().addListener((observable, oldHeight, newHeight) -> {
+		//	responsive();
+		//});
+		
+		//this.root.widthProperty().addListener((observable, oldWidth, newWidth) -> {
+		//	responsive();
+		//});
 
-		this.root.widthProperty().addListener((observable, oldWidth, newWidth) -> {
-			responsive();
-		});
-
-		//loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
-		Platform.runLater(()->responsive());
+		loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
 	}
 }
