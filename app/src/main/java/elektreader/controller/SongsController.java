@@ -74,6 +74,6 @@ public class SongsController {
     }
 
     public void responsive(){
-        songPane.setPrefSize(pane.getWidth(), pane.getHeight());
+        songPane.setPrefWidth(pane.getWidth());
     }
 }

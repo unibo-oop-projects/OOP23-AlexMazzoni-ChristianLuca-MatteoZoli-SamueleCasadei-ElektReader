@@ -37,7 +37,7 @@ public class PlayListsController {
 
         plistContainer.setPrefWidth(playlistsPane.getWidth());
         plistContainer.setSpacing(15);
-    
+
         GUIController.getReader().getPlaylists().stream()
             .map(playlist -> createButton(playlist,songContainer))
             .forEach(button -> {
@@ -75,7 +75,7 @@ public class PlayListsController {
     }
 
     public void responsive(){
-        this.plistContainer.setPrefSize(this.pane.getWidth(), this.pane.getHeight());
+        this.plistContainer.setPrefWidth(this.pane.getWidth());
 
         this.btnPlaylists.stream()
             .forEach(btn -> btn.setPrefWidth(this.pane.getWidth()));

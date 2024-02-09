@@ -256,7 +256,7 @@ public class GUIController implements Initializable {
 		//this.root.heightProperty().addListener((observable, oldHeight, newHeight) -> {
 		//	responsive();
 		//});
-		
+
 		//this.root.widthProperty().addListener((observable, oldWidth, newWidth) -> {
 		//	responsive();
 		//});
