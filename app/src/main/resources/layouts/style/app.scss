@@ -92,6 +92,37 @@ $selected: #3274e4;
   -fx-background-color: $primary;
 }
 
+.scroll-bar:vertical {
+  -fx-background-color :transparent;
+  -fx-border-color :transparent;
+  -fx-background-radius : 0.0em;
+}
+.scroll-bar:vertical .track {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-background-radius: 0em;
+  -fx-border-radius: 2em;
+}
+
+.scroll-bar:vertical .increment-button, 
+.scroll-bar:vertical .decrement-button {
+  -fx-background-color: transparent;
+  -fx-background-radius: 0em;
+  -fx-padding: 0 0 10 0;
+  visibility: hidden;
+}
+.scroll-bar:vertical .thumb {
+    -fx-background-color: derive($secondary, 80%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: derive($tertiary, 10%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+}
+
 .songcontainer {
   -fx-alignment: center;
   -fx-background-color: transparent;

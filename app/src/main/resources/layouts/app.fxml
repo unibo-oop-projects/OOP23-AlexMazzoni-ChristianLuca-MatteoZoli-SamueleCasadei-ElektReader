@@ -55,7 +55,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="root" minWidth="900.0" prefHeight="716.0" prefWidth="1340.0" styleClass="root" stylesheets="@style/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elektreader.controller.GUIController">
+<GridPane fx:id="root" minWidth="900.0" prefHeight="949.0" prefWidth="1597.0" styleClass="root" stylesheets="@style/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="elektreader.controller.GUIController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -197,17 +197,35 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="1000.0">
                            <children>
-                              <ScrollPane fx:id="playlistsList" hbarPolicy="NEVER" prefHeight="422.0" prefWidth="516.0" scaleShape="false" styleClass="viewport" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <ScrollPane fx:id="playlistsList" hbarPolicy="NEVER" prefHeight="655.0" prefWidth="387.0" scaleShape="false" styleClass="viewport" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
                                     <VBox spacing="15.0">
                                        <children>
-                                          <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="372.0" text="#Saggio EXPLORA">
+                                          <Button mnemonicParsing="false" prefWidth="350.0" text="#1">
                                              <styleClass>
                                                 <String fx:value="playlistbtn" />
                                                 <String fx:value="selected" />
                                              </styleClass>
                                           </Button>
-                                          <Button mnemonicParsing="false" prefHeight="52.0" prefWidth="372.0" styleClass="playlistbtn" text="#italiani" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#2" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#3" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#4" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#5" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#6" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#7" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#8" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#9" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#10" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#11" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#12" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#13" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#14" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#15" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#16" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#17" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#18" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#19" />
+                                          <Button mnemonicParsing="false" prefWidth="350.0" styleClass="playlistbtn" text="#20" />
                                        </children>
                                     </VBox>
                                  </content></ScrollPane>
@@ -256,7 +274,7 @@
                                        </content></ScrollPane>
                                     <ScrollPane fx:id="songsIcon" hbarPolicy="NEVER" styleClass="viewport">
                                        <content>
-                                          <FlowPane>
+                                          <FlowPane prefHeight="960.0" prefWidth="1124.0">
                                              <children>
                                                 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
                                                    <children>
@@ -279,6 +297,9 @@
                                                    <padding>
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                    </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
                                                 </VBox>
                                                 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0">
                                                    <children>
@@ -305,6 +326,1609 @@
                                                       <String fx:value="songcontainer" />
                                                       <String fx:value="selected" />
                                                    </styleClass>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
+                                                </VBox>
+                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="120.0" spacing="2.0" styleClass="songcontainer">
+                                                   <children>
+                                                      <Button alignment="CENTER" mnemonicParsing="false" styleClass="songbtn" textAlignment="JUSTIFY">
+                                                         <graphic>
+                                                            <ImageView fitHeight="56.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../icons/Light/Media/AudioWave.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Label styleClass="songduration" text="Duration" textFill="WHITE">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label styleClass="songtitle" text="Title - Artist" textFill="WHITE" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <FlowPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </FlowPane.margin>
                                                 </VBox>
                                              </children>
                                           </FlowPane>
@@ -323,6 +1947,6 @@
          </children>
       </HBox>
       <Slider fx:id="progressBar" blockIncrement="1.0" max="2.0" prefHeight="137.0" prefWidth="1340.0" GridPane.rowIndex="3" />
-      <HBox fx:id="mediaControlPanel" prefHeight="100.0" prefWidth="1325.0" GridPane.rowIndex="4" />
+      <HBox fx:id="mediaControlPanel" prefHeight="100.0" prefWidth="1427.0" GridPane.rowIndex="4" />
    </children>
 </GridPane>
