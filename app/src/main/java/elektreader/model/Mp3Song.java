@@ -78,28 +78,6 @@ public class Mp3Song implements Song{
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Mp3Song other = (Mp3Song) obj;
-        if (songFile == null) {
-            if (other.songFile != null)
-                return false;
-        } else if (!songFile.equals(other.songFile))
-            return false;
-        if (data == null) {
-            if (other.data != null)
-                return false;
-        } else if (!data.equals(other.data))
-            return false;
-        return true;
-    }
-
-    @Override
     public String DurationStringRep() {
         long h = TimeUnit.SECONDS.toHours(getDuration()); /* amount of hours */
         long m = TimeUnit.SECONDS.toMinutes(getDuration()%3600); /* amount of minutes, less the hours */
