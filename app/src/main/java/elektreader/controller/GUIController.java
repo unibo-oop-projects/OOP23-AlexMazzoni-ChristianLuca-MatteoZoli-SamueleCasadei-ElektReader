@@ -6,11 +6,8 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import elektreader.api.MediaControl;
 import elektreader.api.Reader;
 import elektreader.api.Song;
 import elektreader.model.ReaderImpl;
@@ -97,14 +94,13 @@ public class GUIController implements Initializable {
 	private StackPane songsContainer;
 	
 	@FXML
-    private ScrollPane songsIcon;
-	
-	@FXML
     private ScrollPane songsList;
 
 	@FXML
 	private TableView<Song> songsListView;
-
+	
+	@FXML
+    private ScrollPane songsIcon;
 	
 	/* MEDIA CONTROL */
 	@FXML
