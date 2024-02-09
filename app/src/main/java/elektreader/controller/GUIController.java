@@ -16,10 +16,8 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -222,7 +220,7 @@ public class GUIController implements Initializable {
 
 	private void responsive() {
 		//ci andra' la root rsponsive
-		//this.controllerPlayLists.responsive();
+		this.controllerPlayLists.responsive();
 	}
 
 	/* PRIVATE METHODS */
@@ -236,7 +234,7 @@ public class GUIController implements Initializable {
 
 	private void loadPlayer() {
 		this.mediaControlPanel.getChildren().clear();
-		this.controllerMediaControls = new MediaControlsController(this.mediaControlPanel);
+		this.controllerMediaControls = new MediaControlsController(this.mediaControlPanel, this.progressBar);
 	}
 
 	private void loadPlaylists() {
