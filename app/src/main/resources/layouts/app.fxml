@@ -160,7 +160,7 @@
                            <children>
                               <HBox alignment="CENTER" layoutX="14.0" maxHeight="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                              <Label fx:id="lblPlaylists" alignment="CENTER" cacheShape="false" centerShape="false" focusTraversable="false" maxHeight="70.0" minHeight="70.0" minWidth="0.0" mouseTransparent="true" text="Playlists">
+                              <Label fx:id="lblPlaylists" alignment="CENTER" cacheShape="false" centerShape="false" focusTraversable="false" maxHeight="70.0" maxWidth="310.0" minHeight="70.0" minWidth="0.0" mouseTransparent="true" prefHeight="70.0" text="Playlists">
                                        <font>
                                           <Font name="Century" size="60.0" />
                                        </font>
