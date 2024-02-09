@@ -11,6 +11,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /* a controller for songs graphics, link graphics and logics */
@@ -39,6 +40,12 @@ public class SongsController {
         container.setPrefSize(CONTAINER_W, CONTAINER_H);
         container.getStyleClass().add("songcontainer");
         VBox.setMargin(container, new Insets(10));
+
+        /* installing a Tooltip for the track to read the full name if it's too long */
+        Tooltip btnTooltip = new Tooltip(duration.getText()+"\n"+title.getText());
+        btnTooltip.setStyle("-fx-font-size: 12pt");
+        Tooltip.install(container, btnTooltip);
+
         container.setPadding(new Insets(2));
         container.setOnMouseClicked( event -> {
             this.btnSongs.stream()
@@ -50,8 +57,6 @@ public class SongsController {
             player.setSong(song);
             player.play();
         });
-
-        title.setTooltip(new Tooltip(duration.getText()+"\n"+title.getText()));
 
         btn.setPrefSize(BTN_W, BTN_H);
         btn.getStyleClass().add("songbtn");
@@ -79,4 +84,5 @@ public class SongsController {
     public void responsive(){
         songPane.setPrefWidth(pane.getWidth());
     }
+
 }
