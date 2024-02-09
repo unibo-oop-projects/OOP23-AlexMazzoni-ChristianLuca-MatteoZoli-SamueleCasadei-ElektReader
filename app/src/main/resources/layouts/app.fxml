@@ -176,7 +176,7 @@
                                           <String fx:value="title" />
                                        </styleClass>
                               </Label>
-                                    <Button alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="72.0" maxWidth="70.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#showPlaylists" prefHeight="72.0" prefWidth="71.0" textAlignment="CENTER" textFill="WHITE">
+                                    <Button fx:id="btnPlaylists" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#showPlaylists" textAlignment="CENTER" textFill="WHITE">
                                        <graphic>
                                           <ImageView fx:id="imgPlaylistsShowPanel" fitHeight="64.0" fitWidth="70.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -197,7 +197,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="1000.0">
                            <children>
-                              <ScrollPane fx:id="playlistsList" hbarPolicy="NEVER" prefHeight="655.0" prefWidth="387.0" scaleShape="false" styleClass="viewport" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <ScrollPane fx:id="playlistsList" hbarPolicy="NEVER" minWidth="70.0" prefWidth="374.0" scaleShape="false" styleClass="viewport" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
                                     <VBox spacing="15.0">
                                        <children>
@@ -270,7 +270,7 @@
                                  <children>
                                     <ScrollPane fx:id="songsList" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="viewport">
                                        <content>
-                                          <TableView fx:id="songsListView" prefHeight="200.0" prefWidth="882.0" />
+                                          <TableView fx:id="songsListView" prefHeight="797.0" prefWidth="1135.0" />
                                        </content></ScrollPane>
                                     <ScrollPane fx:id="songsIcon" hbarPolicy="NEVER" styleClass="viewport">
                                        <content>

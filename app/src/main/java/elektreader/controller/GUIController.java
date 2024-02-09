@@ -77,6 +77,9 @@ public class GUIController implements Initializable {
     private Label lblPlaylists;
 
 	@FXML
+    private Button btnPlaylists;
+
+	@FXML
     private ImageView imgPlaylistsShowPanel;
 
 	@FXML
@@ -206,21 +209,26 @@ public class GUIController implements Initializable {
 	/* only graphics */
 	@FXML
 	private void showPlaylists() {
-		Platform.runLater(() -> {
-			if(this.lblPlaylists.getPrefWidth()==SIZE_ZERO) { //is hidden
+		if(this.lblPlaylists.getPrefWidth()==SIZE_ZERO) { //is hidden
+			Platform.runLater(() -> {
 				this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE*this.root.getWidth());
+				this.playlistsList.setPrefWidth(this.lblPlaylists.getWidth()+this.btnPlaylists.getWidth());
 				//this.playlistsList.setVisible(true);
-			} else {
+			});
+		} else {
+			Platform.runLater(() -> {
 				//this.playlistsList.setVisible(false);
+				this.playlistsList.setPrefWidth(SIZE_ZERO);
 				this.lblPlaylists.setPrefWidth(SIZE_ZERO);
-			}
-			responsive();
-		});
+			});
+		}
+		responsive();
 	}
 
 	private void responsive() {
-		//ci andra' la root rsponsive
-		this.controllerPlayLists.responsive();
+		Platform.runLater(() -> {
+			this.controllerPlayLists.responsive();
+		});
 	}
 
 	/* PRIVATE METHODS */
@@ -253,15 +261,14 @@ public class GUIController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
 
-		this.root.heightProperty().addListener((observable, oldHeight, newHeight) -> {
-			responsive();
-		});
+		// this.root.heightProperty().addListener((observable, oldHeight, newHeight) -> {
+		// 	responsive();
+		// });
 
-		this.root.widthProperty().addListener((observable, oldWidth, newWidth) -> {
-			responsive();
-		});
+		// this.root.widthProperty().addListener((observable, oldWidth, newWidth) -> {
+		// 	responsive();
+		// });
 
-		//loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
-		Platform.runLater(()->responsive());
+		loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
 	}
 }
