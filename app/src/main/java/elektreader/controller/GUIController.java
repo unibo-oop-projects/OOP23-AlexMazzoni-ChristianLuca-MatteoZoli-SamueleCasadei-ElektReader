@@ -6,16 +6,11 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Arrays;
 
 import elektreader.api.Reader;
-import elektreader.api.Song;
 import elektreader.model.ReaderImpl;
 import elektreader.view.GUI;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -23,12 +18,9 @@ import javafx.scene.control.Label;
 
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 
 
@@ -83,7 +75,7 @@ public class GUIController implements Initializable {
     private ImageView imgPlaylistsShowPanel;
 
 	@FXML
-    private ScrollPane playlistsList;
+    private ScrollPane playlistsScroll;
 
 	/* SONGS */
 	@FXML
@@ -91,18 +83,9 @@ public class GUIController implements Initializable {
 
 	@FXML
     private Label lblSongDesc;
-
-	@FXML
-	private StackPane songsContainer;
 	
 	@FXML
-    private ScrollPane songsList;
-
-	@FXML
-	private TableView<Song> songsListView;
-	
-	@FXML
-    private ScrollPane songsIcon;
+    private ScrollPane songsScroll;
 	
 	/* MEDIA CONTROL */
 	@FXML
@@ -129,37 +112,37 @@ public class GUIController implements Initializable {
 
 	@FXML
 	private void view() {
-		//Setting the TableView for the current playlist (if one has been selected)
-		if (getReader().getCurrentPlaylist().isPresent()){
-			var currentPlaylist = getReader().getCurrentPlaylist().get();
-			ObservableList<Song> listaCoda = FXCollections.observableArrayList(currentPlaylist.getSongs());
-			TableColumn<Song, String> nameColumn = new TableColumn<>("Song Name");
-			nameColumn.setCellValueFactory(cellData -> {
-				var name = cellData.getValue().getName();
-				return new SimpleStringProperty(name);
-			});
-			TableColumn<Song, String> artistColumn = new TableColumn<>("Artist");
-			artistColumn.setCellValueFactory(cellData -> {
-				var artist = cellData.getValue().getArtist();
-				return new SimpleStringProperty(artist.isPresent() ? artist.get() : "");
-			});
-			TableColumn<Song, String> durationColumn = new TableColumn<>("Duration");
-			durationColumn.setCellValueFactory(cellData -> {
-				var duration = cellData.getValue().DurationStringRep();
-				return new SimpleStringProperty(duration);
-			});
-			songsListView.setItems(listaCoda);
-			songsListView.getColumns().addAll(Arrays.asList(nameColumn, artistColumn, durationColumn));
-			songsListView.setOnMouseClicked(e -> {
-				var selectedSong = songsListView.getSelectionModel().getSelectedItem();
-				reader.getPlayer().setSong(selectedSong);
-				reader.getPlayer().play();
-			});
-		}
-		//Switching the pane that is been shown in the StackPane
-		var tmp = songsContainer.getChildren().get(0);
-		songsContainer.getChildren().remove(0);
-		songsContainer.getChildren().add(tmp);
+		// //Setting the TableView for the current playlist (if one has been selected)
+		// if (getReader().getCurrentPlaylist().isPresent()){
+		// 	var currentPlaylist = getReader().getCurrentPlaylist().get();
+		// 	ObservableList<Song> listaCoda = FXCollections.observableArrayList(currentPlaylist.getSongs());
+		// 	TableColumn<Song, String> nameColumn = new TableColumn<>("Song Name");
+		// 	nameColumn.setCellValueFactory(cellData -> {
+		// 		var name = cellData.getValue().getName();
+		// 		return new SimpleStringProperty(name);
+		// 	});
+		// 	TableColumn<Song, String> artistColumn = new TableColumn<>("Artist");
+		// 	artistColumn.setCellValueFactory(cellData -> {
+		// 		var artist = cellData.getValue().getArtist();
+		// 		return new SimpleStringProperty(artist.isPresent() ? artist.get() : "");
+		// 	});
+		// 	TableColumn<Song, String> durationColumn = new TableColumn<>("Duration");
+		// 	durationColumn.setCellValueFactory(cellData -> {
+		// 		var duration = cellData.getValue().DurationStringRep();
+		// 		return new SimpleStringProperty(duration);
+		// 	});
+		// 	songsListView.setItems(listaCoda);
+		// 	songsListView.getColumns().addAll(Arrays.asList(nameColumn, artistColumn, durationColumn));
+		// 	songsListView.setOnMouseClicked(e -> {
+		// 		var selectedSong = songsListView.getSelectionModel().getSelectedItem();
+		// 		reader.getPlayer().setSong(selectedSong);
+		// 		reader.getPlayer().play();
+		// 	});
+		// }
+		// //Switching the pane that is been shown in the StackPane
+		// var tmp = songsContainer.getChildren().get(0);
+		// songsContainer.getChildren().remove(0);
+		// songsContainer.getChildren().add(tmp);
 	}
 
 	@FXML
@@ -210,25 +193,19 @@ public class GUIController implements Initializable {
 	@FXML
 	private void showPlaylists() {
 		if(this.lblPlaylists.getPrefWidth()==SIZE_ZERO) { //is hidden
-			Platform.runLater(() -> {
-				this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE*this.root.getWidth());
-				this.playlistsList.setPrefWidth(this.lblPlaylists.getWidth()+this.btnPlaylists.getWidth());
-				//this.playlistsList.setVisible(true);
-			});
+			this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE*this.root.getWidth());
+			this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth()+this.btnPlaylists.getWidth());
+			//this.playlistsList.setVisible(true);
 		} else {
-			Platform.runLater(() -> {
-				//this.playlistsList.setVisible(false);
-				this.playlistsList.setPrefWidth(SIZE_ZERO);
-				this.lblPlaylists.setPrefWidth(SIZE_ZERO);
-			});
+			//this.playlistsList.setVisible(false);
+			this.playlistsScroll.setPrefWidth(SIZE_ZERO);
+			this.lblPlaylists.setPrefWidth(SIZE_ZERO);
 		}
 		responsive();
 	}
 
 	private void responsive() {
-		Platform.runLater(() -> {
-			this.controllerPlayLists.responsive();
-		});
+		this.controllerPlayLists.responsive();
 	}
 
 	/* PRIVATE METHODS */
@@ -246,11 +223,9 @@ public class GUIController implements Initializable {
 	}
 
 	private void loadPlaylists() {
-		Platform.runLater(()-> {
-			this.playlistsList.setContent(null);
-			this.controllerPlayLists = new PlayListsController(this.playlistsList, this.songsIcon);
-			responsive();
-		});
+		this.playlistsScroll.setContent(null);
+		this.controllerPlayLists = new PlayListsController(this.playlistsScroll, this.songsScroll);
+		responsive();
 	}
 
 	public static Reader getReader() {
@@ -269,6 +244,6 @@ public class GUIController implements Initializable {
 		// 	responsive();
 		// });
 
-		loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
+		//loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
 	}
 }

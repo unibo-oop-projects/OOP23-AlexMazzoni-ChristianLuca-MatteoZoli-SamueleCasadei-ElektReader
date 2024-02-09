@@ -38,7 +38,8 @@ public class SongsController {
         container.setPrefSize(CONTAINER_W, CONTAINER_H);
         container.getStyleClass().add("songcontainer");
         VBox.setMargin(container, new Insets(10));
-        container.setPadding(new Insets(2));
+        container.setPadding(new Insets(5));
+        container.setSpacing(2);
         container.setOnMouseClicked( event -> {
             this.btnSongs.stream()
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
