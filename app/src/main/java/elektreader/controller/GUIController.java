@@ -261,6 +261,7 @@ public class GUIController implements Initializable {
 			responsive();
 		});
 
-		loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
+		//loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
+		Platform.runLater(()->responsive());
 	}
 }
