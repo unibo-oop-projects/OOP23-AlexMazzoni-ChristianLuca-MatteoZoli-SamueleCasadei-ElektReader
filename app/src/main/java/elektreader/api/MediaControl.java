@@ -23,6 +23,11 @@ public interface MediaControl {
     public Song getCurrentSong();
     
     /**
+     * @return the next Song to be set.
+     */
+    public Song getNextSong();
+
+    /**
      * @return Playlist currently set as the current one. ONLY DEBUG!
      */
     public List<Song> getPlaylist();
@@ -92,6 +97,8 @@ public interface MediaControl {
      * Sets the Volume of our mediaPlayer to 0.0.
      */
     public void mute();
+
+    public double getProgress();
 
 }
 

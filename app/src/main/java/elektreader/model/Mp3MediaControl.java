@@ -178,5 +178,21 @@ public class Mp3MediaControl implements MediaControl{
             this.mediaPlayer.get().setVolume(SET_ZERO_VOLUME);
         }
     }
-    
+
+    @Override
+    public Song getNextSong() {
+        if (this.playlist.isPresent() && this.index < getPlaylistSize()) {
+            return this.playlist.get().get(index + 1);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public double getProgress() {
+        if (this.mediaPlayer.isPresent()) {
+            return this.mediaPlayer.get().getBufferProgressTime().toMinutes();
+        }
+        return -1;
+    }
 }
