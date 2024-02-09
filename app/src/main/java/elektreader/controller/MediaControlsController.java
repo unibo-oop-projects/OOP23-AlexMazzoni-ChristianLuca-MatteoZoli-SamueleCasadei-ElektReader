@@ -1,11 +1,9 @@
 package elektreader.controller;
 
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
-import javafx.scene.media.MediaPlayer;
 
 public class MediaControlsController {
 
@@ -35,15 +33,32 @@ public class MediaControlsController {
         this.current_Volume = new Label();
         this.progressBar = progressBar;
     }
-
-    public void full_Labels() {
-        this.prev_Song.setOnMouseClicked(event -> GUIController.getReader().getPlayer().nextSong());
-        // this.next_Song.setOnMouseClicked(event -> this.mediaControl.nextSong());
-        // this.current_meta_Song.setText(this.mediaControl.getCurrentSong().getName() + 
-        //     this.mediaControl.getCurrentSong().getArtist().get());
-        // this.next_meta_Song.setText(this.mediaControl.getNextSong().getName() +
-        //     this.mediaControl.getNextSong().getArtist());
-        // this.current_Volume.setText(Double.toString(this.mediaControl.getVolume()));
-        // this.progressBar.setProgress(this.mediaControl.getProgress());
+    
+    //This method will be used to insert components into MediaControlPanel. 
+    private void insert_in_Panel() {
+        mediaCPanel.getChildren().addAll(play_pause, prev_Song, next_Song, current_meta_Song, next_meta_Song,
+            current_Volume, progressBar);
+        mediaCPanel.getChildren().forEach(t -> t.setVisible(true));
     }
+
+    //This method will be used to insert infos into the components.
+    public void fillMediaControlPanel() {
+        this.prev_Song.setOnMouseClicked(event -> GUIController.getReader().getPlayer().nextSong());
+        this.next_Song.setOnMouseClicked(event -> GUIController.getReader().getPlayer().prevSong());
+        this.current_meta_Song.setText(GUIController.getReader().getPlayer().getCurrentSong().getName() + 
+            GUIController.getReader().getPlayer().getCurrentSong().getArtist().get());
+        this.next_meta_Song.setText(GUIController.getReader().getPlayer().getNextSong().getName() +
+            GUIController.getReader().getPlayer().getNextSong().getArtist());
+        this.current_Volume.setText(Double.toString(GUIController.getReader().getPlayer().getVolume()));
+        //this.progressBar;
+        this.insert_in_Panel();
+    }
+
+    //This method is used to return the updated MediaControlPanel.
+    public HBox getMediaControlPanel() {
+        return this.mediaCPanel;
+    }
+    
+
+    
 }
