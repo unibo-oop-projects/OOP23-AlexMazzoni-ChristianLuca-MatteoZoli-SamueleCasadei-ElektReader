@@ -48,6 +48,9 @@ dependencies {
     // Use jaudiotagger for FILE MP3 METADATA.
     implementation("org:jaudiotagger:2.0.3")
 
+    //Use Jave for track trimming
+    implementation("ws.schild:jave-all-deps:3.4.0")
+
     // This dependency is used by the application. (guava)
     // implementation("com.google.guava:guava:31.1-jre")
 }
