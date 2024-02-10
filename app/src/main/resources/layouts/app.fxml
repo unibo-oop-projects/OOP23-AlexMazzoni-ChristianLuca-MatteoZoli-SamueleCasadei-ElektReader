@@ -124,6 +124,11 @@
                                           <Font name="SansSerif Bold" size="22.0" />
                                        </font>
                                     </Button>
+                                    <Button fx:id="btnTrim" layoutX="191.0" layoutY="16.0" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#trim" styleClass="menubutton" text="Trim">
+                                       <font>
+                                          <Font name="SansSerif Bold" size="22.0" />
+                                       </font>
+                                    </Button>
                                     <Button fx:id="btnHelp" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#help" styleClass="menubutton" text="?">
                                        <font>
                                           <Font name="SansSerif Bold" size="22.0" />

@@ -9,19 +9,28 @@ import java.util.ResourceBundle;
 
 import elektreader.api.Reader;
 import elektreader.model.ReaderImpl;
+import elektreader.model.TrackTrimmer;
 import elektreader.view.GUI;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 
 public class GUIController implements Initializable {
@@ -50,6 +59,9 @@ public class GUIController implements Initializable {
 
 	@FXML
     private Button btnFind;
+
+	@FXML
+	private Button btnTrim;
 
 	@FXML
     private Button btnHelp;
@@ -143,6 +155,46 @@ public class GUIController implements Initializable {
 		// var tmp = songsContainer.getChildren().get(0);
 		// songsContainer.getChildren().remove(0);
 		// songsContainer.getChildren().add(tmp);
+	}
+
+	@FXML
+	private void trim(){
+		TrackTrimmer trimmer = new TrackTrimmer();
+		Stage trimStage = new Stage();
+		trimStage.initModality(Modality.WINDOW_MODAL);
+		trimStage.initOwner(root.getScene().getWindow());
+		GridPane pane = new GridPane();
+		pane.setPadding(new Insets(15));
+		pane.setHgap(10);
+		pane.setVgap(10);
+		pane.setPrefSize(270, 300);
+		Label firstLabel = new Label("1.");
+		Label secondLabel = new Label("2.");
+		Label thirdLabel = new Label("3.");
+		Label fourthLabel = new Label("4.");
+		Label fifthLabel = new Label("5.");
+		Button fileBtn = new Button("Select track");
+		fileBtn.setOnMouseClicked(e -> {trimmer.action();});
+		//mostra nome file scelto
+		TextField startCut = new TextField("Insert start (hh:mm:ss or seconds)");
+		TextField endCut = new TextField("Insert end (hh:mm:ss or seconds)");
+		TextField newName = new TextField("Insert the name for the trimmed track");
+		startCut.setPrefWidth(220);
+		Button trimBtn = new Button("trim");
+		trimBtn.setOnMouseClicked(e -> {trimmer.printBEncoding(startCut, endCut, newName);});
+		pane.add(firstLabel, 0, 0);
+		pane.add(secondLabel, 0, 1);
+		pane.add(thirdLabel, 0, 2);
+		pane.add(fourthLabel, 0, 3);
+		pane.add(fifthLabel, 0, 4);
+		pane.add(fileBtn, 1, 0);
+		pane.add(startCut, 1, 1);
+		pane.add(endCut, 1, 2);
+		pane.add(newName, 1, 3);
+		pane.add(trimBtn, 1, 4);
+		Scene scene = new Scene(pane);
+		trimStage.setScene(scene);
+		trimStage.show();
 	}
 
 	@FXML
