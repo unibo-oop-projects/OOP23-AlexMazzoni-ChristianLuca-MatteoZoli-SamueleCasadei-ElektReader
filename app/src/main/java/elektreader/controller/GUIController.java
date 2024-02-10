@@ -192,19 +192,24 @@ public class GUIController implements Initializable {
 	/* only graphics */
 	@FXML
 	private void showPlaylists() {
+		
 		if(this.lblPlaylists.getPrefWidth()==SIZE_ZERO) { //is hidden
 			this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE*this.root.getWidth());
 			this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth()+this.btnPlaylists.getWidth());
 			//this.playlistsList.setVisible(true);
+	
 		} else {
 			//this.playlistsList.setVisible(false);
 			this.playlistsScroll.setPrefWidth(SIZE_ZERO);
 			this.lblPlaylists.setPrefWidth(SIZE_ZERO);
+	
 		}
 		responsive();
 	}
 
 	private void responsive() {
+		this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth());
+		this.songsScroll.setPrefWidth(this.lblSong.getWidth());
 		this.controllerPlayLists.responsive();
 	}
 
@@ -214,8 +219,7 @@ public class GUIController implements Initializable {
 			System.out.println("environment loaded: " + reader.getCurrentEnvironment().get());
 			loadPlayer();
 			loadPlaylists();
-		}
-	}
+		}	}
 
 	private void loadPlayer() {
 		this.mediaControlPanel.getChildren().clear();

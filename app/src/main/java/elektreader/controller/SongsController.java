@@ -39,14 +39,13 @@ public class SongsController {
         container.setPrefSize(CONTAINER_W, CONTAINER_H);
         container.getStyleClass().add("songcontainer");
         VBox.setMargin(container, new Insets(10));
-        container.setPadding(new Insets(5));
-        container.setSpacing(2);
 
-        /* installing a Tooltip for the track to read the full name if it's too long */
+        // adding a Tooltip in order to make possible to reade song titles if they're too long
         Tooltip btnTooltip = new Tooltip(duration.getText()+"\n"+title.getText());
-        btnTooltip.setStyle("-fx-font-size: 12pt");
+        btnTooltip.setStyle("-fx-font-size: 12pt;");
         Tooltip.install(container, btnTooltip);
 
+        container.setSpacing(2);
         container.setOnMouseClicked( event -> {
             this.btnSongs.stream()
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
