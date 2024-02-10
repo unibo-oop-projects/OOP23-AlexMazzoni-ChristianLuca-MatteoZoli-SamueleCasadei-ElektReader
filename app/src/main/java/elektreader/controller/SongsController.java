@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -38,7 +39,12 @@ public class SongsController {
         container.setPrefSize(CONTAINER_W, CONTAINER_H);
         container.getStyleClass().add("songcontainer");
         VBox.setMargin(container, new Insets(10));
-        container.setPadding(new Insets(5));
+
+        // adding a Tooltip in order to make possible to reade song titles if they're too long
+        Tooltip btnTooltip = new Tooltip(duration.getText()+"\n"+title.getText());
+        btnTooltip.setStyle("-fx-font-size: 12pt;");
+        Tooltip.install(container, btnTooltip);
+
         container.setSpacing(2);
         container.setOnMouseClicked( event -> {
             this.btnSongs.stream()
@@ -75,6 +81,7 @@ public class SongsController {
     }
 
     public void responsive(){
-        songPane.setPrefSize(pane.getWidth(), pane.getHeight());
+        songPane.setPrefWidth(pane.getWidth());
     }
+
 }

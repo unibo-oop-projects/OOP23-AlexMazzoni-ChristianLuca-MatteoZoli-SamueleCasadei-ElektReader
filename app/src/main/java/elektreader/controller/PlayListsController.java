@@ -19,6 +19,9 @@ public class PlayListsController {
     private final SongsController songsController;
     private final VBox plistContainer;
     private final ScrollPane pane;
+    /* to implement the switch between song views */
+    private PlayList current;
+    private boolean OnIcons = true;
 
     /**
      * Gets the playlist list from the static method getReader of GUI Controller
@@ -32,12 +35,13 @@ public class PlayListsController {
         this.songsController = new SongsController(songContainer, songsPane);
         this.plistContainer = new VBox();
         this.pane = playlistsPane;
+        this.pane.setOnMouseEntered(event -> responsive());
 
         songContainer.setPrefWidth(songsPane.getWidth());
 
         plistContainer.setPrefWidth(playlistsPane.getWidth());
         plistContainer.setSpacing(15);
-    
+
         GUIController.getReader().getPlaylists().stream()
             .map(playlist -> createButton(playlist,songContainer))
             .forEach(button -> {
@@ -50,6 +54,7 @@ public class PlayListsController {
         
         playlistsPane.setContent(plistContainer);
         songsPane.setContent(songContainer);
+        songsPane.setOnMouseEntered(event -> responsive());
     }
 
     private Button createButton(final PlayList p, final FlowPane songsList) {
@@ -63,6 +68,7 @@ public class PlayListsController {
             var btn = (Button)event.getSource();
             btn.getStyleClass().add("selected");
 			if(GUIController.getReader().setCurrentPlaylist(Optional.of(p))); {
+                this.current = p;
                 songsController.load(p);
                 responsive();
             }
@@ -75,11 +81,14 @@ public class PlayListsController {
     }
 
     public void responsive(){
-        this.plistContainer.setPrefSize(this.pane.getWidth(), this.pane.getHeight());
-
-        this.btnPlaylists.stream()
-            .forEach(btn -> btn.setPrefWidth(this.pane.getWidth()));
+        this.plistContainer.setPrefWidth(this.pane.getWidth());
+        this.plistContainer.fillWidthProperty();
         
         this.songsController.responsive();
+    }
+
+    /* needs implementation ... */
+    public void switchView(){
+
     }
 }
