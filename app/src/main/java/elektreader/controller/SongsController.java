@@ -46,7 +46,7 @@ public class SongsController {
         btnTooltip.setStyle("-fx-font-size: 12pt;");
         Tooltip.install(container, btnTooltip);
 
-        container.setSpacing(2);
+        container.setSpacing(DEF_SPACING);
         container.setOnMouseClicked( event -> {
             this.btnSongs.stream()
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));

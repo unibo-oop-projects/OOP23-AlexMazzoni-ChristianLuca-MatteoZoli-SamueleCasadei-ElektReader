@@ -34,6 +34,9 @@ public class PlayListsController {
         FlowPane songContainer = new FlowPane();
         this.songsController = new SongsController(songContainer, songsPane);
         this.plistContainer = new VBox();
+        /* now the playlist container will keep its children resized to its current width */
+        this.plistContainer.setFillWidth(true);
+        
         this.pane = playlistsPane;
         this.pane.setOnMouseEntered(event -> responsive());
 
@@ -81,9 +84,7 @@ public class PlayListsController {
     }
 
     public void responsive(){
-        this.plistContainer.setPrefWidth(this.pane.getWidth());
         this.plistContainer.fillWidthProperty();
-        
         this.songsController.responsive();
     }
 

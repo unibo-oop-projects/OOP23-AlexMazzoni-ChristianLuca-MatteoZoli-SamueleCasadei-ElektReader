@@ -216,7 +216,7 @@ public class GUIController implements Initializable {
 			this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE*this.root.getWidth());
 			this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth()+this.btnPlaylists.getWidth());
 			//this.playlistsList.setVisible(true);
-	
+			
 		} else {
 			//this.playlistsList.setVisible(false);
 			this.playlistsScroll.setPrefWidth(SIZE_ZERO);
@@ -247,6 +247,10 @@ public class GUIController implements Initializable {
 
 	private void loadPlaylists() {
 		this.playlistsScroll.setContent(null);
+		/* in order to keep constant track of the size of the two scrolls */
+		this.playlistsScroll.setFitToWidth(true);
+		this.songsScroll.setFitToWidth(true);
+	
 		this.controllerPlayLists = new PlayListsController(this.playlistsScroll, this.songsScroll);
 		responsive();
 	}
