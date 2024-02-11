@@ -7,8 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import ws.schild.jave.Encoder;
-import ws.schild.jave.EncoderException;
-import ws.schild.jave.InputFormatException;
 import ws.schild.jave.MultimediaObject;
 import ws.schild.jave.encode.AudioAttributes;
 import ws.schild.jave.encode.EncodingAttributes;
@@ -17,15 +15,14 @@ import ws.schild.jave.info.AudioInfo;
 public class TrackTrimmer {
 
     private File track;
-    private String startString, endString, newName;
 
-    public void action(){
+    public void chooseTrack(){
         FileChooser fileChooser = new FileChooser();
 		fileChooser.getExtensionFilters().add(new ExtensionFilter("MP3, wav", "*.mp3", "*.wav"));
 		track = fileChooser.showOpenDialog(null);
     }
 
-    public void printBEncoding(TextField start, TextField end, TextField name) {
+    public void trim(TextField start, TextField end, TextField name) {
         MultimediaObject mObj = new MultimediaObject(track);
         long startTime = timeConverter(start);
         long endTime = timeConverter(end);
@@ -72,5 +69,9 @@ public class TrackTrimmer {
     private String getExtesion(File file) {
         var name = file.getName().split("\\.");
         return name[name.length-1];
+    }
+
+    public String getSourceName() {
+        return track.getName();
     }
 }
