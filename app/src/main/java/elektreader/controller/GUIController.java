@@ -236,6 +236,7 @@ public class GUIController implements Initializable {
 	private void loadEnvironment(final Optional<Path> root) {
 		if(reader.setCurrentEnvironment(root.get())) {
 			System.out.println("environment loaded: " + reader.getCurrentEnvironment().get());
+			this.lblSongDesc.setText("");
 			loadPlayer();
 			loadPlaylists();
 		}	}
@@ -251,7 +252,7 @@ public class GUIController implements Initializable {
 		this.playlistsScroll.setFitToWidth(true);
 		this.songsScroll.setFitToWidth(true);
 	
-		this.controllerPlayLists = new PlayListsController(this.playlistsScroll, this.songsScroll);
+		this.controllerPlayLists = new PlayListsController(this.playlistsScroll, this.songsScroll, this.lblSongDesc);
 		responsive();
 	}
 
