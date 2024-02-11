@@ -35,7 +35,11 @@ public class Mp3MediaControl implements MediaControl{
 
     //This method return the Song found at the index passed as a parameter, in the current playlist. 
     private Song getSongAtCertainIndex(final int index) {
-        return this.playlist.get().get(index);
+        if (this.playlist.isPresent()) {
+            return this.playlist.get().get(index);
+        } else {
+            throw new IllegalStateException("No playlist set.");
+        }   
     }
 
     //This method returns the size of the current playlist.
@@ -169,7 +173,10 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public double getVolume() {
-        return this.mediaPlayer.get().getVolume();
+        if (this.mediaPlayer.isPresent()) {
+            return this.mediaPlayer.get().getVolume();
+        }
+        return 0.0;
     }
 
     @Override
@@ -194,5 +201,16 @@ public class Mp3MediaControl implements MediaControl{
             return this.mediaPlayer.get().getBufferProgressTime().toMinutes();
         }
         return -1;
+    }
+
+    public Status getStatus() {
+        if (this.mediaPlayer.isPresent()) {
+            if (this.mediaPlayer.get().getStatus().equals(MediaPlayer.Status.PLAYING)) {
+                return Status.PLAYING;
+            } else {
+                return Status.PAUSED;
+            }
+        }
+        return null;
     }
 }
