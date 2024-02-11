@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import elektreader.api.PlayList;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -18,26 +19,31 @@ public class PlayListsController {
     private final List<Button> btnPlaylists;
     private final SongsController songsController;
     private final VBox plistContainer;
-    private final ScrollPane pane;
+    private final Label desc;
+    /* to implement the switch between song views */
+    private PlayList current;
+    private boolean onIcons = true;
 
     /**
      * Gets the playlist list from the static method getReader of GUI Controller
      * @param playlistsList the playlists panel in which the class grafts the buttons
      * @param songsPane the songs panel to build the the new song controller
      */
-    public PlayListsController(final ScrollPane playlistsPane, final ScrollPane songsPane) {
+    public PlayListsController(final ScrollPane playlistsPane, final ScrollPane songsPane, final Label desc) {
 
         this.btnPlaylists = new ArrayList<>(Collections.emptyList());
+        this.desc = desc;
         FlowPane songContainer = new FlowPane();
         this.songsController = new SongsController(songContainer, songsPane);
         this.plistContainer = new VBox();
-        this.pane = playlistsPane;
+        /* now the playlist container will keep its children resized to its current width */
+        this.plistContainer.setFillWidth(true);
 
         songContainer.setPrefWidth(songsPane.getWidth());
 
         plistContainer.setPrefWidth(playlistsPane.getWidth());
         plistContainer.setSpacing(15);
-    
+
         GUIController.getReader().getPlaylists().stream()
             .map(playlist -> createButton(playlist,songContainer))
             .forEach(button -> {
@@ -50,6 +56,7 @@ public class PlayListsController {
         
         playlistsPane.setContent(plistContainer);
         songsPane.setContent(songContainer);
+        songsPane.setOnMouseEntered(event -> responsive());
     }
 
     private Button createButton(final PlayList p, final FlowPane songsList) {
@@ -63,7 +70,9 @@ public class PlayListsController {
             var btn = (Button)event.getSource();
             btn.getStyleClass().add("selected");
 			if(GUIController.getReader().setCurrentPlaylist(Optional.of(p))); {
-                songsController.load(p);
+                this.current = p;
+                songsController.load(p, onIcons);
+                this.desc.setText(" - "+p.getSize()+" - "+p.getName());
                 responsive();
             }
 		});
@@ -75,11 +84,13 @@ public class PlayListsController {
     }
 
     public void responsive(){
-        this.plistContainer.setPrefSize(this.pane.getWidth(), this.pane.getHeight());
-
-        this.btnPlaylists.stream()
-            .forEach(btn -> btn.setPrefWidth(this.pane.getWidth()));
-        
+        this.plistContainer.fillWidthProperty();
         this.songsController.responsive();
+    }
+
+    
+    public void switchView(){
+        onIcons = !onIcons;
+        songsController.load(current, onIcons);
     }
 }
