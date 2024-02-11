@@ -21,7 +21,7 @@ public class PlayListsController {
     private final ScrollPane pane;
     /* to implement the switch between song views */
     private PlayList current;
-    private boolean OnIcons = true;
+    private boolean onIcons = true;
 
     /**
      * Gets the playlist list from the static method getReader of GUI Controller
@@ -69,7 +69,7 @@ public class PlayListsController {
             btn.getStyleClass().add("selected");
 			if(GUIController.getReader().setCurrentPlaylist(Optional.of(p))); {
                 this.current = p;
-                songsController.load(p);
+                songsController.load(p, onIcons);
                 responsive();
             }
 		});
@@ -87,8 +87,9 @@ public class PlayListsController {
         this.songsController.responsive();
     }
 
-    /* needs implementation ... */
+    
     public void switchView(){
-
+        onIcons = !onIcons;
+        songsController.load(current, onIcons);
     }
 }

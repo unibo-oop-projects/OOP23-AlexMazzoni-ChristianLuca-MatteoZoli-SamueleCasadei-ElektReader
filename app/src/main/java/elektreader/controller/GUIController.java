@@ -11,7 +11,6 @@ import elektreader.api.Reader;
 import elektreader.model.ReaderImpl;
 import elektreader.model.TrackTrimmer;
 import elektreader.view.GUI;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -21,16 +20,14 @@ import javafx.scene.control.Label;
 
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.FileChooser.ExtensionFilter;
+
 
 
 public class GUIController implements Initializable {
@@ -124,37 +121,7 @@ public class GUIController implements Initializable {
 
 	@FXML
 	private void view() {
-		// //Setting the TableView for the current playlist (if one has been selected)
-		// if (getReader().getCurrentPlaylist().isPresent()){
-		// 	var currentPlaylist = getReader().getCurrentPlaylist().get();
-		// 	ObservableList<Song> listaCoda = FXCollections.observableArrayList(currentPlaylist.getSongs());
-		// 	TableColumn<Song, String> nameColumn = new TableColumn<>("Song Name");
-		// 	nameColumn.setCellValueFactory(cellData -> {
-		// 		var name = cellData.getValue().getName();
-		// 		return new SimpleStringProperty(name);
-		// 	});
-		// 	TableColumn<Song, String> artistColumn = new TableColumn<>("Artist");
-		// 	artistColumn.setCellValueFactory(cellData -> {
-		// 		var artist = cellData.getValue().getArtist();
-		// 		return new SimpleStringProperty(artist.isPresent() ? artist.get() : "");
-		// 	});
-		// 	TableColumn<Song, String> durationColumn = new TableColumn<>("Duration");
-		// 	durationColumn.setCellValueFactory(cellData -> {
-		// 		var duration = cellData.getValue().DurationStringRep();
-		// 		return new SimpleStringProperty(duration);
-		// 	});
-		// 	songsListView.setItems(listaCoda);
-		// 	songsListView.getColumns().addAll(Arrays.asList(nameColumn, artistColumn, durationColumn));
-		// 	songsListView.setOnMouseClicked(e -> {
-		// 		var selectedSong = songsListView.getSelectionModel().getSelectedItem();
-		// 		reader.getPlayer().setSong(selectedSong);
-		// 		reader.getPlayer().play();
-		// 	});
-		// }
-		// //Switching the pane that is been shown in the StackPane
-		// var tmp = songsContainer.getChildren().get(0);
-		// songsContainer.getChildren().remove(0);
-		// songsContainer.getChildren().add(tmp);
+		controllerPlayLists.switchView();
 	}
 
 	@FXML
@@ -174,14 +141,14 @@ public class GUIController implements Initializable {
 		Label fourthLabel = new Label("4.");
 		Label fifthLabel = new Label("5.");
 		Button fileBtn = new Button("Select track");
-		fileBtn.setOnMouseClicked(e -> {trimmer.action();});
+		fileBtn.setOnMouseClicked(e -> trimmer.chooseTrack());
 		//mostra nome file scelto
 		TextField startCut = new TextField("Insert start (hh:mm:ss or seconds)");
 		TextField endCut = new TextField("Insert end (hh:mm:ss or seconds)");
 		TextField newName = new TextField("Insert the name for the trimmed track");
 		startCut.setPrefWidth(220);
-		Button trimBtn = new Button("trim");
-		trimBtn.setOnMouseClicked(e -> {trimmer.printBEncoding(startCut, endCut, newName);});
+		Button trimBtn = new Button("Trim");
+		trimBtn.setOnMouseClicked(e -> trimmer.trim(startCut, endCut, newName));
 		pane.add(firstLabel, 0, 0);
 		pane.add(secondLabel, 0, 1);
 		pane.add(thirdLabel, 0, 2);
