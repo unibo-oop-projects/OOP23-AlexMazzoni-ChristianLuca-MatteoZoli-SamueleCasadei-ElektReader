@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Page-1" id="ecqLVog1buzcT9Wsd1fs">
-        <mxGraphModel dx="903" dy="601" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="558" dy="1466" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -33,6 +33,98 @@
                 </mxCell>
                 <mxCell id="eDpFOvDPi3UEWpO-Dq-w-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.998;entryY=0.534;entryDx=0;entryDy=0;entryPerimeter=0;dashed=1;" parent="1" source="eDpFOvDPi3UEWpO-Dq-w-5" target="eDpFOvDPi3UEWpO-Dq-w-1" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="3" parent="1" target="4">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="940" y="-140" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;elektreader.api&lt;/font&gt;" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;fontSize=8;" vertex="1" parent="1">
+                    <mxGeometry x="910" y="-230" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center; font-size: 10px;&quot;&gt;&lt;i style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;elektreader.api.PlayList&lt;/font&gt;&lt;/i&gt;&lt;/p&gt;&lt;p style=&quot;margin: 4px 0px 0px; text-align: center; font-size: 10px;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;i style=&quot;&quot;&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;PlayList&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;hr style=&quot;font-size: 6px;&quot; size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getPath(): Path&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getSong(int): Optional&amp;lt;Song&amp;gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getSongs(): List&amp;lt;Song&amp;gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getSong(Path): Optional&amp;lt;Song&amp;gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getTotalDuration(): String&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getSize(): int&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="800" y="-120" width="140" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;fontSize=6;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="4" target="eDpFOvDPi3UEWpO-Dq-w-6">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="710" y="110" as="sourcePoint"/>
+                        <mxPoint x="870" y="110" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="870" y="178"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="6" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;fontSize=6;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="7" target="4">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="905" y="240" as="sourcePoint"/>
+                        <mxPoint x="970" y="120" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="905" y="118"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="Mp3PlayList" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=10;" vertex="1" parent="1">
+                    <mxGeometry x="950" y="110" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="7">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1015" y="90" as="targetPoint"/>
+                        <mxPoint x="1135" y="30" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="12" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;elektreader.model&lt;/font&gt;" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;fontSize=8;" vertex="1" parent="1">
+                    <mxGeometry x="1090" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;fontSize=10;entryX=1;entryY=0.25;entryDx=0;entryDy=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="14" target="4">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="1260" y="-160" as="sourcePoint"/>
+                        <mxPoint x="1170" y="-100" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1252" y="-95"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center; font-size: 10px;&quot;&gt;&lt;i style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;elektreader.api.Song&lt;/font&gt;&lt;/i&gt;&lt;/p&gt;&lt;p style=&quot;margin: 4px 0px 0px; text-align: center; font-size: 10px;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;i style=&quot;&quot;&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;Song&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 4px 0px 0px; text-align: center; font-size: 10px;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;br&gt;&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+&lt;u style=&quot;&quot;&gt; getTitle(String): String&lt;/u&gt;&lt;br&gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getName(): String&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getArtist(): Optional&amp;lt;String&amp;gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getAlbumName(): Optional&amp;lt;String&amp;gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getGenre(): Optional&amp;lt;String&amp;gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getFile(): File&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getDuration(): int&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; font-size: 6px;&quot;&gt;&lt;font style=&quot;font-size: 6px;&quot;&gt;+ getDurationStringRep(): String&lt;/font&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1200" y="-260" width="210" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="16" parent="1" target="14">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1290" y="-270" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;elektreader.api&lt;/font&gt;" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;fontSize=8;" vertex="1" parent="1">
+                    <mxGeometry x="1330" y="-380" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="Mp3Song" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontSize=10;" vertex="1" parent="1">
+                    <mxGeometry x="1330" y="20" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="17">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1330" y="30" as="targetPoint"/>
+                        <mxPoint x="1434.9999999999998" y="-50" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="22" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;elektreader.model&lt;/font&gt;" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;fontSize=8;" vertex="1" parent="1">
+                    <mxGeometry x="1390" y="-80" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;fontSize=6;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="17" target="14">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="1330" y="-40.5" as="sourcePoint"/>
+                        <mxPoint x="1285" y="-108" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1370" y="-20"/>
+                            <mxPoint x="1305" y="-20"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="24" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;fontSize=10;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="17" target="7">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="1431.5" y="87" as="sourcePoint"/>
+                        <mxPoint x="1119.0000000000002" y="129.5" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1410" y="125"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
             </root>
         </mxGraphModel>

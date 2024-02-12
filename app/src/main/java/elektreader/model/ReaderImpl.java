@@ -29,7 +29,7 @@ public class ReaderImpl implements Reader{
         this.player = this.root.isEmpty() ? Optional.empty() : Optional.of(new Mp3MediaControl());
 
         if(this.playlists.isPresent() && !this.playlists.get().isEmpty()){
-            setCurrentPlaylist(Optional.of(this.playlists.get().stream().findAny().get()));
+            setCurrentPlaylist(Optional.of(this.playlists.get().stream().findFirst().get()));
         }
         else {
             setCurrentPlaylist(Optional.empty());

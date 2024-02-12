@@ -62,7 +62,10 @@ public class SongsController {
             
             container.getStyleClass().add("selected");
             this.mediaControl.loadSong(song);
-            GUIController.getReader().getPlayer().setSong(song);
+            var player = GUIController.getReader().getPlayer();
+            player.setSong(song);
+            player.play();
+        
         });
 
         btn.setPrefSize(BTN_W, BTN_H);
