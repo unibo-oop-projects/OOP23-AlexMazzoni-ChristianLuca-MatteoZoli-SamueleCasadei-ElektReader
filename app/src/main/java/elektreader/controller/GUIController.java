@@ -246,13 +246,15 @@ public class GUIController implements Initializable {
 		this.controllerMediaControls = new MediaControlsController(this.mediaControlPanel, this.progressBar);
 	}
 
+
+
 	private void loadPlaylists() {
 		this.playlistsScroll.setContent(null);
 		/* in order to keep constant track of the size of the two scrolls */
 		this.playlistsScroll.setFitToWidth(true);
 		this.songsScroll.setFitToWidth(true);
 	
-		this.controllerPlayLists = new PlayListsController(this.playlistsScroll, this.songsScroll, this.lblSongDesc);
+		this.controllerPlayLists = new PlayListsController(this.playlistsScroll, this.songsScroll, this.lblSongDesc, this.controllerMediaControls);
 		responsive();
 	}
 

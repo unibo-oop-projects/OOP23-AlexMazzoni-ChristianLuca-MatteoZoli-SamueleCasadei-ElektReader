@@ -31,12 +31,12 @@ public class PlayListsController {
      * @param desc the description label on the song panel, it lists the number of songs in the playlist and,
      * also, the name of the playlist
      */
-    public PlayListsController(final ScrollPane playlistsPane, final ScrollPane songsPane, final Label desc) {
+    public PlayListsController(final ScrollPane playlistsPane, final ScrollPane songsPane, final Label desc, final MediaControlsController mediaControl) {
 
         this.btnPlaylists = new ArrayList<>(Collections.emptyList());
         this.desc = desc;
         FlowPane songContainer = new FlowPane();
-        this.songsController = new SongsController(songContainer, songsPane);
+        this.songsController = new SongsController(songContainer, songsPane, mediaControl);
         this.plistContainer = new VBox();
         /* now the playlist container will keep its children resized to its current width */
         this.plistContainer.setFillWidth(true);
