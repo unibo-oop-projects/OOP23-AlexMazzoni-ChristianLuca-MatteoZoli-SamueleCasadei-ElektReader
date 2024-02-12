@@ -22,7 +22,7 @@ public class SongsController {
     private final FlowPane songPane;
     private final ScrollPane pane;
     private final double CONTAINER_W = 120, CONTAINER_H = 140, BTN_W = 90, BTN_H = 80,
-        IMGFIT_W = 75, IMGFIT_H = 85, DEF_SPACING = 2;
+        IMGFIT_W = 75, IMGFIT_H = 85, DEF_SPACING = 2, DEF_GAP = 10;
 
     /**
      * @param songContainer the pane that will graphically contain the songs
@@ -31,6 +31,8 @@ public class SongsController {
      */
     public SongsController(final FlowPane songContainer, final ScrollPane pane, final MediaControlsController mediaControl) {
         this.songPane = songContainer;
+        this.songPane.setHgap(DEF_GAP);
+        this.songPane.setVgap(DEF_GAP);
         songPane.setPrefWidth(pane.getWidth());
         this.pane = pane;
         this.mediaControl = mediaControl;
@@ -59,7 +61,7 @@ public class SongsController {
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
             
             container.getStyleClass().add("selected");
-            //this.mediaControl.loadSong(song);
+            this.mediaControl.loadSong(song);
             GUIController.getReader().getPlayer().setSong(song);
         });
 

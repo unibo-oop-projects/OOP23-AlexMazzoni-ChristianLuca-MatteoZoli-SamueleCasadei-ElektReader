@@ -246,7 +246,10 @@ public class GUIController implements Initializable {
 		this.controllerMediaControls = new MediaControlsController(this.mediaControlPanel, this.progressBar);
 	}
 
-
+	//debug
+	public MediaControlsController getMediaControl() {
+		return this.controllerMediaControls;
+	}
 
 	private void loadPlaylists() {
 		this.playlistsScroll.setContent(null);
