@@ -52,7 +52,9 @@ public class MediaControlsController {
     
     //This method will be used to insert components into MediaControlPanel. 
     private void insert_in_Panel() {
+        this.gridPane.getChildren().clear();
         this.gridPane.getChildren().addAll(current_meta_Song, prev_Song, play_pause, next_Song, next_meta_Song, current_Volume);
+        this.gridPane.setVisible(true);
     }
 
     //This method will be used to insert infos into the components.
@@ -67,12 +69,12 @@ public class MediaControlsController {
             }
         });
         this.prev_Song.setOnMouseClicked(event -> this.mediaControl.prevSong());
-        //this.prev_Song.setGraphic(current_Volume);
+        this.prev_Song.setGraphic(current_Volume);
         this.next_Song.setOnMouseClicked(event -> this.mediaControl.nextSong());
         this.current_meta_Song.setText(this.mediaControl.getCurrentSong().getName() + 
             this.mediaControl.getCurrentSong().getArtist().get());
-        this.next_meta_Song.setText(this.mediaControl.getNextSong().getName() +
-            this.mediaControl.getNextSong().getArtist());
+        //this.next_meta_Song.setText(this.mediaControl.getNextSong().getName() +
+        //    this.mediaControl.getNextSong().getArtist());
         this.current_Volume.setText(Double.toString(this.mediaControl.getVolume()));
     }
 }
