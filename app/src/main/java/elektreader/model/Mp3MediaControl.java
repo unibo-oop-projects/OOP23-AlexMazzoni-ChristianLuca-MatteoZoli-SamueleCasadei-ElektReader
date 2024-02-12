@@ -14,7 +14,7 @@ public class Mp3MediaControl implements MediaControl{
     private Optional<MediaPlayer> mediaPlayer;
     private Optional<List<Song>> playlist;
     private int index;
-    private double CurrentVolume;
+    private double currentVolume;
     static private final double SET_ZERO_VOLUME = 0.0;
 
     public Mp3MediaControl() {
@@ -25,10 +25,10 @@ public class Mp3MediaControl implements MediaControl{
 
     //This method set the current song as the Media given to our Mediaplyer.
     private void currentSong() {
-        this.stop();
         Song currSong = this.getCurrentSong();
+        this.stop();
         this.mediaPlayer = Optional.of(new MediaPlayer(new Media(currSong.getFile().toURI().toString())));
-        this.mediaPlayer.get().setVolume(this.CurrentVolume);
+        this.mediaPlayer.get().setVolume(this.currentVolume);
         this.play();
         this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);   //If media ends, the next song in the queue will be played.
     }
@@ -167,7 +167,7 @@ public class Mp3MediaControl implements MediaControl{
     public void setVolume(final double volume) {
         if (this.mediaPlayer.isPresent()) {
             this.mediaPlayer.get().setVolume(volume);
-            this.CurrentVolume = volume;
+            this.currentVolume = volume;
         }
     }
 
