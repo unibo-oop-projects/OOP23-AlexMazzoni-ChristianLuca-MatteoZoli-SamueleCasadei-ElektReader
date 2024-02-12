@@ -11,6 +11,12 @@ import javafx.util.Duration;
  */
 public interface MediaControl {
 
+    static enum Status {
+        PLAYING, PAUSED;
+    }
+
+
+
     /**
      * @param playList the playlist to be set as the current one.
      * @return true if the playlist is set as the current one correctly, false otherwise.
@@ -99,6 +105,8 @@ public interface MediaControl {
     public void mute();
 
     public double getProgress();
+
+    public Status getStatus();
 
 }
 
