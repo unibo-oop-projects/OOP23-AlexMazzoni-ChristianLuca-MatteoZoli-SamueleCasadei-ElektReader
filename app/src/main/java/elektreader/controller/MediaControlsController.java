@@ -1,5 +1,9 @@
 package elektreader.controller;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -7,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import elektreader.api.MediaControl;
+import elektreader.api.Song;
 
 public class MediaControlsController {
 
@@ -47,14 +52,13 @@ public class MediaControlsController {
         this.current_Volume = new Label();
         this.progressBar = progressBar;
         this.mediaControl = GUIController.getReader().getPlayer();
-        fillMediaControlPanel();
         insert_in_Panel();
+        fillPanel();
     }
     
     //This method will be used to insert components into MediaControlPanel. 
     private void insert_in_Panel() {
         this.gridPane.getChildren().clear();
-        //this.gridPane.getChildren().addAll(current_meta_Song, prev_Song, play_pause, next_Song, next_meta_Song, current_Volume);
         this.gridPane.add(current_meta_Song, 3, 2);
         this.gridPane.add(prev_Song, 50, 2);
         this.gridPane.add(play_pause, 55, 2);
@@ -64,8 +68,16 @@ public class MediaControlsController {
         this.gridPane.setVisible(true);
     }
 
-    //This method will be used to insert infos into the components.
-    private void fillMediaControlPanel() {
+    public void loadSong(Song song) {
+        //this.progressBar.valueProperty().bindBidirectional(GUIController.getReader().getPlayer().getMediaControl().currentTimeProperty().);
+        /*
+        DoubleProperty currTimeProperty = new SimpleDoubleProperty();
+        DoubleBinding currTimeBinding = Bindings.createDoubleBinding(
+            () -> mediaControl.getMediaControl().getCurrentTime().toSeconds(), 
+            mediaControl.getMediaControl().currentTimeProperty());
+        currTimeProperty.bind(currTimeBinding);
+        Bindings.bindBidirectional(progressBar.valueProperty(), currTimeProperty);
+        */
         this.play_pause.setOnMouseClicked(event -> {
             if (this.mediaControl.getStatus().equals(MediaControl.Status.PLAYING)) {
                 this.mediaControl.pause();
@@ -79,13 +91,42 @@ public class MediaControlsController {
         //this.prev_Song.setGraphic();
         this.next_Song.setOnMouseClicked(event -> this.mediaControl.nextSong());
         //this.next_Song.setGraphic();
-        this.current_meta_Song.setText(this.mediaControl.getCurrentSong().getName() + 
-            "\n" + (this.mediaControl.getCurrentSong().getArtist().isPresent() ? 
-            this.mediaControl.getCurrentSong().getArtist().get() : "No artist found"));
-        this.next_meta_Song.setText("Next song: " + this.mediaControl.getNextSong().getName() +
-            (this.mediaControl.getNextSong().getArtist().isPresent() ?
-            this.mediaControl.getNextSong().getArtist().get() : "No artist found"));
+        this.current_meta_Song.setText(song.getName() + 
+            "\n" + (song.getArtist().isPresent() ? 
+            song.getArtist().get() : "No artist found"));
+        this.next_meta_Song.setText("Next song: " + song.getName() +
+            (song.getArtist().isPresent() ?
+            song.getArtist().get() : "No artist found"));
         this.current_Volume.setText(Double.toString(this.mediaControl.getVolume()));
     }
 
+    public void fillPanel() {
+        DoubleProperty currTimeProperty = new SimpleDoubleProperty();
+        DoubleBinding currTimeBinding = Bindings.createDoubleBinding(
+            () -> mediaControl.getMediaControl().getCurrentTime().toSeconds(), 
+            mediaControl.getMediaControl().currentTimeProperty());
+        currTimeProperty.bind(currTimeBinding);
+        Bindings.bindBidirectional(progressBar.valueProperty(), currTimeProperty);
+        
+        this.play_pause.setOnMouseClicked(event -> {
+            if (this.mediaControl.getStatus().equals(MediaControl.Status.PLAYING)) {
+                this.mediaControl.pause();
+                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
+            } else {
+                this.mediaControl.play();
+                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
+            }
+        });
+        this.prev_Song.setOnMouseClicked(event -> this.mediaControl.prevSong());
+        //this.prev_Song.setGraphic();
+        this.next_Song.setOnMouseClicked(event -> this.mediaControl.nextSong());
+        //this.next_Song.setGraphic();
+        this.current_meta_Song.setText(mediaControl.getCurrentSong().getName() + 
+            "\n" + (mediaControl.getCurrentSong().getArtist().isPresent() ? 
+            mediaControl.getCurrentSong().getArtist().get() : "No artist found"));
+        this.next_meta_Song.setText("Next song: " + mediaControl.getNextSong().getName() +
+            (mediaControl.getNextSong().getArtist().isPresent() ?
+            mediaControl.getNextSong().getArtist().get() : "No artist found"));
+        this.current_Volume.setText(Double.toString(this.mediaControl.getVolume()));
+    }
 }

@@ -2,6 +2,7 @@ package elektreader.api;
 
 import java.util.List;
 
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 
@@ -105,6 +106,8 @@ public interface MediaControl {
     public void mute();
 
     public double getProgress();
+
+    public MediaPlayer getMediaControl();
 
     public Status getStatus();
 
