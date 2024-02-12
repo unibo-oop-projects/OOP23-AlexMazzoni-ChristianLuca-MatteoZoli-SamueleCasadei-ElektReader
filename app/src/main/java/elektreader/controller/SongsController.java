@@ -23,6 +23,11 @@ public class SongsController {
     private final double CONTAINER_W = 120, CONTAINER_H = 140, BTN_W = 90, BTN_H = 80,
         IMGFIT_W = 75, IMGFIT_H = 85, DEF_SPACING = 2;
 
+    /**
+     * @param songContainer the pane that will graphically contain the songs
+     * @param pane the scroll pane which will contain songContainer, i keep that in
+     * order to resize
+     */
     public SongsController(final FlowPane songContainer, final ScrollPane pane) {
         this.songPane = songContainer;
         songPane.setPrefWidth(pane.getWidth());
@@ -73,6 +78,11 @@ public class SongsController {
         return container;
     }
 
+    /**
+     * @param playlist the playlist to be graphically loaded
+     * @param onIcons a flag to know if the songs will be loaded as icons,
+     * or as list
+     */
     public void load(PlayList playlist, boolean onIcons){
         if (onIcons) {
             loadIcons(playlist);
@@ -116,6 +126,9 @@ public class SongsController {
         return btn;
     }
 
+    /**
+     * this method adjusts the song pane to the size of its container 
+     */
     public void responsive(){
         songPane.setPrefWidth(pane.getWidth());
         listContainer.setPrefWidth(songPane.getPrefWidth());

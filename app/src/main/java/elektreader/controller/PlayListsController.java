@@ -28,6 +28,8 @@ public class PlayListsController {
      * Gets the playlist list from the static method getReader of GUI Controller
      * @param playlistsList the playlists panel in which the class grafts the buttons
      * @param songsPane the songs panel to build the the new song controller
+     * @param desc the description label on the song panel, it lists the number of songs in the playlist and,
+     * also, the name of the playlist
      */
     public PlayListsController(final ScrollPane playlistsPane, final ScrollPane songsPane, final Label desc) {
 
@@ -70,6 +72,7 @@ public class PlayListsController {
             var btn = (Button)event.getSource();
             btn.getStyleClass().add("selected");
 			if(GUIController.getReader().setCurrentPlaylist(Optional.of(p))); {
+                /* i should probably alert the MediaControlsController class to get the playlist, still to decide... */
                 this.current = p;
                 songsController.load(p, onIcons);
                 this.desc.setText(" - "+p.getSize()+" - "+p.getName());
@@ -83,12 +86,17 @@ public class PlayListsController {
         return this.btnPlaylists;
     }
 
+    /**
+     * adjusts the size of panels and relative content, also call responsive for the songs controller
+     */
     public void responsive(){
         this.plistContainer.fillWidthProperty();
         this.songsController.responsive();
     }
 
-    
+    /**
+     * switches and reloads the type of view, from icons to list or viceversa
+     */
     public void switchView(){
         onIcons = !onIcons;
         songsController.load(current, onIcons);

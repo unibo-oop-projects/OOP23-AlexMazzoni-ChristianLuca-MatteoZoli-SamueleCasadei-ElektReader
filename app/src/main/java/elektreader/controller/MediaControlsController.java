@@ -46,4 +46,5 @@ public class MediaControlsController {
         // this.current_Volume.setText(Double.toString(this.mediaControl.getVolume()));
         // this.progressBar.setProgress(this.mediaControl.getProgress());
     }
+
 }
