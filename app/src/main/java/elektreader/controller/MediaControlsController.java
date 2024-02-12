@@ -38,9 +38,10 @@ public class MediaControlsController {
         this.gridPane.setPrefHeight(mediaControlPanel.getHeight());
         this.gridPane.setPrefWidth(mediaControlPanel.getWidth());
 
-        this.play_pause = new Button("Avvio/Pausa");
-        this.prev_Song = new Button("Prev Song");
-        this.next_Song = new Button("Next Song");
+        this.play_pause = new Button(/*"Avvio/Pausa"*/);
+        play_pause.setGraphic(new ImageView("icons/Light/Media/Play.png"));
+        this.prev_Song = new Button("Previous");
+        this.next_Song = new Button("Next");
         this.current_meta_Song = new Label();
         this.next_meta_Song = new Label();
         this.current_Volume = new Label();
@@ -68,16 +69,16 @@ public class MediaControlsController {
         this.play_pause.setOnMouseClicked(event -> {
             if (this.mediaControl.getStatus().equals(MediaControl.Status.PLAYING)) {
                 this.mediaControl.pause();
-                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Pause.png").toString()));
+                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
             } else {
                 this.mediaControl.play();
-                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Play.png").toString()));
+                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
             }
         });
         this.prev_Song.setOnMouseClicked(event -> this.mediaControl.prevSong());
-        this.prev_Song.setGraphic(current_Volume);
+        //this.prev_Song.setGraphic();
         this.next_Song.setOnMouseClicked(event -> this.mediaControl.nextSong());
-        this.next_Song.setGraphic(current_Volume);
+        //this.next_Song.setGraphic();
         this.current_meta_Song.setText(this.mediaControl.getCurrentSong().getName() + 
             "\n" + (this.mediaControl.getCurrentSong().getArtist().isPresent() ? 
             this.mediaControl.getCurrentSong().getArtist().get() : "No artist found"));
