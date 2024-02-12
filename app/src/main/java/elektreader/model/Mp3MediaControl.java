@@ -187,11 +187,11 @@ public class Mp3MediaControl implements MediaControl{
     }
 
     @Override
-    public Song getNextSong() {
-        if (this.playlist.isPresent() && this.index < getPlaylistSize()) {
-            return this.playlist.get().get(index + 1);
+    public Optional<Song> getNextSong() {
+        if (this.playlist.isPresent() && this.index < getPlaylistSize() - 1) {
+            return Optional.of(this.playlist.get().get(index + 1));
         } else {
-            return null;
+            return Optional.empty();
         }
     }
 
