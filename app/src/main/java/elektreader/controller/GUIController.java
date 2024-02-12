@@ -267,11 +267,12 @@ public class GUIController implements Initializable {
 		return reader;
 	}
 
+	//Functional interface to execute FXML methods via shortcuts
 	private interface ShortcutAction {
-		void execute();
-		
+		void execute();	
 	}
 	
+	//adds to the scene's accelerators list the KeyCombination and the associated action to perform
 	private static void createShortcut(Scene scene, KeyCodeCombination key, ShortcutAction action) {
 		scene.getAccelerators().put(key, () -> action.execute());
 	}
@@ -280,9 +281,9 @@ public class GUIController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
 		
-        //root.sceneProperty().addListener((observableScene, oldScene, newScene) -> createShortcut(newScene, new KeyCodeCombination(KeyCode.T), () -> trim()));
-		//root.sceneProperty().addListener((observableScene, oldScene, newScene) -> createShortcut(newScene, new KeyCodeCombination(KeyCode.F), () -> view()));
-		
+        root.sceneProperty().addListener((observableScene, oldScene, newScene) -> createShortcut(newScene, new KeyCodeCombination(KeyCode.T), () -> trim()));
+		root.sceneProperty().addListener((observableScene, oldScene, newScene) -> createShortcut(newScene, new KeyCodeCombination(KeyCode.V), () -> view()));
+		//NEED TO ADD MORE SHORTCUTS
 
 		// this.root.heightProperty().addListener((observable, oldHeight, newHeight) -> {
 		// 	responsive();
