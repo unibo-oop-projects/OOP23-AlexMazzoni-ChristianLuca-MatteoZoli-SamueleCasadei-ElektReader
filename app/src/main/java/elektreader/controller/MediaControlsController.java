@@ -72,9 +72,11 @@ public class MediaControlsController {
         this.prev_Song.setGraphic(current_Volume);
         this.next_Song.setOnMouseClicked(event -> this.mediaControl.nextSong());
         this.current_meta_Song.setText(this.mediaControl.getCurrentSong().getName() + 
-            this.mediaControl.getCurrentSong().getArtist().get());
-        //this.next_meta_Song.setText(this.mediaControl.getNextSong().getName() +
-        //    this.mediaControl.getNextSong().getArtist());
+            (this.mediaControl.getCurrentSong().getArtist().isPresent() ? 
+            this.mediaControl.getCurrentSong().getArtist().get() : "No artist found"));
+        this.next_meta_Song.setText(this.mediaControl.getNextSong().getName() +
+            (this.mediaControl.getNextSong().getArtist().isPresent() ?
+            this.mediaControl.getNextSong().getArtist().get() : "No artist found"));
         this.current_Volume.setText(Double.toString(this.mediaControl.getVolume()));
     }
 
