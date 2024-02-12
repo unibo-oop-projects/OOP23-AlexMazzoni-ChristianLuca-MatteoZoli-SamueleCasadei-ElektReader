@@ -22,6 +22,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
@@ -265,9 +267,22 @@ public class GUIController implements Initializable {
 		return reader;
 	}
 
+	private interface ShortcutAction {
+		void execute();
+		
+	}
+	
+	private static void createShortcut(Scene scene, KeyCodeCombination key, ShortcutAction action) {
+		scene.getAccelerators().put(key, () -> action.execute());
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
+		
+        //root.sceneProperty().addListener((observableScene, oldScene, newScene) -> createShortcut(newScene, new KeyCodeCombination(KeyCode.T), () -> trim()));
+		//root.sceneProperty().addListener((observableScene, oldScene, newScene) -> createShortcut(newScene, new KeyCodeCombination(KeyCode.F), () -> view()));
+		
 
 		// this.root.heightProperty().addListener((observable, oldHeight, newHeight) -> {
 		// 	responsive();
