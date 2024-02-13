@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+//import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import elektreader.api.MediaControl;
@@ -47,6 +48,10 @@ public class MediaControlsController {
         this.current_meta_Song = new Label();
         this.next_meta_Song = new Label();
         this.current_Volume = new TextArea("Write here");
+        this.current_Volume.setStyle("-fx-text-fill: black");
+        this.current_Volume.positionCaret(current_Volume.getText().length() / 2);
+        this.current_Volume.setPrefHeight(30.0);
+        this.current_Volume.setPrefWidth(70.0);
         //this.progressBar = progressBar;
         this.mediaControl = GUIController.getReader().getPlayer();
         insert_in_Panel();
@@ -55,6 +60,11 @@ public class MediaControlsController {
     //This method will be used to insert components into MediaControlPanel. 
     private void insert_in_Panel() {
         this.gridPane.getChildren().clear();
+        //Still to be understood
+        /*
+        this.gridPane.getColumnConstraints().addAll(new ColumnConstraints().setPercentWidth(50), 
+            new ColumnConstraints().setPercentWidth(50));
+        */
         this.gridPane.add(current_meta_Song, 3, 2);
         this.gridPane.add(prev_Song, 50, 2);
         this.gridPane.add(play_pause, 55, 2);
@@ -64,22 +74,16 @@ public class MediaControlsController {
         this.gridPane.setVisible(true);
     }
 
+    //This method is used to load song infos into the view.
     public void loadSong(Song song) {
-        //this.progressBar.valueProperty().bindBidirectional(GUIController.getReader().getPlayer().getMediaControl().currentTimeProperty().);
-        /*DoubleProperty currTimeProperty = new SimpleDoubleProperty();
-        DoubleBinding currTimeBinding = Bindings.createDoubleBinding(
-            () -> mediaControl.getMediaControl().getCurrentTime().toSeconds(), 
-            mediaControl.getMediaControl().currentTimeProperty());
-        currTimeProperty.bind(currTimeBinding);
-        Bindings.bindBidirectional(progressBar.valueProperty(), currTimeProperty);
-        */
+        this.play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
         this.play_pause.setOnMouseClicked(event -> {
             if (this.mediaControl.getStatus().equals(MediaControl.Status.PLAYING)) {
                 this.mediaControl.pause();
-                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
+                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
             } else {
                 this.mediaControl.play();
-                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
+                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
             }
         });
         this.prev_Song.setOnMouseClicked(event -> {
@@ -95,11 +99,16 @@ public class MediaControlsController {
         this.current_meta_Song.setText(song.getName() + 
             "\n" + (song.getArtist().isPresent() ? 
             song.getArtist().get() : "No artist found"));
-            
-            var next_Song = mediaControl.getNextSong().isPresent() ? mediaControl.getNextSong().get().getName() + " " +
-            (mediaControl.getNextSong().get().getArtist().isPresent() ?
-            mediaControl.getNextSong().get().getArtist().get() : " No artist found") : "end of playlist";
-            this.next_meta_Song.setText(next_Song);
-        //this.current_Volume.setText(Double.toString(this.mediaControl.getVolume()));
+        //Debug
+        this.current_Volume.setOnInputMethodTextChanged(event -> {
+            this.mediaControl.setVolume(Double.parseDouble(current_Volume.getText()));
+        });  
+        //End debug
+        var next_Song = mediaControl.getNextSong().isPresent() ? mediaControl.getNextSong().get().getName() + "\n" +
+        (mediaControl.getNextSong().get().getArtist().isPresent() ?
+        mediaControl.getNextSong().get().getArtist().get() : " No artist found") : "end of playlist";
+        this.next_meta_Song.setText(next_Song);
+        this.current_Volume.setText(Double.toString(this.mediaControl.getVolume()));
+        //this.current_Volume.positionCaret(current_Volume.getText().length() / 2);
     }
 }
