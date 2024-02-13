@@ -9,7 +9,8 @@ import java.util.ResourceBundle;
 
 import elektreader.api.Reader;
 import elektreader.model.ReaderImpl;
-import elektreader.model.TrackTrimmer;
+import elektreader.model.TrackTrimmerImpl;
+import elektreader.api.TrackTrimmer;
 import elektreader.view.GUI;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +23,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
@@ -125,8 +128,8 @@ public class GUIController implements Initializable {
 	}
 
 	@FXML
-	private void trim(){
-		TrackTrimmer trimmer = new TrackTrimmer();
+	private void trim() {
+		TrackTrimmer trimmer = new TrackTrimmerImpl();
 		Stage trimStage = new Stage();
 		trimStage.initModality(Modality.WINDOW_MODAL);
 		trimStage.initOwner(root.getScene().getWindow());
@@ -142,7 +145,6 @@ public class GUIController implements Initializable {
 		Label fifthLabel = new Label("5.");
 		Button fileBtn = new Button("Select track");
 		fileBtn.setOnMouseClicked(e -> trimmer.chooseTrack());
-		//mostra nome file scelto
 		TextField startCut = new TextField("Insert start (hh:mm:ss or seconds)");
 		TextField endCut = new TextField("Insert end (hh:mm:ss or seconds)");
 		TextField newName = new TextField("Insert the name for the trimmed track");
@@ -159,6 +161,12 @@ public class GUIController implements Initializable {
 		pane.add(endCut, 1, 2);
 		pane.add(newName, 1, 3);
 		pane.add(trimBtn, 1, 4);
+		pane.setStyle("-fx-background-color: #000000");
+		firstLabel.setStyle("-fx-mid-text-color: #ffffff");
+		secondLabel.setStyle("-fx-mid-text-color: #ffffff");
+		thirdLabel.setStyle("-fx-mid-text-color: #ffffff");
+		fourthLabel.setStyle("-fx-mid-text-color: #ffffff");
+		fifthLabel.setStyle("-fx-mid-text-color: #ffffff");
 		Scene scene = new Scene(pane);
 		trimStage.setScene(scene);
 		trimStage.show();
@@ -265,9 +273,25 @@ public class GUIController implements Initializable {
 		return reader;
 	}
 
+	//Functional interface to execute FXML methods via shortcuts
+	private interface ShortcutAction {
+		void execute();	
+	}
+	
+	//adds to the scene's accelerators list the KeyCombination and the associated action to perform
+	private static void createShortcut(final Scene scene, final KeyCodeCombination key, final ShortcutAction action) {
+		scene.getAccelerators().put(key, () -> action.execute());
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
+		
+        root.sceneProperty().addListener((observableScene, oldScene, newScene) -> 
+			createShortcut(newScene, new KeyCodeCombination(KeyCode.T), () -> trim()));
+		root.sceneProperty().addListener((observableScene, oldScene, newScene) -> 
+			createShortcut(newScene, new KeyCodeCombination(KeyCode.V), () -> view()));
+		//NEED TO ADD MORE SHORTCUTS
 
 		// this.root.heightProperty().addListener((observable, oldHeight, newHeight) -> {
 		// 	responsive();

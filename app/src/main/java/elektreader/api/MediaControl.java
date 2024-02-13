@@ -1,6 +1,7 @@
 package elektreader.api;
 
 import java.util.List;
+import java.util.Optional;
 
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -32,7 +33,7 @@ public interface MediaControl {
     /**
      * @return the next Song to be set.
      */
-    public Song getNextSong();
+    public Optional<Song> getNextSong();
 
     /**
      * @return Playlist currently set as the current one. ONLY DEBUG!

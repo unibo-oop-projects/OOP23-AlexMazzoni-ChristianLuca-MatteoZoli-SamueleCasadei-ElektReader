@@ -1,12 +1,9 @@
 package elektreader.controller;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -29,9 +26,9 @@ public class MediaControlsController {
 
     private Label next_meta_Song;
 
-    private Label current_Volume;
+    private TextArea current_Volume;
 
-    private Slider progressBar;
+    //private Slider progressBar;
 
     MediaControl mediaControl;
 
@@ -49,11 +46,10 @@ public class MediaControlsController {
         this.next_Song = new Button("Next");
         this.current_meta_Song = new Label();
         this.next_meta_Song = new Label();
-        this.current_Volume = new Label();
-        this.progressBar = progressBar;
+        this.current_Volume = new TextArea("Write here");
+        //this.progressBar = progressBar;
         this.mediaControl = GUIController.getReader().getPlayer();
         insert_in_Panel();
-        fillPanel();
     }
     
     //This method will be used to insert components into MediaControlPanel. 
@@ -70,8 +66,7 @@ public class MediaControlsController {
 
     public void loadSong(Song song) {
         //this.progressBar.valueProperty().bindBidirectional(GUIController.getReader().getPlayer().getMediaControl().currentTimeProperty().);
-        /*
-        DoubleProperty currTimeProperty = new SimpleDoubleProperty();
+        /*DoubleProperty currTimeProperty = new SimpleDoubleProperty();
         DoubleBinding currTimeBinding = Bindings.createDoubleBinding(
             () -> mediaControl.getMediaControl().getCurrentTime().toSeconds(), 
             mediaControl.getMediaControl().currentTimeProperty());
@@ -87,46 +82,24 @@ public class MediaControlsController {
                 play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
             }
         });
-        this.prev_Song.setOnMouseClicked(event -> this.mediaControl.prevSong());
+        this.prev_Song.setOnMouseClicked(event -> {
+            this.mediaControl.prevSong();
+            this.loadSong(mediaControl.getCurrentSong());
+        });
         //this.prev_Song.setGraphic();
-        this.next_Song.setOnMouseClicked(event -> this.mediaControl.nextSong());
+        this.next_Song.setOnMouseClicked(event -> {
+            this.mediaControl.nextSong();
+            this.loadSong(mediaControl.getCurrentSong());
+        });
         //this.next_Song.setGraphic();
         this.current_meta_Song.setText(song.getName() + 
             "\n" + (song.getArtist().isPresent() ? 
             song.getArtist().get() : "No artist found"));
-        this.next_meta_Song.setText("Next song: " + song.getName() +
-            (song.getArtist().isPresent() ?
-            song.getArtist().get() : "No artist found"));
-        this.current_Volume.setText(Double.toString(this.mediaControl.getVolume()));
-    }
-
-    public void fillPanel() {
-        DoubleProperty currTimeProperty = new SimpleDoubleProperty();
-        DoubleBinding currTimeBinding = Bindings.createDoubleBinding(
-            () -> mediaControl.getMediaControl().getCurrentTime().toSeconds(), 
-            mediaControl.getMediaControl().currentTimeProperty());
-        currTimeProperty.bind(currTimeBinding);
-        Bindings.bindBidirectional(progressBar.valueProperty(), currTimeProperty);
-        
-        this.play_pause.setOnMouseClicked(event -> {
-            if (this.mediaControl.getStatus().equals(MediaControl.Status.PLAYING)) {
-                this.mediaControl.pause();
-                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
-            } else {
-                this.mediaControl.play();
-                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
-            }
-        });
-        this.prev_Song.setOnMouseClicked(event -> this.mediaControl.prevSong());
-        //this.prev_Song.setGraphic();
-        this.next_Song.setOnMouseClicked(event -> this.mediaControl.nextSong());
-        //this.next_Song.setGraphic();
-        this.current_meta_Song.setText(mediaControl.getCurrentSong().getName() + 
-            "\n" + (mediaControl.getCurrentSong().getArtist().isPresent() ? 
-            mediaControl.getCurrentSong().getArtist().get() : "No artist found"));
-        this.next_meta_Song.setText("Next song: " + mediaControl.getNextSong().getName() +
-            (mediaControl.getNextSong().getArtist().isPresent() ?
-            mediaControl.getNextSong().getArtist().get() : "No artist found"));
-        this.current_Volume.setText(Double.toString(this.mediaControl.getVolume()));
+            
+            var next_Song = mediaControl.getNextSong().isPresent() ? mediaControl.getNextSong().get().getName() + " " +
+            (mediaControl.getNextSong().get().getArtist().isPresent() ?
+            mediaControl.getNextSong().get().getArtist().get() : " No artist found") : "end of playlist";
+            this.next_meta_Song.setText(next_Song);
+        //this.current_Volume.setText(Double.toString(this.mediaControl.getVolume()));
     }
 }

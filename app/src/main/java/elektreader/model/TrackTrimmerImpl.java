@@ -3,6 +3,7 @@ package elektreader.model;
 import java.io.File;
 import java.nio.file.FileSystems;
 
+import elektreader.api.TrackTrimmer;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -12,21 +13,36 @@ import ws.schild.jave.encode.AudioAttributes;
 import ws.schild.jave.encode.EncodingAttributes;
 import ws.schild.jave.info.AudioInfo;
 
-public class TrackTrimmer {
+public class TrackTrimmerImpl implements TrackTrimmer{
 
     private File track;
 
+    @Override
     public void chooseTrack(){
         FileChooser fileChooser = new FileChooser();
 		fileChooser.getExtensionFilters().add(new ExtensionFilter("MP3, wav", "*.mp3", "*.wav"));
 		track = fileChooser.showOpenDialog(null);
     }
 
-    public void trim(TextField start, TextField end, TextField name) {
+    @Override
+    public void trim(final TextField start, final TextField end, final TextField name) {
         MultimediaObject mObj = new MultimediaObject(track);
         long startTime = timeConverter(start);
         long endTime = timeConverter(end);
-        File target = new File(track.getParent() + FileSystems.getDefault().getSeparator() + name.getText() + "." + getExtesion(track));
+        try {
+            if(track == null){
+                throw new Exception("must select a track");
+            }
+            if(startTime > endTime) {
+                throw new Exception("start has to be grater than end");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        File target = new File(track.getParent() + FileSystems.getDefault().getSeparator() 
+            + (name.getText().isBlank() ? track.getName() + "(1)" : name.getText()) 
+            + "." + getExtesion(track));
         try {
             AudioAttributes audioAttrs = new AudioAttributes();
             AudioInfo aInfo = mObj.getInfo().getAudio();
@@ -55,7 +71,7 @@ public class TrackTrimmer {
         }
     }
 
-    private long timeConverter(TextField timeInput) {
+    private long timeConverter(final TextField timeInput) {
         long output = 0;
         String[] inputstStrings = timeInput.getText().split(":");
         int i = 1;
@@ -66,12 +82,12 @@ public class TrackTrimmer {
         return output;
     }
 
-    private String getExtesion(File file) {
+    private String getExtesion(final File file) {
         var name = file.getName().split("\\.");
         return name[name.length-1];
     }
 
-    public String getSourceName() {
+    /*public String getSourceName() {
         return track.getName();
-    }
+    }*/
 }
