@@ -85,7 +85,7 @@ public class SongsController {
      * @param onIcons a flag to know if the songs will be loaded as icons,
      * or as list
      */
-    public void load(PlayList playlist, boolean onIcons){
+    public void load(final PlayList playlist, final boolean onIcons){
         if (onIcons) {
             loadIcons(playlist);
         } else {
@@ -93,7 +93,7 @@ public class SongsController {
         }
     }
 
-    private void loadIcons(PlayList playlist) {
+    private void loadIcons(final PlayList playlist) {
         songPane.getChildren().clear();
         this.btnSongs = playlist.getSongs().stream()
             .map(s -> createButton(s))
@@ -101,8 +101,9 @@ public class SongsController {
         songPane.getChildren().addAll(btnSongs);
     }
 
-    private void loadList(PlayList playList) {
+    private void loadList(final PlayList playList) {
         songPane.getChildren().clear();
+        listContainer.getChildren().clear();
         songPane.getChildren().add(listContainer);
         playList.getSongs().stream()
             .map(s -> createListButton(s))
@@ -111,7 +112,7 @@ public class SongsController {
         listContainer.fillWidthProperty();
     }
 
-    private Button createListButton(Song song) {
+    private Button createListButton(final Song song) {
         Button btn = new Button(song.getName() 
             + "   |   " + (song.getArtist().isPresent() ? song.getArtist().get() : "Artist not found") 
             + "   |   " + song.DurationStringRep());
