@@ -29,7 +29,7 @@ public class MediaControlsController {
 
     private TextArea current_Volume;
 
-    //private Slider progressBar;
+    private Slider progressBar;
 
     MediaControl mediaControl;
 
@@ -41,10 +41,12 @@ public class MediaControlsController {
         this.gridPane.setPrefHeight(mediaControlPanel.getHeight());
         this.gridPane.setPrefWidth(mediaControlPanel.getWidth());
 
-        this.play_pause = new Button(/*"Avvio/Pausa"*/);
+        this.play_pause = new Button();
         play_pause.setGraphic(new ImageView("icons/Light/Media/Play.png"));
-        this.prev_Song = new Button("Previous");
-        this.next_Song = new Button("Next");
+        this.prev_Song = new Button();
+        this.prev_Song.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Rewind.png").toString()));
+        this.next_Song = new Button();
+        this.next_Song.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/FastForward.png").toString()));
         this.current_meta_Song = new Label();
         this.next_meta_Song = new Label();
         this.current_Volume = new TextArea("Write here");
@@ -52,7 +54,7 @@ public class MediaControlsController {
         this.current_Volume.positionCaret(current_Volume.getText().length() / 2);
         this.current_Volume.setPrefHeight(30.0);
         this.current_Volume.setPrefWidth(70.0);
-        //this.progressBar = progressBar;
+        this.progressBar = progressBar;
         this.mediaControl = GUIController.getReader().getPlayer();
         insert_in_Panel();
     }
@@ -76,7 +78,12 @@ public class MediaControlsController {
 
     //This method is used to load song infos into the view.
     public void loadSong(Song song) {
+
+        mediaControl.getMediaControl().currentTimeProperty().addListener((observable, oldValue, newValue) -> 
+            progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().getTotalDuration().toSeconds()));
+            
         this.play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
+        
         this.play_pause.setOnMouseClicked(event -> {
             if (this.mediaControl.getStatus().equals(MediaControl.Status.PLAYING)) {
                 this.mediaControl.pause();
@@ -90,12 +97,12 @@ public class MediaControlsController {
             this.mediaControl.prevSong();
             this.loadSong(mediaControl.getCurrentSong());
         });
-        //this.prev_Song.setGraphic();
+        this.prev_Song.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Rewind.png").toString()));
         this.next_Song.setOnMouseClicked(event -> {
             this.mediaControl.nextSong();
             this.loadSong(mediaControl.getCurrentSong());
         });
-        //this.next_Song.setGraphic();
+        this.next_Song.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/FastForward.png").toString()));
         this.current_meta_Song.setText(song.getName() + 
             "\n" + (song.getArtist().isPresent() ? 
             song.getArtist().get() : "No artist found"));
