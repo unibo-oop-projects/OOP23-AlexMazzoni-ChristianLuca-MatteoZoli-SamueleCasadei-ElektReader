@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import elektreader.api.Reader;
 import elektreader.model.ReaderImpl;
 import elektreader.view.GUI;
+import elektreader.view.QueueGUI;
 import elektreader.view.TrimGUI;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -128,6 +129,7 @@ public class GUIController implements Initializable {
 
 	@FXML
 	private void help() { 
+		QueueGUI queue = new QueueGUI();
 		//TODO - anyone
 		/* codice per trovare le canzoni duplicate (inutile e poco efficente) */
 		// songs = files.stream().filter(t -> {

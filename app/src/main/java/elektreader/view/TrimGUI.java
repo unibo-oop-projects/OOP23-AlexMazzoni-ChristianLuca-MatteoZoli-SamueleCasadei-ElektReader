@@ -18,7 +18,6 @@ public class TrimGUI{
     TrackTrimmer trimmer = new TrackTrimmerImpl();
 
     public TrimGUI(Window primaryStage) {
-
         Stage trimStage = new Stage();
 		trimStage.initModality(Modality.WINDOW_MODAL);
 		trimStage.initOwner(primaryStage);
