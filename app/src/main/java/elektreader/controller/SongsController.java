@@ -61,8 +61,9 @@ public class SongsController {
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
             
             container.getStyleClass().add("selected");
-            this.mediaControl.loadSong(song);
             GUIController.getReader().getPlayer().setSong(song);
+            this.mediaControl.loadSong(song);
+            //GUIController.getReader().getPlayer().setSong(song);
         });
 
         btn.setPrefSize(BTN_W, BTN_H);
