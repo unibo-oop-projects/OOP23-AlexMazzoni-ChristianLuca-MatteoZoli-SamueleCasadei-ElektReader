@@ -44,6 +44,11 @@ public interface Song {
     File getFile();
 
     /**
+     * @return the file format of the song, for example, if the song contains a file named song.mp3, then "mp3" is returned
+     */
+    String getFileFormat();
+
+    /**
      * @return song's duration in seconds, the duration is not optional
      */
     int getDuration();

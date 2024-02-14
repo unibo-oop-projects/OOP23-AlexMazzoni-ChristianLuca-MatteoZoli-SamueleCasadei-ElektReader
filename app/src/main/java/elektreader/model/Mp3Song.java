@@ -6,7 +6,8 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.AudioHeader;
@@ -83,6 +84,17 @@ public class Mp3Song implements Song{
         long m = TimeUnit.SECONDS.toMinutes(getDuration()%3600); /* amount of minutes, less the hours */
         long s = (getDuration()%3600)%60; /* seconds left, less minutes, less hours */
         return String.format("%02d:%02d:%02d",h,m,s);
+    }
+
+    @Override
+    public String getFileFormat() {
+        Matcher match =  Pattern.compile(".*.(\\w+)$").matcher(getFile().getName());
+        if(match.matches()){
+            return match.group(1);
+        }
+        else {
+            return "";
+        }
     }
     
 }
