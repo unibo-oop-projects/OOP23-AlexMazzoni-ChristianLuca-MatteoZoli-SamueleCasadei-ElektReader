@@ -192,6 +192,23 @@ class ElektreaderTest {
         Assertions.assertEquals(true, flag);
         Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG1).getName(), mC1.getCurrentSong().getName());
         mC1.setRepSpeed(2.0);
+        flag = mC1.setSong(mC1.getPlaylist().get(mC1.getPlaylist().size() - 1));
+        System.out.println(mC1.getCurrentSong().getName());
+        Assertions.assertEquals(true, flag);
+        mC1.loopSong();
+        mC1.nextSong();
+        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG1).getName(), mC1.getCurrentSong().getName());
+        mC1.loopSong();
+        mC1.nextSong();
+        Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG1).getName(), mC1.getCurrentSong().getName());
+        mC1.loopSong();
+        mC1.rand();
+        mC1.nextSong();
+        mC1.rand();
+        int actualSong = mC1.getPlaylist().indexOf(mC1.getCurrentSong());
+        mC1.nextSong();
+        Assertions.assertEquals(actualSong + 1, mC1.getPlaylist().indexOf(mC1.getCurrentSong()));
+        //Thread.sleep(2000);
         mC1.stop();
     }
 

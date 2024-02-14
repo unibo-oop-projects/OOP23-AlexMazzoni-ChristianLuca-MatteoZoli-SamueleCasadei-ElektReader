@@ -179,8 +179,8 @@ public class Mp3MediaControl implements MediaControl{
             Collections.shuffle(tmpList);
             playlist = Optional.of(tmpList);
         } else {
-            playlist = playlistCopy;
             index = playlistCopy.get().indexOf(getCurrentSong());
+            playlist = playlistCopy;
         }
         randOn = !randOn;
     }

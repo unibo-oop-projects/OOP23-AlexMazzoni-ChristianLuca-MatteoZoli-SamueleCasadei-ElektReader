@@ -131,11 +131,13 @@ public class SongsController {
     }
 
     private Button createListButton(final Song song) {
-        Button btn = new Button(String.format("%2d.\t%s\t-\t%s\t|\t%s\t|\t%s",
-            Mp3PlayList.getIndexFromName(song.getFile().getName()),
+        Button btn = new Button(String.format("%2s.\t%s\t-\t%s\t|\t%s\t|\t%s",
+            Mp3PlayList.getIndexFromName(song.getFile().getName()).isPresent() ?
+                Mp3PlayList.getIndexFromName(song.getFile().getName()).get().toString()
+                :   "  ",
             song.getName(),
             song.getArtist().isPresent() ? song.getArtist().get() : "no artist",
-            song.DurationStringRep(), song.getFileFormat()));
+            song.DurationStringRep(), song.getFileFormat()) );
         
             btn.setOnMouseClicked(e -> {
             listContainer.getChildren().stream()
