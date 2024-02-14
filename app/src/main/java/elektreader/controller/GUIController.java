@@ -11,6 +11,7 @@ import elektreader.api.Reader;
 import elektreader.model.ReaderImpl;
 import elektreader.view.GUI;
 import elektreader.view.TrimGUI;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -24,7 +25,10 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
-
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 
 public class GUIController implements Initializable {
@@ -148,46 +152,74 @@ public class GUIController implements Initializable {
 				this.playlistsScroll.setVisible(false);
 				this.playlistsScroll.setPrefWidth(SIZE_ZERO);
 				this.lblPlaylists.setPrefWidth(SIZE_ZERO);
-		
 			}
 			responsive();
 		}
 	}
 
 	private void responsive() {
-		this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth());
-		this.songsScroll.setPrefWidth(this.lblSong.getWidth());
-		this.controllerPlayLists.responsive();
+		Platform.runLater(() -> {
+			this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth());
+			this.songsScroll.setPrefWidth(this.lblSong.getWidth());
+			this.controllerPlayLists.responsive();
+		});
+	}
+
+	private void reload() {
+		Platform.runLater(() -> {
+			this.controllerMediaControls.reload();
+			this.controllerPlayLists.reload();
+		});
+	}
+
+	private Runnable GUIReaderListener() {
+		return new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					GUIController.getReader().getPlayer().getMediaControl().statusProperty().addListener(new ChangeListener<MediaPlayer.Status>() {
+						@Override
+						public void changed(ObservableValue<? extends MediaPlayer.Status> observable, MediaPlayer.Status oldValue, MediaPlayer.Status newValue) {
+							reload();
+							responsive();
+						}
+					});
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) { e.printStackTrace(); }
+				}
+			}
+		};	
 	}
 
 	/* PRIVATE METHODS */
 	private void loadEnvironment(final Optional<Path> root) {
 		if(reader.setCurrentEnvironment(root.get())) {
 			System.out.println("environment loaded: " + reader.getCurrentEnvironment().get());
-			this.lblSongDesc.setText("");
+			//this.lblSongDesc.setText("");
 			loadPlaylists();
 			loadPlayer();
-			responsive();
-
-			GUIController.getReader().getPlayer().getMediaControl().statusProperty().addListener(observable -> {
-				//this.controllerMediaControls.reload();
-				this.controllerPlayLists.reload();
-			});
+			Thread statusCheckerThread = new Thread(GUIReaderListener());
+			statusCheckerThread.setDaemon(true);
+			statusCheckerThread.start();
 		}	
 	}
 
 	private void loadPlayer() {
-		this.mediaControlPanel.getChildren().clear();
-		this.controllerMediaControls = new MediaControlsController(this.mediaControlPanel, this.progressBar);
+		Platform.runLater(() -> {
+			this.mediaControlPanel.getChildren().clear();
+			this.controllerMediaControls = new MediaControlsController(this.mediaControlPanel, this.progressBar);
+		});
 	}
 
 	private void loadPlaylists() {
-		this.playlistsScroll.setContent(null);
-		/* in order to keep constant track of the size of the two scrolls */
-		this.playlistsScroll.setFitToWidth(true);
-		this.songsScroll.setFitToWidth(true);
-	
-		this.controllerPlayLists = new PlayListsController(this.playlistsScroll, this.songsScroll, this.lblSongDesc);
+		Platform.runLater(() -> {
+			this.playlistsScroll.setContent(null);
+			/* in order to keep constant track of the size of the two scrolls */
+			this.playlistsScroll.setFitToWidth(true);
+			this.songsScroll.setFitToWidth(true);
+			this.controllerPlayLists = new PlayListsController(this.playlistsScroll, this.songsScroll, this.lblSongDesc);
+		});
 	}
 
 	public static Reader getReader() {
@@ -213,6 +245,7 @@ public class GUIController implements Initializable {
 			createShortcut(newScene, new KeyCodeCombination(KeyCode.T), () -> trim());
 			createShortcut(newScene, new KeyCodeCombination(KeyCode.V), () -> view());
 		});
-		loadEnvironment(Optional.of(elektreader.App.TEST_PATH));
+
+		Platform.runLater(() -> loadEnvironment(Optional.of(elektreader.App.TEST_PATH)));
 	}
 }

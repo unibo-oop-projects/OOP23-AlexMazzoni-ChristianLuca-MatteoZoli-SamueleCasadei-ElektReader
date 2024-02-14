@@ -5,6 +5,7 @@ import java.util.List;
 import elektreader.api.PlayList;
 import elektreader.api.Song;
 import elektreader.model.Mp3PlayList;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,7 +23,7 @@ public class SongsController {
     private final FlowPane songPane;
     private final ScrollPane pane;
     private final double CONTAINER_W = 120, CONTAINER_H = 140, BTN_W = 50, BTN_H = 50,
-        IMGFIT_W = 75, IMGFIT_H = 85, DEF_SPACING = 2, DEF_GAP = 15;
+        IMGFIT_W = 50, IMGFIT_H = 56, DEF_SPACING = 2, DEF_GAP = 15;
 
     /**
      * @param songContainer the pane that will graphically contain the songs
@@ -46,6 +47,7 @@ public class SongsController {
         container.setPrefSize(CONTAINER_W, CONTAINER_H);
         container.getStyleClass().add("songcontainer");
         VBox.setMargin(container, new Insets(10));
+        container.setPadding(new Insets(5));
 
         // adding a Tooltip in order to make possible to reade song titles if they're too long
         Tooltip btnTooltip = new Tooltip(duration.getText()+"\n"+title.getText());
@@ -92,37 +94,41 @@ public class SongsController {
     }
 
     private void loadIcons(final PlayList playlist) {
-        songPane.getChildren().clear();
-        this.btnSongs = playlist.getSongs().stream()
-            .map(s -> {
-                if(s.equals(GUIController.getReader().getPlayer().getCurrentSong())){
-                    var songView = createButton(s);
-                    songView.getStyleClass().add("selected");
-                    return songView;
-                }
-                return createButton(s);
-            })
-            .toList();
-        songPane.getChildren().addAll(btnSongs);
+        Platform.runLater(() -> {
+            songPane.getChildren().clear();
+            this.btnSongs = playlist.getSongs().stream()
+                .map(s -> {
+                    if(s.equals(GUIController.getReader().getPlayer().getCurrentSong())){
+                        var songView = createButton(s);
+                        songView.getStyleClass().add("selected");
+                        return songView;
+                    }
+                    return createButton(s);
+                })
+                .toList();
+            songPane.getChildren().addAll(btnSongs);
+        });
     }
 
     private void loadList(final PlayList playList) {
-        songPane.getChildren().clear();
-        listContainer.getChildren().clear();
-        songPane.getChildren().add(listContainer);
-        playList.getSongs().stream()
-            .map(s -> {
-                /* tmp */
-                if(s.equals(GUIController.getReader().getPlayer().getCurrentSong())){
-                    var songView = createListButton(s);
-                    songView.getStyleClass().add("selected");
-                    return songView;
-                }
-                return createListButton(s);
-            })
-            .forEach(b -> listContainer.getChildren().add(b));
-        listContainer.setSpacing(DEF_SPACING);
-        listContainer.fillWidthProperty();
+        Platform.runLater(() -> {
+            songPane.getChildren().clear();
+            listContainer.getChildren().clear();
+            songPane.getChildren().add(listContainer);
+            playList.getSongs().stream()
+                .map(s -> {
+                    /* tmp */
+                    if(s.equals(GUIController.getReader().getPlayer().getCurrentSong())){
+                        var songView = createListButton(s);
+                        songView.getStyleClass().add("selected");
+                        return songView;
+                    }
+                    return createListButton(s);
+                })
+                .forEach(b -> listContainer.getChildren().add(b));
+            listContainer.setSpacing(DEF_SPACING);
+            listContainer.fillWidthProperty();
+        });
     }
 
     private Button createListButton(final Song song) {
@@ -147,9 +153,11 @@ public class SongsController {
      * this method adjusts the song pane to the size of its container 
      */
     public void responsive(){
-        songPane.setPrefWidth(pane.getWidth());
-        listContainer.setPrefWidth(songPane.getPrefWidth());
-        listContainer.getChildren().stream().forEach(b -> b.prefWidth(listContainer.getPrefWidth()));
+        // Platform.runLater(() -> {
+            songPane.setPrefWidth(pane.getWidth());
+            listContainer.setPrefWidth(songPane.getPrefWidth());
+            listContainer.getChildren().stream().forEach(b -> b.prefWidth(listContainer.getPrefWidth()));
+        // });
     }
 
 }
