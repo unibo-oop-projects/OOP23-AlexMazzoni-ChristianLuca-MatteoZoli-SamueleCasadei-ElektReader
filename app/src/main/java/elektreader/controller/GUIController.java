@@ -170,8 +170,8 @@ public class GUIController implements Initializable {
 			responsive();
 
 			GUIController.getReader().getPlayer().getMediaControl().statusProperty().addListener(observable -> {
-				this.controllerMediaControls.reload();
-				//this.controllerPlayLists.reload();
+				//this.controllerMediaControls.reload();
+				this.controllerPlayLists.reload();
 			});
 		}	
 	}
@@ -187,7 +187,7 @@ public class GUIController implements Initializable {
 		this.playlistsScroll.setFitToWidth(true);
 		this.songsScroll.setFitToWidth(true);
 	
-		this.controllerPlayLists = new PlayListsController(this.playlistsScroll, this.songsScroll, this.lblSongDesc, this.controllerMediaControls);
+		this.controllerPlayLists = new PlayListsController(this.playlistsScroll, this.songsScroll, this.lblSongDesc);
 	}
 
 	public static Reader getReader() {

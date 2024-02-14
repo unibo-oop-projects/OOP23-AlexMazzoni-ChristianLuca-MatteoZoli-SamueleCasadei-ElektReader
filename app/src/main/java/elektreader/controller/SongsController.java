@@ -17,7 +17,6 @@ import javafx.scene.layout.VBox;
 /* a controller for songs graphics, link graphics and logics */
 public class SongsController {
     
-    private final MediaControlsController mediaControl;
     private List<VBox> btnSongs;
     private final VBox listContainer = new VBox();
     private final FlowPane songPane;
@@ -30,13 +29,12 @@ public class SongsController {
      * @param pane the scroll pane which will contain songContainer, i keep that in
      * order to resize
      */
-    public SongsController(final FlowPane songContainer, final ScrollPane pane, final MediaControlsController mediaControl) {
+    public SongsController(final FlowPane songContainer, final ScrollPane pane) {
         this.songPane = songContainer;
         this.songPane.setHgap(DEF_GAP);
         this.songPane.setVgap(DEF_GAP);
         songPane.setPrefWidth(pane.getWidth());
         this.pane = pane;
-        this.mediaControl = mediaControl;
     }
     
     private VBox createButton(final Song song) {
@@ -61,7 +59,6 @@ public class SongsController {
             
             container.getStyleClass().add("selected");
             GUIController.getReader().getPlayer().setSong(song);
-            this.mediaControl.loadSong(song);
              //GUIController.getReader().getPlayer().setSong(song);
         });
 
@@ -142,7 +139,6 @@ public class SongsController {
             var button = (Button)e.getSource();
             button.getStyleClass().add("selected");
             GUIController.getReader().getPlayer().setSong(song);
-            this.mediaControl.loadSong(song);
         });
         return btn;
     }
