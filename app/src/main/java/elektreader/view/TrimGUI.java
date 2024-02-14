@@ -2,7 +2,6 @@ package elektreader.view;
 
 import elektreader.api.TrackTrimmer;
 import elektreader.model.TrackTrimmerImpl;
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,19 +12,24 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-public class TrimGUI{
+public class TrimGUI {
 
-    TrackTrimmer trimmer = new TrackTrimmerImpl();
+    private static final int TEXTFIELD_WIDTH = 220;
+	private static final int PANE_HEIGHT = 300;
+	private static final int PANE_WIDTH = 270;
+	private static final int GAP_UNITS = 10;
+	private static final int PADDING_UNITS = 15;
+	private final TrackTrimmer trimmer = new TrackTrimmerImpl();
 
-    public TrimGUI(Window primaryStage) {
+    public TrimGUI(final Window primaryStage) {
         Stage trimStage = new Stage();
 		trimStage.initModality(Modality.WINDOW_MODAL);
 		trimStage.initOwner(primaryStage);
 		GridPane pane = new GridPane();
-		pane.setPadding(new Insets(15));
-		pane.setHgap(10);
-		pane.setVgap(10);
-		pane.setPrefSize(270, 300);
+		pane.setPadding(new Insets(PADDING_UNITS));
+		pane.setHgap(GAP_UNITS);
+		pane.setVgap(GAP_UNITS);
+		pane.setPrefSize(PANE_WIDTH, PANE_HEIGHT);
 		Label firstLabel = new Label("1.");
 		Label secondLabel = new Label("2.");
 		Label thirdLabel = new Label("3.");
@@ -36,7 +40,9 @@ public class TrimGUI{
 		TextField startCut = new TextField("Insert start (hh:mm:ss or seconds)");
 		TextField endCut = new TextField("Insert end (hh:mm:ss or seconds)");
 		TextField newName = new TextField("Insert the name for the trimmed track");
-		startCut.setPrefWidth(220);
+		startCut.setPrefWidth(TEXTFIELD_WIDTH);
+		endCut.setPrefWidth(TEXTFIELD_WIDTH);
+		newName.setPrefWidth(TEXTFIELD_WIDTH);
 		Button trimBtn = new Button("Trim");
 		trimBtn.setOnMouseClicked(e -> trimmer.trim(startCut.getText(), endCut.getText(), newName.getText()));
 		pane.add(firstLabel, 0, 0);

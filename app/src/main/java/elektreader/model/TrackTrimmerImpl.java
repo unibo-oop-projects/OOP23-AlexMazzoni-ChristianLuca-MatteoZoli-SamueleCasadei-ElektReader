@@ -8,30 +8,33 @@ import elektreader.api.TrackTrimmer;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import ws.schild.jave.Encoder;
+import ws.schild.jave.EncoderException;
 import ws.schild.jave.MultimediaObject;
 import ws.schild.jave.encode.AudioAttributes;
 import ws.schild.jave.encode.EncodingAttributes;
 import ws.schild.jave.info.AudioInfo;
 
-public class TrackTrimmerImpl implements TrackTrimmer{
+public class TrackTrimmerImpl implements TrackTrimmer {
 
     private File track;
+    private static final int SECONDS_TO_MINUTES = 60;
 
     @Override
-    public void chooseTrack(){
-        FileChooser fileChooser = new FileChooser();
+    public void chooseTrack() {
+        final FileChooser fileChooser = new FileChooser();
 		fileChooser.getExtensionFilters().add(new ExtensionFilter("MP3, wav", "*.mp3", "*.wav"));
 		track = fileChooser.showOpenDialog(null);
     }
 
     /*TEST ONLY */
+    @Override
     public void setTrack(final Path path) {
         track = new File(path.toUri());
     }
 
     @Override
     public boolean trim(final String start, final String end, final String name) {
-        if (track == null){
+        if (track == null) {
             System.out.println("must select a track");
             return false;
         }
@@ -61,7 +64,7 @@ public class TrackTrimmerImpl implements TrackTrimmer{
             encodingAttrs.setOutputFormat(getExtesion(track));
             encodingAttrs.setAudioAttributes(audioAttrs);
 
-            long duration = mObj.getInfo().getDuration()/1000;
+            long duration = mObj.getInfo().getDuration() / 1000;
             if (endTime > duration) {
                 endTime = duration;
             }
@@ -73,7 +76,7 @@ public class TrackTrimmerImpl implements TrackTrimmer{
             Encoder encoder = new Encoder();
             encoder.encode(new MultimediaObject(track), target, encodingAttrs);
             return true;
-        } catch (Exception e) {
+        } catch (EncoderException | IllegalArgumentException e) {
             e.printStackTrace();
             return false;
         }
@@ -84,7 +87,7 @@ public class TrackTrimmerImpl implements TrackTrimmer{
         String[] inputstStrings = timeInput.split(":");
         int i = 1;
         for (String str : inputstStrings) {
-            output += Long.parseLong(str)*Math.pow(60, inputstStrings.length - i);
+            output += Long.parseLong(str) * Math.pow(SECONDS_TO_MINUTES, inputstStrings.length - i);
             i++;
         }
         return output;
@@ -92,10 +95,6 @@ public class TrackTrimmerImpl implements TrackTrimmer{
 
     private String getExtesion(final File file) {
         var name = file.getName().split("\\.");
-        return name[name.length-1];
+        return name[name.length - 1];
     }
-
-    /*public String getSourceName() {
-        return track.getName();
-    }*/
 }
