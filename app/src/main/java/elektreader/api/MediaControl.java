@@ -120,14 +120,18 @@ public interface MediaControl {
     public double getVolume();
 
     /**
-     * Sets the Volume of our mediaPlayer to 0.0.
+     * @return Prgoress done by our mediaPlayer.
      */
-    public void mute();
-
     public double getProgress();
 
+    /**
+     * @return our mediaPlayer.
+     */
     public Optional<MediaPlayer> getMediaControl();
 
+    /**
+     * @return current mediaPLayer status.
+     */
     public Status getStatus();
 
 }

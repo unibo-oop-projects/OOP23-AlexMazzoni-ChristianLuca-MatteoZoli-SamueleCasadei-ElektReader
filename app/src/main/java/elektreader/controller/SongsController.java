@@ -5,7 +5,6 @@ import java.util.List;
 import elektreader.api.PlayList;
 import elektreader.api.Song;
 import elektreader.model.Mp3PlayList;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

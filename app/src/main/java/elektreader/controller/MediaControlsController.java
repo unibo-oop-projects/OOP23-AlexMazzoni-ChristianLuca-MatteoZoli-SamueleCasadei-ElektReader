@@ -1,18 +1,15 @@
 package elektreader.controller;
 
-import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import elektreader.api.MediaControl;
 import elektreader.api.Song;
 
 public class MediaControlsController {
-
     private GridPane mediaCPanel;
 
     private Button play_pause;
@@ -24,6 +21,8 @@ public class MediaControlsController {
     private Button loop;
 
     private Button rand;
+
+    private Button stop;
 
     private Label current_meta_song;
 
@@ -42,6 +41,7 @@ public class MediaControlsController {
     public MediaControlsController(final GridPane mediaControlGrid, final Slider progressBar) {
         mediaControlGrid.getChildren().clear();
 
+        HBox base_controls = new HBox();
 
         this.play_pause = new Button();
         play_pause.setGraphic(new ImageView("icons/Light/Media/Play.png"));
@@ -54,6 +54,7 @@ public class MediaControlsController {
         
         this.loop = new Button();
         loop.setGraphic(new ImageView("icons/Light/Media/Repeat.png"));
+
         loop.setOnMouseClicked(e -> {
             mediaControl.loopSong();
             switch (mediaControl.getLoopStatus()) {
@@ -71,7 +72,7 @@ public class MediaControlsController {
                 }
             }
         });
-
+        
         this.rand = new Button();
         rand.setOnMouseClicked(e -> {
             mediaControl.rand();
@@ -83,12 +84,11 @@ public class MediaControlsController {
         });
         rand.setGraphic(new ImageView("icons/Light/Media/Shuffle.png"));
 
-        var stop = new Button();
+        this.stop = new Button();
         stop.setGraphic(new ImageView("icons/Light/Media/Stop.png"));
 
-        HBox base_controls = new HBox();
         base_controls.getChildren().addAll(rand, prev_Song, play_pause, next_Song, loop, stop);
-
+    
         this.current_meta_song = new Label();
         this.next_meta_song = new Label();
 
@@ -98,7 +98,7 @@ public class MediaControlsController {
         this.current_Volume.setPrefWidth(70.0);
         this.volumeImage = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Audio.png").toString());
         this.progressBar = progressBar;
-
+    
         this.mediaControl = GUIController.getReader().getPlayer();
         
         mediaControlGrid.add(current_meta_song, 0, 0);
@@ -107,29 +107,10 @@ public class MediaControlsController {
         //mediaControlGrid.add(volume, 3, 0);
         //mediaControlGrid.add(volume, 3, 0);
     }
-    
-    //This method will be used to insert components into MediaControlPanel. 
-    // private void insert_in_Panel() {
-    //     this.gridPane.getChildren().clear();
-        
-    //     this.gridPane.add(current_meta_Song, 3, 1);
-    //     this.gridPane.add(loop, 40, 1);
-    //     this.gridPane.add(rand, 45, 1);
-    //     this.gridPane.add(prev_Song, 50, 1);
-    //     this.gridPane.add(play_pause, 55, 1);
-    //     this.gridPane.add(next_Song, 60, 1);
-    //     this.gridPane.add(next_meta_Song, 80, 1);
-    //     this.gridPane.add(current_Volume, (gridPane.getColumnCount() - 3), 2);
-    //     this.gridPane.add(volume, (gridPane.getColumnCount() - 3), 1);
-    //     this.gridPane.add(volumeImage, (gridPane.getColumnCount() - 4), 2);
-    //     this.gridPane.setVisible(true);
-    // }
-    /*
-    //This method is used to load song infos into the view.
-    public void loadSong(Song song) {
 
-        mediaControl.getMediaControl().currentTimeProperty().addListener((observable, oldValue, newValue) -> 
-            progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().getTotalDuration().toSeconds()));
+    public void loadSong(Song song) {
+        this.mediaControl.getMediaControl().get().currentTimeProperty().addListener((observable, oldValue, newValue) -> 
+            progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().get().getTotalDuration().toSeconds()));
             
         this.play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
         
@@ -152,18 +133,17 @@ public class MediaControlsController {
             this.loadSong(mediaControl.getCurrentSong());
         });
         this.next_Song.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/FastForward.png").toString()));
-        this.current_meta_Song.setText(song.getName() + 
+        this.current_meta_song.setText(song.getName() + 
             "\n" + (song.getArtist().isPresent() ? 
             song.getArtist().get() : "No artist found"));
         var next_Song = mediaControl.getNextSong().isPresent() ? mediaControl.getNextSong().get().getName() + "\n" +
         (mediaControl.getNextSong().get().getArtist().isPresent() ?
         mediaControl.getNextSong().get().getArtist().get() : " No artist found") : "End of playlist";
-        this.next_meta_Song.setText(next_Song);
+        this.next_meta_song.setText(next_Song);
         this.current_Volume.valueProperty().addListener((a, b, c) -> {
             mediaControl.setVolume(c.doubleValue());
         });
     }
-    */
 
     //This method will be used by GUIControllers to reload my components
     public void reload() {
