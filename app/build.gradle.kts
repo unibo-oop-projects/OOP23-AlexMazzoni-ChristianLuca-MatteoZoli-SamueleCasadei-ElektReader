@@ -57,7 +57,6 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainModule.set("elektreader.javafx") // name defined in module-info.java
     mainClass.set("elektreader.App")
 }
 
