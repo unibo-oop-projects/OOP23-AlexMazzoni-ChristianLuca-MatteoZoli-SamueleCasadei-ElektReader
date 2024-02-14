@@ -178,7 +178,6 @@ class ElektreaderTest {
         mC1.prevSong();
         System.out.println(mC1.getCurrentSong().getName());
         //Thread.sleep(2000);
-        mC1.mute();
         mC1.setVolume(0.015);
         flag = mC1.setSong(mC1.getPlaylist().get(1));
         Assertions.assertEquals(true, flag);

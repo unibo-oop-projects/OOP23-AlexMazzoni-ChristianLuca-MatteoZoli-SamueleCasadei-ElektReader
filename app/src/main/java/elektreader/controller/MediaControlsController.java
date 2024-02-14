@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import elektreader.api.MediaControl;
-import elektreader.api.Song;
 
 public class MediaControlsController {
 

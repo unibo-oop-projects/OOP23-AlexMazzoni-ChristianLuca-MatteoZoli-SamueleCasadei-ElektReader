@@ -17,7 +17,6 @@ public class Mp3MediaControl implements MediaControl{
     private boolean randOn = false;
     private LoopStatus loop = LoopStatus.OFF;
     private double currentVolume;
-    static private final double SET_ZERO_VOLUME = 0.0;
 
     public Mp3MediaControl() {
         this.mediaPlayer = Optional.empty();
@@ -240,13 +239,6 @@ public class Mp3MediaControl implements MediaControl{
             return this.mediaPlayer.get().getVolume();
         }
         return 0.0;
-    }
-
-    @Override
-    public void mute() {
-        if (this.mediaPlayer.isPresent()) {
-            this.mediaPlayer.get().setVolume(SET_ZERO_VOLUME);
-        }
     }
 
     @Override
