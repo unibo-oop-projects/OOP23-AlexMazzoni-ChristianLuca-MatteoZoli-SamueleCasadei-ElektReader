@@ -82,6 +82,10 @@ public class PlayListsController {
         return btnPlaylist;
     }
 
+    public void reloadSongs(){
+        this.songsController.load(GUIController.getReader().getCurrentPlaylist().get(), onIcons);
+    }
+
     public List<Button> getBtnPlaylists() {
         return this.btnPlaylists;
     }
