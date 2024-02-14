@@ -1,6 +1,6 @@
 package elektreader.api;
 
-import javafx.scene.control.TextField;
+import java.nio.file.Path;
 
 public interface TrackTrimmer {
 
@@ -11,9 +11,15 @@ public interface TrackTrimmer {
 
     /**
      * Trims a track based on the specified start and end times, and saves it with the given name.
-     * @param start The TextField that contains the start time of the trim.
-     * @param end The TextField that contains the end time of the trim.
-     * @param name The TextField that contains the name to be given to the trimmed track.
+     * @param start The start time of the trim.
+     * @param end The end time of the trim.
+     * @param name The name to be given to the trimmed track.
      */
-    void trim(TextField start, TextField end, TextField name);
+    boolean trim(String start, String end, String name);
+
+    /**
+     * Test-only method to set a track without using a FileChooser.
+     * @param path
+     */
+    void setTrack(Path path);
 }

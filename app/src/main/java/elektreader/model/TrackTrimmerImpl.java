@@ -2,9 +2,9 @@ package elektreader.model;
 
 import java.io.File;
 import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 import elektreader.api.TrackTrimmer;
-import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import ws.schild.jave.Encoder;
@@ -24,24 +24,30 @@ public class TrackTrimmerImpl implements TrackTrimmer{
 		track = fileChooser.showOpenDialog(null);
     }
 
+    /*TEST ONLY */
+    public void setTrack(final Path path) {
+        track = new File(path.toUri());
+    }
+
     @Override
-    public void trim(final TextField start, final TextField end, final TextField name) {
+    public boolean trim(final String start, final String end, final String name) {
+        if (track == null){
+            System.out.println("must select a track");
+            return false;
+        }
+        if (start.isBlank() || end.isBlank()) {
+            System.out.println("must enter both start and end");
+            return false;
+        }
         MultimediaObject mObj = new MultimediaObject(track);
         long startTime = timeConverter(start);
         long endTime = timeConverter(end);
-        try {
-            if(track == null){
-                throw new Exception("must select a track");
-            }
-            if(startTime > endTime) {
-                throw new Exception("start has to be grater than end");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return;
+        if (startTime > endTime) {
+            System.out.println("start has to be grater than end");
+            return false;
         }
         File target = new File(track.getParent() + FileSystems.getDefault().getSeparator() 
-            + (name.getText().isBlank() ? track.getName() + "(1)" : name.getText()) 
+            + (name.isBlank() ? track.getName() + "(1)" : name) 
             + "." + getExtesion(track));
         try {
             AudioAttributes audioAttrs = new AudioAttributes();
@@ -56,7 +62,7 @@ public class TrackTrimmerImpl implements TrackTrimmer{
             encodingAttrs.setAudioAttributes(audioAttrs);
 
             long duration = mObj.getInfo().getDuration()/1000;
-            if(endTime > duration) {
+            if (endTime > duration) {
                 endTime = duration;
             }
 
@@ -66,14 +72,16 @@ public class TrackTrimmerImpl implements TrackTrimmer{
 
             Encoder encoder = new Encoder();
             encoder.encode(new MultimediaObject(track), target, encodingAttrs);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    private long timeConverter(final TextField timeInput) {
+    private long timeConverter(final String timeInput) {
         long output = 0;
-        String[] inputstStrings = timeInput.getText().split(":");
+        String[] inputstStrings = timeInput.split(":");
         int i = 1;
         for (String str : inputstStrings) {
             output += Long.parseLong(str)*Math.pow(60, inputstStrings.length - i);
