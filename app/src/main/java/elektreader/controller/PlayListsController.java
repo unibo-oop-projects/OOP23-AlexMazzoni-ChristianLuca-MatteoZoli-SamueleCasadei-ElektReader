@@ -86,7 +86,9 @@ public class PlayListsController {
      * refreshes the song view
      */
     public void reload(){
-        this.songsController.load(GUIController.getReader().getCurrentPlaylist().get(), onIcons);
+        this.current = GUIController.getReader().getCurrentPlaylist().get();
+        this.songsController.load(current, onIcons);
+
     }
 
     public List<Button> getBtnPlaylists() {
