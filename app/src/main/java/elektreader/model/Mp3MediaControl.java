@@ -266,12 +266,8 @@ public class Mp3MediaControl implements MediaControl{
         return -1;
     }
 
-    public MediaPlayer getMediaControl() {
-        if (this.mediaPlayer.isPresent()) {
-            return this.mediaPlayer.get();
-        } else {
-            throw new IllegalStateException("MediaPlayer is currently unset.");
-        }
+    public Optional<MediaPlayer> getMediaControl() {
+        return this.mediaPlayer;
     }
 
     public Status getStatus() {

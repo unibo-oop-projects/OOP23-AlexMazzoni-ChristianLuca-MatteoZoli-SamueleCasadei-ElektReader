@@ -126,7 +126,7 @@ public interface MediaControl {
 
     public double getProgress();
 
-    public MediaPlayer getMediaControl();
+    public Optional<MediaPlayer> getMediaControl();
 
     public Status getStatus();
 

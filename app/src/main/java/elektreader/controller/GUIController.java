@@ -19,15 +19,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 
@@ -92,7 +91,7 @@ public class GUIController implements Initializable {
 	private Slider progressBar;
 
 	@FXML
-	private HBox mediaControlPanel;
+	private GridPane mediaControlGrid;
 
 
 	/* EVENTS */
@@ -112,7 +111,9 @@ public class GUIController implements Initializable {
 
 	@FXML
 	private void view() {
-		controllerPlayLists.switchView();
+		if(GUIController.getReader().getCurrentPlaylist().isPresent()) {
+			controllerPlayLists.switchView();
+		}
 	}
 
 	@FXML
@@ -144,32 +145,32 @@ public class GUIController implements Initializable {
 	@FXML
 	private void showPlaylists() {
 		if(GUIController.getReader().getCurrentEnvironment().isPresent()) {
-			if(this.lblPlaylists.getPrefWidth()==SIZE_ZERO) { //is hidden
-				this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE*this.root.getWidth());
-				this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth()+this.btnPlaylists.getWidth());
-				this.playlistsScroll.setVisible(true);
-			} else {
-				this.playlistsScroll.setVisible(false);
-				this.playlistsScroll.setPrefWidth(SIZE_ZERO);
-				this.lblPlaylists.setPrefWidth(SIZE_ZERO);
-			}
+			Platform.runLater(() -> {
+				if(this.lblPlaylists.getPrefWidth()==SIZE_ZERO) { //is hidden
+					this.imgPlaylistsShowPanel.setImage(new Image(ClassLoader.getSystemResource("icons/Light/UI/HideSidepanel.png").toString())); 
+					this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE*this.root.getWidth());
+					this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth()+this.btnPlaylists.getWidth());
+					this.playlistsScroll.setVisible(true);
+				} else {
+					this.imgPlaylistsShowPanel.setImage(new Image(ClassLoader.getSystemResource("icons/Light/UI/ShowSidepanel.png").toString())); 
+					this.playlistsScroll.setVisible(false);
+					this.playlistsScroll.setPrefWidth(SIZE_ZERO);
+					this.lblPlaylists.setPrefWidth(SIZE_ZERO);
+				}
+			});
 			responsive();
 		}
 	}
 
 	private void responsive() {
-		Platform.runLater(() -> {
-			this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth());
-			this.songsScroll.setPrefWidth(this.lblSong.getWidth());
-			this.controllerPlayLists.responsive();
-		});
+		this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth());
+		this.songsScroll.setPrefWidth(this.lblSong.getWidth());
+		this.controllerPlayLists.responsive();
 	}
 
 	private void reload() {
-		Platform.runLater(() -> {
-			this.controllerMediaControls.reload();
-			this.controllerPlayLists.reload();
-		});
+		this.controllerPlayLists.reload();
+		this.controllerMediaControls.reload();
 	}
 
 	private Runnable GUIReaderListener() {
@@ -177,17 +178,21 @@ public class GUIController implements Initializable {
 			@Override
 			public void run() {
 				while (true) {
-					GUIController.getReader().getPlayer().getMediaControl().statusProperty().addListener(new ChangeListener<MediaPlayer.Status>() {
-						@Override
-						public void changed(ObservableValue<? extends MediaPlayer.Status> observable, MediaPlayer.Status oldValue, MediaPlayer.Status newValue) {
-							reload();
-							responsive();
+					Platform.runLater(() -> {
+						if(GUIController.getReader().getPlayer().getMediaControl().isPresent()) {
+							GUIController.getReader().getPlayer().getMediaControl().get().statusProperty().addListener(new ChangeListener<MediaPlayer.Status>() {
+								@Override
+								public void changed(ObservableValue<? extends MediaPlayer.Status> observable, MediaPlayer.Status oldValue, MediaPlayer.Status newValue) {
+									reload();
+								}
+							});
 						}
 					});
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) { e.printStackTrace(); }
-				}
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) { e.printStackTrace(); }
+			}
+				
 			}
 		};	
 	}
@@ -200,15 +205,15 @@ public class GUIController implements Initializable {
 			loadPlaylists();
 			loadPlayer();
 			Thread statusCheckerThread = new Thread(GUIReaderListener());
-			statusCheckerThread.setDaemon(true);
+			//statusCheckerThread.setDaemon(false);
 			statusCheckerThread.start();
 		}	
 	}
 
 	private void loadPlayer() {
 		Platform.runLater(() -> {
-			this.mediaControlPanel.getChildren().clear();
-			this.controllerMediaControls = new MediaControlsController(this.mediaControlPanel, this.progressBar);
+			this.mediaControlGrid.getChildren().clear();
+			this.controllerMediaControls = new MediaControlsController(this.mediaControlGrid, this.progressBar);
 		});
 	}
 

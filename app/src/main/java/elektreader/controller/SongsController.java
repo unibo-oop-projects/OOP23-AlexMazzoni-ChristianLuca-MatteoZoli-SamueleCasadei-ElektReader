@@ -94,7 +94,7 @@ public class SongsController {
     }
 
     private void loadIcons(final PlayList playlist) {
-        Platform.runLater(() -> {
+        //Platform.runLater(() -> {
             songPane.getChildren().clear();
             this.btnSongs = playlist.getSongs().stream()
                 .map(s -> {
@@ -107,11 +107,11 @@ public class SongsController {
                 })
                 .toList();
             songPane.getChildren().addAll(btnSongs);
-        });
+        //});
     }
 
     private void loadList(final PlayList playList) {
-        Platform.runLater(() -> {
+        //Platform.runLater(() -> {
             songPane.getChildren().clear();
             listContainer.getChildren().clear();
             songPane.getChildren().add(listContainer);
@@ -128,7 +128,7 @@ public class SongsController {
                 .forEach(b -> listContainer.getChildren().add(b));
             listContainer.setSpacing(DEF_SPACING);
             listContainer.fillWidthProperty();
-        });
+        //});
     }
 
     private Button createListButton(final Song song) {
@@ -152,12 +152,10 @@ public class SongsController {
     /**
      * this method adjusts the song pane to the size of its container 
      */
-    public void responsive(){
-        // Platform.runLater(() -> {
-            songPane.setPrefWidth(pane.getWidth());
-            listContainer.setPrefWidth(songPane.getPrefWidth());
-            listContainer.getChildren().stream().forEach(b -> b.prefWidth(listContainer.getPrefWidth()));
-        // });
+    public void responsive() {
+        songPane.setPrefWidth(pane.getWidth());
+        listContainer.setPrefWidth(songPane.getPrefWidth());
+        listContainer.getChildren().stream().forEach(b -> b.prefWidth(listContainer.getPrefWidth()));
     }
 
 }

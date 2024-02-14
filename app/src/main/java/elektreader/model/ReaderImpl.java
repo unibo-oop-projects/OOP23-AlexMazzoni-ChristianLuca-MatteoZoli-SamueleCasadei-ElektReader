@@ -24,16 +24,17 @@ public class ReaderImpl implements Reader{
     private Optional<MediaControl> player = Optional.empty();
 
     private void resetEnvironment() {
-
+        
         /* needs to be intialized before calling setCurrentPlaylist */
         this.player = this.root.isEmpty() ? Optional.empty() : Optional.of(new Mp3MediaControl());
-
-        if(this.playlists.isPresent() && !this.playlists.get().isEmpty()){
-            setCurrentPlaylist(Optional.of(this.playlists.get().stream().findFirst().get()));
-        }
-        else {
-            setCurrentPlaylist(Optional.empty());
-        }
+        setCurrentPlaylist(Optional.empty());
+        
+        // if(this.playlists.isPresent() && !this.playlists.get().isEmpty()){
+        //     setCurrentPlaylist(Optional.of(this.playlists.get().stream().findFirst().get()));
+        // }
+        // else {
+        //     setCurrentPlaylist(Optional.empty());
+        // }
     }
 
     @Override
