@@ -22,7 +22,7 @@ public class SongsController {
     private final FlowPane songPane;
     private final ScrollPane pane;
     private final double CONTAINER_W = 120, CONTAINER_H = 140, BTN_W = 90, BTN_H = 80,
-        IMGFIT_W = 75, IMGFIT_H = 85, DEF_SPACING = 2, DEF_GAP = 10;
+        IMGFIT_W = 75, IMGFIT_H = 85, DEF_SPACING = 2, DEF_GAP = 15;
 
     /**
      * @param songContainer the pane that will graphically contain the songs
@@ -97,7 +97,14 @@ public class SongsController {
     private void loadIcons(final PlayList playlist) {
         songPane.getChildren().clear();
         this.btnSongs = playlist.getSongs().stream()
-            .map(s -> createButton(s))
+            .map(s -> {
+                if(s.equals(GUIController.getReader().getPlayer().getCurrentSong())){
+                    var songView = createButton(s);
+                    songView.getStyleClass().add("selected");
+                    return songView;
+                }
+                return createButton(s);
+            })
             .toList();
         songPane.getChildren().addAll(btnSongs);
     }
@@ -107,9 +114,17 @@ public class SongsController {
         listContainer.getChildren().clear();
         songPane.getChildren().add(listContainer);
         playList.getSongs().stream()
-            .map(s -> createListButton(s))
+            .map(s -> {
+                /* tmp */
+                if(s.equals(GUIController.getReader().getPlayer().getCurrentSong())){
+                    var songView = createListButton(s);
+                    songView.getStyleClass().add("selected");
+                    return songView;
+                }
+                return createListButton(s);
+            })
             .forEach(b -> listContainer.getChildren().add(b));
-        listContainer.setSpacing(2);
+        listContainer.setSpacing(DEF_SPACING);
         listContainer.fillWidthProperty();
     }
 
