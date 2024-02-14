@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.regex.*;
 import java.util.stream.Collectors;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -194,10 +193,10 @@ public class Mp3PlayList implements PlayList{
      * like "index - actual name.mp3"
      */
     public static Optional<Integer> getIndexFromName(String name){
-        Pattern pattern = Pattern.compile("\\d+\\s*-\\s*.+\\.w+");
+        Pattern pattern = Pattern.compile("\\d+\\s*-\\s*.+$");
         Matcher match = pattern.matcher(name);
         /* if the filename matches the standard pattern... */
-        if(match.matches() && Reader.isSupportedSong(Paths.get(name))){
+        if(match.matches()){
             /* the index can be picked and returned */
             return Optional.of(Integer.valueOf(name.split(" ")[0]));
         }

@@ -88,7 +88,7 @@ public class Mp3Song implements Song{
 
     @Override
     public String getFileFormat() {
-        Matcher match =  Pattern.compile(".*.(\\w+)$").matcher(getFile().getName());
+        Matcher match =  Pattern.compile(".+\\.(\\w+$)").matcher(getFile().getName());
         if(match.matches()){
             return match.group(1);
         }
