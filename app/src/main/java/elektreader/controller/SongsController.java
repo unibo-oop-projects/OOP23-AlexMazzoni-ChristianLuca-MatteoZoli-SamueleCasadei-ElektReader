@@ -61,11 +61,9 @@ public class SongsController {
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
             
             container.getStyleClass().add("selected");
+            GUIController.getReader().getPlayer().setSong(song);
             this.mediaControl.loadSong(song);
-            var player = GUIController.getReader().getPlayer();
-            player.setSong(song);
-            player.play();
-        
+             //GUIController.getReader().getPlayer().setSong(song);
         });
 
         btn.setPrefSize(BTN_W, BTN_H);
@@ -125,9 +123,8 @@ public class SongsController {
 
             var button = (Button)e.getSource();
             button.getStyleClass().add("selected");
-            var player = GUIController.getReader().getPlayer();
-            player.setSong(song);
-            player.play();
+            GUIController.getReader().getPlayer().setSong(song);
+            this.mediaControl.loadSong(song);
         });
         return btn;
     }

@@ -12,14 +12,17 @@ import javafx.util.Duration;
 public class Mp3MediaControl implements MediaControl{
 
     private Optional<MediaPlayer> mediaPlayer;
-    private Optional<List<Song>> playlist;
+    private Optional<List<Song>> playlist, playlistCopy;
     private int index;
+    private boolean randOn = false;
+    private LoopStatus loop = LoopStatus.OFF;
     private double currentVolume;
     static private final double SET_ZERO_VOLUME = 0.0;
 
     public Mp3MediaControl() {
         this.mediaPlayer = Optional.empty();
         this.playlist = Optional.empty();
+        this.playlistCopy = Optional.empty();
         /*Debug*/this.currentVolume = 1.0;
         this.index = 0;
     }
@@ -57,6 +60,7 @@ public class Mp3MediaControl implements MediaControl{
         }
         this.index = 0;
         this.playlist = Optional.of(playList.getSongs());
+        this.playlistCopy = Optional.of(playList.getSongs());
         this.mediaPlayer = Optional.of(new MediaPlayer(new Media(this.getCurrentSong().getFile().toURI().toString())));
         /*Debug*/this.mediaPlayer.get().setVolume(currentVolume);
         this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);
@@ -98,11 +102,30 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void nextSong() {
+        // if (this.mediaPlayer.isPresent()) {
+        //     if (this.index == (this.getPlaylistSize()-1)) {
+        //         return;
+        //     }
+        //     this.index++;
+        //     this.currentSong();
+        // }
         if (this.mediaPlayer.isPresent()) {
-            if (this.index == (this.getPlaylistSize()-1)) {
-                return;
+            switch (loop) {
+                case OFF -> {
+                    if (this.index == (this.getPlaylistSize()-1)) {
+                        return;
+                    }
+                    this.index++;
+                    break;
+                }
+                case PLAYLIST -> {
+                    this.index = (this.index + 1) % this.getPlaylistSize();
+                    break;
+                }
+                case TRACK -> {
+                    break;
+                }
             }
-            this.index++;
             this.currentSong();
         }
     }
@@ -120,13 +143,51 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void loopSong() {
-        if (this.mediaPlayer.isPresent()) {
-            this.stop();
-            Media media = this.mediaPlayer.get().getMedia();
-            this.mediaPlayer = Optional.of(new MediaPlayer(media));
-            this.mediaPlayer.get().setCycleCount(MediaPlayer.INDEFINITE);
-            this.play();
+        // if (this.mediaPlayer.isPresent()) {
+        //     this.stop();
+        //     Media media = this.mediaPlayer.get().getMedia();
+        //     this.mediaPlayer = Optional.of(new MediaPlayer(media));
+        //     this.mediaPlayer.get().setCycleCount(MediaPlayer.INDEFINITE);
+        //     this.play();
+        // }
+        switch (loop) {
+            case OFF -> {
+                loop = LoopStatus.PLAYLIST;
+                break;
+            }
+            case PLAYLIST -> {
+                loop = LoopStatus.TRACK;
+                break;
+            }
+            case TRACK -> {
+                loop = LoopStatus.OFF;
+                break;
+            }
         }
+    }
+
+    @Override
+    public LoopStatus getLoopStatus() {
+        return loop;
+    }
+
+    @Override
+    public void rand() {
+        if (!randOn) {
+            index = 0;
+            List<Song> tmpList = new ArrayList<>();
+            tmpList.addAll(playlist.get());
+            Collections.shuffle(tmpList);
+            playlist = Optional.of(tmpList);
+        } else {
+            playlist = playlistCopy;
+            index = playlistCopy.get().indexOf(getCurrentSong());
+        }
+        randOn = !randOn;
+    }
+
+    public boolean getRandStatus() {
+        return randOn ? true : false;
     }
 
     @Override

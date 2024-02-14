@@ -150,7 +150,7 @@ public class GUIController implements Initializable {
 		TextField newName = new TextField("Insert the name for the trimmed track");
 		startCut.setPrefWidth(220);
 		Button trimBtn = new Button("Trim");
-		trimBtn.setOnMouseClicked(e -> trimmer.trim(startCut, endCut, newName));
+		trimBtn.setOnMouseClicked(e -> trimmer.trim(startCut.getText(), endCut.getText(), newName.getText()));
 		pane.add(firstLabel, 0, 0);
 		pane.add(secondLabel, 0, 1);
 		pane.add(thirdLabel, 0, 2);

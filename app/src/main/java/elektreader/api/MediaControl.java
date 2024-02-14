@@ -17,6 +17,9 @@ public interface MediaControl {
         PLAYING, PAUSED;
     }
 
+    static enum LoopStatus {
+        OFF, PLAYLIST, TRACK
+    }
 
 
     /**
@@ -56,7 +59,7 @@ public interface MediaControl {
     public void stop();
 
     /**
-     * Changes current played song with the next in the playlist.
+     * Changes current played song according to the current loop status.
      */
     public void nextSong();
 
@@ -66,9 +69,24 @@ public interface MediaControl {
     public void prevSong();
     
     /**
-     * Creates a playing loop with the current song played by our mediaPLayer.
+     * Sets the loop status either on true for the playlist or true for the current song or turns the loop off.
      */
     public void loopSong();
+
+    /**
+     * Returns the current status of the loop functionality.
+     */
+    public LoopStatus getLoopStatus();
+
+    /**
+     * Shuffles the current playlist or resets it to its normal behaviour.
+     */
+    public void rand();
+
+    /**
+     * Returns true if random functionality is enabled, false otherwise.
+     */
+    public boolean getRandStatus();
 
     /**
      * @param song the song to be set as the current one.
