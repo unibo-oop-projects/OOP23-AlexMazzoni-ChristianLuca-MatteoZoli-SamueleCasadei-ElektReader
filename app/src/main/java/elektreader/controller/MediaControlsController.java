@@ -114,46 +114,6 @@ public class MediaControlsController {
         this.gridPane.add(volumeImage, (gridPane.getColumnCount() - 4), 2);
         this.gridPane.setVisible(true);
     }
-    /*
-    //This method is used to load song infos into the view.
-    public void loadSong(Song song) {
-
-        mediaControl.getMediaControl().currentTimeProperty().addListener((observable, oldValue, newValue) -> 
-            progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().getTotalDuration().toSeconds()));
-            
-        this.play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
-        
-        this.play_pause.setOnMouseClicked(event -> {
-            if (this.mediaControl.getStatus().equals(MediaControl.Status.PLAYING)) {
-                this.mediaControl.pause();
-                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
-            } else {
-                this.mediaControl.play();
-                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
-            }
-        });
-        this.prev_Song.setOnMouseClicked(event -> {
-            this.mediaControl.prevSong();
-            this.loadSong(mediaControl.getCurrentSong());
-        });
-        this.prev_Song.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Rewind.png").toString()));
-        this.next_Song.setOnMouseClicked(event -> {
-            this.mediaControl.nextSong();
-            this.loadSong(mediaControl.getCurrentSong());
-        });
-        this.next_Song.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/FastForward.png").toString()));
-        this.current_meta_Song.setText(song.getName() + 
-            "\n" + (song.getArtist().isPresent() ? 
-            song.getArtist().get() : "No artist found"));
-        var next_Song = mediaControl.getNextSong().isPresent() ? mediaControl.getNextSong().get().getName() + "\n" +
-        (mediaControl.getNextSong().get().getArtist().isPresent() ?
-        mediaControl.getNextSong().get().getArtist().get() : " No artist found") : "End of playlist";
-        this.next_meta_Song.setText(next_Song);
-        this.current_Volume.valueProperty().addListener((a, b, c) -> {
-            mediaControl.setVolume(c.doubleValue());
-        });
-    }
-    */
 
     //This method will be used by GUIControllers to reload my components
     public void reload() {
