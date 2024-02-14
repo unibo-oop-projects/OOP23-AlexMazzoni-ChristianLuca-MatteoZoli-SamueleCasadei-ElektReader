@@ -122,9 +122,8 @@ public class SongsController {
 
             var button = (Button)e.getSource();
             button.getStyleClass().add("selected");
-            var player = GUIController.getReader().getPlayer();
-            player.setSong(song);
-            player.play();
+            GUIController.getReader().getPlayer().setSong(song);
+            this.mediaControl.loadSong(song);
         });
         return btn;
     }

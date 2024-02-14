@@ -23,6 +23,10 @@ public class MediaControlsController {
 
     private Button next_Song;
 
+    private Button loop;
+
+    private Button rand;
+
     private Label current_meta_Song;
 
     private Label next_meta_Song;
@@ -45,6 +49,35 @@ public class MediaControlsController {
         play_pause.setGraphic(new ImageView("icons/Light/Media/Play.png"));
         this.prev_Song = new Button("Previous");
         this.next_Song = new Button("Next");
+        this.loop = new Button();
+        loop.setGraphic(new ImageView("icons/Light/Media/Repeat.png"));
+        loop.setOnMouseClicked(e -> {
+            mediaControl.loopSong();
+            switch (mediaControl.getLoopStatus()) {
+                case OFF -> {
+                    loop.setGraphic(new ImageView("icons/Light/Media/Repeat.png"));
+                    break;
+                }
+                case PLAYLIST -> {
+                    loop.setGraphic(new ImageView("icons/Light/Media/RepeatActive.png"));
+                    break;
+                }
+                case TRACK -> {
+                    loop.setGraphic(new ImageView("icons/Light/Media/RepeatOneActive.png"));
+                    break;
+                }
+            }
+        });
+        this.rand = new Button();
+        rand.setOnMouseClicked(e -> {
+            mediaControl.rand();
+            if (mediaControl.getRandStatus()) {
+                rand.setGraphic(new ImageView("icons/Light/Media/ShuffleActive.png"));
+            } else {
+                rand.setGraphic(new ImageView("icons/Light/Media/Shuffle.png"));
+            }
+        });
+        rand.setGraphic(new ImageView("icons/Light/Media/Shuffle.png"));
         this.current_meta_Song = new Label();
         this.next_meta_Song = new Label();
         this.current_Volume = new TextArea("Write here");
@@ -66,6 +99,8 @@ public class MediaControlsController {
             new ColumnConstraints().setPercentWidth(50));
         */
         this.gridPane.add(current_meta_Song, 3, 2);
+        this.gridPane.add(loop, 40, 2);
+        this.gridPane.add(rand, 45, 2);
         this.gridPane.add(prev_Song, 50, 2);
         this.gridPane.add(play_pause, 55, 2);
         this.gridPane.add(next_Song, 60, 2);
