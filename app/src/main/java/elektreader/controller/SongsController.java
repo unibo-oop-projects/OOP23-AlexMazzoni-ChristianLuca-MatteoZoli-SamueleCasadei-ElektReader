@@ -4,6 +4,7 @@ package elektreader.controller;
 import java.util.List;
 import elektreader.api.PlayList;
 import elektreader.api.Song;
+import elektreader.model.Mp3PlayList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,7 +22,7 @@ public class SongsController {
     private final VBox listContainer = new VBox();
     private final FlowPane songPane;
     private final ScrollPane pane;
-    private final double CONTAINER_W = 120, CONTAINER_H = 140, BTN_W = 90, BTN_H = 80,
+    private final double CONTAINER_W = 120, CONTAINER_H = 140, BTN_W = 50, BTN_H = 50,
         IMGFIT_W = 75, IMGFIT_H = 85, DEF_SPACING = 2, DEF_GAP = 10;
 
     /**
@@ -40,12 +41,10 @@ public class SongsController {
     
     private VBox createButton(final Song song) {
         VBox container = new VBox();
-        Button btn = new Button();
+        Label icon = new Label();
         ImageView img = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/AudioWave.png").toString());
         Label duration = new Label(song.DurationStringRep());
         Label title = new Label(song.getName());
-
-        container.setSpacing(DEF_SPACING);
         container.setPrefSize(CONTAINER_W, CONTAINER_H);
         container.getStyleClass().add("songcontainer");
         VBox.setMargin(container, new Insets(10));
@@ -56,7 +55,7 @@ public class SongsController {
         Tooltip.install(container, btnTooltip);
 
         container.setSpacing(DEF_SPACING);
-        btn.setOnMouseClicked( event -> {
+        container.setOnMouseClicked( event -> {
             this.btnSongs.stream()
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
             
@@ -66,18 +65,19 @@ public class SongsController {
              //GUIController.getReader().getPlayer().setSong(song);
         });
 
-        btn.setPrefSize(BTN_W, BTN_H);
-        btn.getStyleClass().add("songbtn");
+        icon.setPrefSize(BTN_W, BTN_H);
+        icon.setPadding(new Insets(5));
+        icon.getStyleClass().add("songbtn");
 
         img.setFitHeight(IMGFIT_W);
         img.setFitWidth(IMGFIT_H);
         img.setPreserveRatio(true);
-        btn.setGraphic(img);
+        icon.setGraphic(img);
 
         duration.getStyleClass().add("songduration");
         title.getStyleClass().add("songtitle");
 
-        container.getChildren().addAll(btn, duration, title);
+        container.getChildren().addAll(icon, duration, title);
         return container;
     }
 
@@ -114,10 +114,13 @@ public class SongsController {
     }
 
     private Button createListButton(final Song song) {
-        Button btn = new Button(song.getName() 
-            + "   |   " + (song.getArtist().isPresent() ? song.getArtist().get() : "Artist not found") 
-            + "   |   " + song.DurationStringRep());
-        btn.setOnMouseClicked(e -> {
+        Button btn = new Button(String.format("%2d.\t%s\t-\t%s\t|\t%s\t|\t%s",
+            Mp3PlayList.getIndexFromName(song.getFile().getName()),
+            song.getName(),
+            song.getArtist().isPresent() ? song.getArtist().get() : "no artist",
+            song.DurationStringRep(), song.getFileFormat()));
+        
+            btn.setOnMouseClicked(e -> {
             listContainer.getChildren().stream()
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
 

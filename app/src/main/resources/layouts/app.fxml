@@ -73,34 +73,7 @@
                      <right>
                         <AnchorPane BorderPane.alignment="CENTER">
                            <children>
-                              <HBox alignment="CENTER" spacing="4.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Button fx:id="btnDebug1" mnemonicParsing="false" onMouseClicked="#debug1" text="debug1">
-                                       <styleClass>
-                                          <String fx:value="btn" />
-                                          <String fx:value="dark" />
-                                       </styleClass>
-                                    </Button>
-                                    <Button fx:id="btnDebug2" mnemonicParsing="false" onMouseClicked="#debug2" text="debug2">
-                                       <styleClass>
-                                          <String fx:value="btn" />
-                                          <String fx:value="dark" />
-                                       </styleClass>
-                                    </Button>
-                                    <Button fx:id="btnDebug3" mnemonicParsing="false" onMouseClicked="#debug3" text="debug3">
-                                       <styleClass>
-                                          <String fx:value="btn" />
-                                          <String fx:value="dark" />
-                                       </styleClass>
-                                    </Button>
-                                    <Button fx:id="btnDebug4" mnemonicParsing="false" onMouseClicked="#debug4" text="mode">
-                                       <styleClass>
-                                          <String fx:value="btn" />
-                                          <String fx:value="dark" />
-                                       </styleClass>
-                                    </Button>
-                                 </children>
-                              </HBox>
+                              <HBox alignment="CENTER" spacing="4.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </right>
