@@ -45,6 +45,6 @@ public class QueueGUI {
             :   "  ",
         song.getName(),
         song.getArtist().isPresent() ? song.getArtist().get() : "no artist",
-        song.DurationStringRep(), song.getFileFormat()));
+        song.durationStringRep(), song.getFileFormat()));
     }
 }

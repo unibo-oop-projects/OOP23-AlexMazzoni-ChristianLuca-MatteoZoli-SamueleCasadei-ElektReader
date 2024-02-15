@@ -7,132 +7,131 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 
-/*
+/**
  * This interface models the logic about MediaControl aspect of our MP3Reader. It consists of a lot of utility methods that
  * are useful about retrieving data, manipulating reproduction, eccetera.
  */
 public interface MediaControl {
 
-    static enum Status {
-        PLAYING, PAUSED;
+    /**
+     * This enum is used to check the current status of our mediaPlayer.
+     */
+    enum Status {
+        /**
+         *  PLAYING is the status of the mediaControl when a media is currently played.
+         */
+        PLAYING, /**
+         *  PAUSED is the status of the mediaControl when a media is currently paused.
+         */
+        PAUSED;
     }
 
-    static enum LoopStatus {
-        OFF, PLAYLIST, TRACK
+    /**
+     * TO DO: MATTEO.
+     */
+    enum LoopStatus {
+        /**
+         * TO DO MATTEO.
+         */
+        OFF, /**
+         * TO DO MATTEO.
+         */
+        PLAYLIST, /**
+         * TO DO MATTEO.
+         */
+        TRACK
     }
-
 
     /**
      * @param playList the playlist to be set as the current one.
      * @return true if the playlist is set as the current one correctly, false otherwise.
      */
-    public boolean setPlaylist(PlayList playList);
-
+    boolean setPlaylist(PlayList playList);
     /**
      * @return current played song by our MediaPlayer.
      */
-    public Song getCurrentSong();
-    
+    Song getCurrentSong();
     /**
      * @return the next Song to be set.
      */
-    public Optional<Song> getNextSong();
-
+    Optional<Song> getNextSong();
     /**
      * @return Playlist currently set as the current one. ONLY DEBUG!
      */
-    public List<Song> getPlaylist();
-
+    List<Song> getPlaylist();
     /**
      * Starts MediaPlayer execution.
      */
-    public void play();
-
+    void play();
     /**
      * Pauses MediaPlayer execution.
      */
-    public void pause();
-
+    void pause();
     /**
-     * Stops MediaPlayer execution
+     * Stops MediaPlayer execution.
      */
-    public void stop();
-
+    void stop();
     /**
      * Changes current played song according to the current loop status.
      */
-    public void nextSong();
-
+    void nextSong();
     /**
      * Changes current played song with the previous in the playlist.
      */
-    public void prevSong();
-    
+    void prevSong();
     /**
      * Sets the loop status either on true for the playlist or true for the current song or turns the loop off.
      */
-    public void loopSong();
-
+    void loopSong();
     /**
-     * Returns the current status of the loop functionality.
+     * @return the current status of the loop functionality.
      */
-    public LoopStatus getLoopStatus();
-
+    LoopStatus getLoopStatus();
     /**
      * Shuffles the current playlist or resets it to its normal behaviour.
      */
-    public void rand();
-
+    void rand();
     /**
-     * Returns true if random functionality is enabled, false otherwise.
+     * @return true if random functionality is enabled, false otherwise.
      */
-    public boolean getRandStatus();
-
+    boolean getRandStatus();
     /**
      * @param song the song to be set as the current one.
      * @return true if the operation ends with a success, false otherwise.
      */
-    public boolean setSong(final Song song);
-
+    boolean setSong(Song song);
     /**
      * @param rate the speed rate to be assigned to our mediaPlayer.
      */
-    public void setRepSpeed(final double rate);
-
+    void setRepSpeed(double rate);
     /**
      * @param duration the new playback time that must be assigned to our mediaPlayer
      */
-    public void setProgress(final Duration duration);
-
+    void setProgress(Duration duration);
     /**
      * @return the Duration of song currently played by our mediaPlayer.
      */
-    public double getDuration();
-
+    double getDuration();
     /**
      * @param volume the Volume that must be assigned to our mediaPlayer. 
      */
-    public void setVolume(final double volume);
-
+    void setVolume(double volume);
     /**
      * @return the current Volume assigned to our mediaPlayer in double.
      */
-    public double getVolume();
-
+    double getVolume();
     /**
      * @return Prgoress done by our mediaPlayer.
      */
-    public double getProgress();
-
+    double getProgress();
     /**
      * @return our mediaPlayer.
      */
-    public Optional<MediaPlayer> getMediaControl();
-
+    Optional<MediaPlayer> getMediaControl();
     /**
-     * @return current mediaPLayer status.
+     * @return current mediaPlayer status.
      */
-    public Status getStatus();
+    Status getStatus();
 
 }
 

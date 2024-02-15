@@ -14,15 +14,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-/* a controller for songs graphics, link graphics and logics */
+/**
+ * a controller for songs graphics, link graphics and logics.
+ */
 public class SongsController {
-    
+
     private List<VBox> btnSongs;
     private final VBox listContainer = new VBox();
     private final FlowPane songPane;
     private final ScrollPane pane;
-    private final double CONTAINER_W = 120, CONTAINER_H = 140, BTN_W = 50, BTN_H = 50,
-        IMGFIT_W = 50, IMGFIT_H = 56, DEF_SPACING = 2, DEF_GAP = 15;
+    private final double containerW = 120, containerH = 140, btnW = 50, btnH = 50,
+        imgfitW = 50, imgfitH = 56, defSpace = 2, defGap = 15, insets = 5, margin = 10;
 
     /**
      * @param songContainer the pane that will graphically contain the songs
@@ -31,44 +33,43 @@ public class SongsController {
      */
     public SongsController(final FlowPane songContainer, final ScrollPane pane) {
         this.songPane = songContainer;
-        this.songPane.setHgap(DEF_GAP);
-        this.songPane.setVgap(DEF_GAP);
+        this.songPane.setHgap(defGap);
+        this.songPane.setVgap(defGap);
         songPane.setPrefWidth(pane.getWidth());
         this.pane = pane;
     }
-    
+ 
     private VBox createButton(final Song song) {
         VBox container = new VBox();
         Label icon = new Label();
         ImageView img = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/AudioWave.png").toString());
-        Label duration = new Label(song.DurationStringRep());
+        Label duration = new Label(song.durationStringRep());
         Label title = new Label(song.getName());
-        container.setPrefSize(CONTAINER_W, CONTAINER_H);
+        container.setPrefSize(containerW, containerH);
         container.getStyleClass().add("songcontainer");
-        VBox.setMargin(container, new Insets(10));
-        container.setPadding(new Insets(5));
+        VBox.setMargin(container, new Insets(margin));
+        container.setPadding(new Insets(insets));
 
         // adding a Tooltip in order to make possible to reade song titles if they're too long
-        Tooltip btnTooltip = new Tooltip(duration.getText()+"\n"+title.getText());
+        Tooltip btnTooltip = new Tooltip(duration.getText() + "\n" + title.getText());
         btnTooltip.setStyle("-fx-font-size: 12pt;");
         Tooltip.install(container, btnTooltip);
 
-        container.setSpacing(DEF_SPACING);
-        container.setOnMouseClicked( event -> {
+        container.setSpacing(defSpace);
+        container.setOnMouseClicked(event -> {
             this.btnSongs.stream()
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
-            
             container.getStyleClass().add("selected");
             GUIController.READER.getPlayer().setSong(song);
              //GUIController.getReader().getPlayer().setSong(song);
         });
 
-        icon.setPrefSize(BTN_W, BTN_H);
-        icon.setPadding(new Insets(5));
+        icon.setPrefSize(btnW, btnH);
+        icon.setPadding(new Insets(insets));
         icon.getStyleClass().add("songbtn");
 
-        img.setFitHeight(IMGFIT_W);
-        img.setFitWidth(IMGFIT_H);
+        img.setFitHeight(imgfitH);
+        img.setFitWidth(imgfitW);
         img.setPreserveRatio(true);
         icon.setGraphic(img);
 
@@ -93,11 +94,10 @@ public class SongsController {
     }
 
     private void loadIcons(final PlayList playlist) {
-        //Platform.runLater(() -> {
             songPane.getChildren().clear();
             this.btnSongs = playlist.getSongs().stream()
                 .map(s -> {
-                    if(s.equals(GUIController.READER.getPlayer().getCurrentSong())){
+                    if (s.equals(GUIController.READER.getPlayer().getCurrentSong())) {
                         var songView = createButton(s);
                         songView.getStyleClass().add("selected");
                         return songView;
@@ -106,18 +106,15 @@ public class SongsController {
                 })
                 .toList();
             songPane.getChildren().addAll(btnSongs);
-        //});
     }
 
     private void loadList(final PlayList playList) {
-        //Platform.runLater(() -> {
             songPane.getChildren().clear();
             listContainer.getChildren().clear();
             songPane.getChildren().add(listContainer);
             playList.getSongs().stream()
                 .map(s -> {
-                    /* tmp */
-                    if(s.equals(GUIController.READER.getPlayer().getCurrentSong())) {
+                    if (s.equals(GUIController.READER.getPlayer().getCurrentSong())) {
                         var songView = createListButton(s);
                         songView.getStyleClass().add("selected");
                         return songView;
@@ -125,9 +122,8 @@ public class SongsController {
                     return createListButton(s);
                 })
                 .forEach(b -> listContainer.getChildren().add(b));
-            listContainer.setSpacing(DEF_SPACING);
+            listContainer.setSpacing(defSpace);
             listContainer.fillWidthProperty();
-        //});
     }
 
     private Button createListButton(final Song song) {
@@ -137,7 +133,7 @@ public class SongsController {
                 :   "  ",
             song.getName(),
             song.getArtist().isPresent() ? song.getArtist().get() : "no artist",
-            song.DurationStringRep(), song.getFileFormat()));
+            song.durationStringRep(), song.getFileFormat()));
 
             btn.setOnMouseClicked(e -> {
             listContainer.getChildren().stream()
@@ -151,12 +147,11 @@ public class SongsController {
     }
 
     /**
-     * this method adjusts the song pane to the size of its container 
+     * this method adjusts the song pane to the size of its container.
      */
     public void responsive() {
         songPane.setPrefWidth(pane.getWidth());
         listContainer.setPrefWidth(songPane.getPrefWidth());
         listContainer.getChildren().stream().forEach(b -> b.prefWidth(listContainer.getPrefWidth()));
     }
-
 }

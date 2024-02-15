@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.List;
 
 /**
- * A class which represents the concept of a playlist of songs
+ * A class which represents the concept of a playlist of songs.
  */
 public interface PlayList {
 
@@ -43,7 +43,7 @@ public interface PlayList {
     Iterable<Song> getQueue();
 
     /**
-     * shuffles the reproduction queue
+     * shuffles the reproduction queue.
      */
     void shuffleQueue();
 
@@ -69,5 +69,5 @@ public interface PlayList {
      * @return true if the song has been removed (it was present), false otherwise
      */
     boolean removeSong(Song song);
-    
+ 
 }
