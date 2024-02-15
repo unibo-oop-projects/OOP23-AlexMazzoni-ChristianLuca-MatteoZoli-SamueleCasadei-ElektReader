@@ -127,7 +127,7 @@ public class MediaControlsController {
         mediaControlGrid.add(nextMetaSong, 4, 0);
         mediaControlGrid.add(currentVolume, 3, 0);
     }
-    
+
     /**
      * This method will be used by GUIControllers to reload my components.
      */
