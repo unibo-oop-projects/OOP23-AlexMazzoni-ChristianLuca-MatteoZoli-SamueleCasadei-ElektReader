@@ -72,7 +72,7 @@ public final class GUIController implements Initializable {
 	/**
 	 * constant used for put in sleep the thread that sync all the GUI's with logics.
 	 */
-	public static final long THREAD_SLEEP = 200L;
+	public static final long THREAD_SLEEP = 1000L;
 	
 	/**
 	 * must be public for all the classes he contains all the logic,
@@ -188,7 +188,7 @@ public final class GUIController implements Initializable {
 	private void find() {
 		if (GUIController.READER.getCurrentEnvironment().isPresent()) {
 			Platform.runLater(() -> {
-				if (this.findPane.getMaxHeight() == MIN_FIND_SIZE) { //pane is closed, so open it
+				if (this.root.getRowConstraints().get(1).getMaxHeight() <= MIN_FIND_SIZE) { //pane is closed, so open it
 					this.root.getRowConstraints().get(1).setMaxHeight(MAX_FIND_SIZE);
 					find.show(this.findPane);
 				} else {
