@@ -25,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -36,13 +37,18 @@ public class GUIController implements Initializable {
 	public static final double SIZE_ZERO = 0.0;
 	public static final double SCALE_PLAYLIST_SIZE = 0.3;
 	public static final double SCALE_SONG_SIZE = 0.7;
+	public static final double MIN_FIND_SIZE = 4;
+	public static final double MAX_FIND_SIZE = 800;
 	
 
 	/* LOGICS */
+	FindController find = new FindController();
+	
 	private final static Reader reader = new ReaderImpl();
 
 	PlayListsController controllerPlayLists;
 	MediaControlsController controllerMediaControls;
+	
 
 	/* MAIN PARENT */
 	@FXML
@@ -63,6 +69,9 @@ public class GUIController implements Initializable {
 
 	@FXML
     private Button btnHelp;
+
+	@FXML
+	private Pane findPane;
 
 	/* PLAYLISTS */
 	@FXML
@@ -119,17 +128,30 @@ public class GUIController implements Initializable {
 
 	@FXML
 	private void trim() {
-		TrimGUI trim = new TrimGUI(this.root.getScene().getWindow());
+		new TrimGUI(this.root.getScene().getWindow());
 	}
 
 	@FXML
-	private void find() { 
-		//TODO - Alex
+	private void find() {
+		if(GUIController.getReader().getCurrentEnvironment().isPresent()) {
+			Platform.runLater(() -> {
+				if(this.findPane.getMaxHeight()==MIN_FIND_SIZE) { //pane is closed, so open it
+					this.root.getRowConstraints().get(1).setMaxHeight(MAX_FIND_SIZE);
+					find.show(this.findPane);
+				} else {
+					this.findPane.getChildren().clear();
+					this.root.getRowConstraints().get(1).setMaxHeight(MIN_FIND_SIZE);
+				}
+			});
+			responsive();
+		}
 	}
 
 	@FXML
 	private void help() { 
-		QueueGUI queue = new QueueGUI();
+		if(GUIController.getReader().getCurrentPlaylist().isPresent()) {
+			new QueueGUI();
+		}
 		//TODO - anyone
 		/* codice per trovare le canzoni duplicate (inutile e poco efficente) */
 		// songs = files.stream().filter(t -> {
@@ -165,6 +187,7 @@ public class GUIController implements Initializable {
 	}
 
 	private void responsive() {
+		//this.findPane.setPrefWidth(this.root.getWidth());
 		this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth());
 		this.songsScroll.setPrefWidth(this.lblSong.getWidth());
 		this.controllerPlayLists.responsive();

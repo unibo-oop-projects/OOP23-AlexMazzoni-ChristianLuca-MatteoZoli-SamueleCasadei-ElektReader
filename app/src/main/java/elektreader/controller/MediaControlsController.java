@@ -111,8 +111,6 @@ public class MediaControlsController {
     public void loadSong(Song song) {
         this.mediaControl.getMediaControl().get().currentTimeProperty().addListener((observable, oldValue, newValue) -> 
             progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().get().getTotalDuration().toSeconds()));
-            
-        this.play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
         
         this.play_pause.setOnMouseClicked(event -> {
             if (this.mediaControl.getStatus().equals(MediaControl.Status.PLAYING)) {
@@ -147,44 +145,47 @@ public class MediaControlsController {
 
     //This method will be used by GUIControllers to reload my components
     public void reload() {
-        //Platform.runLater(() -> {
-            mediaControl.getMediaControl().get().currentTimeProperty().addListener((observable, oldValue, newValue) -> {
-                progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().get().getTotalDuration().toSeconds());
-            });
-            
-                this.play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
-                this.prev_Song.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Rewind.png").toString()));
-                this.next_Song.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/FastForward.png").toString()));
-                this.current_meta_song.setText(mediaControl.getCurrentSong().getName() + 
-                    "\n" + (mediaControl.getCurrentSong().getArtist().isPresent() ? 
-                    mediaControl.getCurrentSong().getArtist().get() : "No artist found"));
-                var next_Song = mediaControl.getNextSong().isPresent() ? mediaControl.getNextSong().get().getName() + "\n" +
-                (mediaControl.getNextSong().get().getArtist().isPresent() ?
-                mediaControl.getNextSong().get().getArtist().get() : " No artist found") : "End of playlist";
-                this.next_meta_song.setText(next_Song);
+        /* refresh media controls */
+        this.mediaControl.getMediaControl().get().currentTimeProperty().addListener((observable, oldValue, newValue) -> 
+        progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().get().getTotalDuration().toSeconds()));
+        /* refresh icons and buttons */
+        if(GUIController.getReader().getPlayer().getStatus().equals(MediaControl.Status.PAUSED)) {
+            this.play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
+        } else {
+            this.play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
+        }
+        this.prev_Song.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Rewind.png").toString()));
+        this.next_Song.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/FastForward.png").toString()));
 
-            this.play_pause.setOnMouseClicked(event -> {
-                if (this.mediaControl.getStatus().equals(MediaControl.Status.PLAYING)) {
-                    this.mediaControl.pause();
-                    play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
-                } else {
-                    this.mediaControl.play();
-                    play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
-                }
-            });
-            
-            this.prev_Song.setOnMouseClicked(event -> {
-                this.mediaControl.prevSong();
-            });
+        this.current_meta_song.setText(mediaControl.getCurrentSong().getName() + 
+            "\n" + (mediaControl.getCurrentSong().getArtist().isPresent() ? 
+            mediaControl.getCurrentSong().getArtist().get() : "No artist found"));
+        var next_Song = mediaControl.getNextSong().isPresent() ? mediaControl.getNextSong().get().getName() + "\n" +
+        (mediaControl.getNextSong().get().getArtist().isPresent() ?
+        mediaControl.getNextSong().get().getArtist().get() : " No artist found") : "End of playlist";
+        this.next_meta_song.setText(next_Song);
 
-            
-            this.next_Song.setOnMouseClicked(event -> {
-                this.mediaControl.nextSong();
-            });
+        this.play_pause.setOnMouseClicked(event -> {
+            if (this.mediaControl.getStatus().equals(MediaControl.Status.PLAYING)) {
+                this.mediaControl.pause();
+                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
+            } else {
+                this.mediaControl.play();
+                play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
+            }
+        });
+        
+        this.prev_Song.setOnMouseClicked(event -> {
+            this.mediaControl.prevSong();
+        });
 
-            this.current_Volume.valueProperty().addListener((a, b, c) -> {
-                mediaControl.setVolume(c.doubleValue());
-            });
-        //});
+        
+        this.next_Song.setOnMouseClicked(event -> {
+            this.mediaControl.nextSong();
+        });
+
+        this.current_Volume.valueProperty().addListener((a, b, c) -> {
+            mediaControl.setVolume(c.doubleValue());
+        });
     }
 }
