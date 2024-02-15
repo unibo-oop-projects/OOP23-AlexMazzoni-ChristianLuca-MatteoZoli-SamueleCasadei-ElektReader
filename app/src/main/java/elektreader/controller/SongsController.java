@@ -59,7 +59,7 @@ public class SongsController {
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
             
             container.getStyleClass().add("selected");
-            GUIController.getReader().getPlayer().setSong(song);
+            GUIController.READER.getPlayer().setSong(song);
              //GUIController.getReader().getPlayer().setSong(song);
         });
 
@@ -84,7 +84,7 @@ public class SongsController {
      * @param onIcons a flag to know if the songs will be loaded as icons,
      * or as list
      */
-    public void load(final PlayList playlist, final boolean onIcons){
+    public void load(final PlayList playlist, final boolean onIcons) {
         if (onIcons) {
             loadIcons(playlist);
         } else {
@@ -97,7 +97,7 @@ public class SongsController {
             songPane.getChildren().clear();
             this.btnSongs = playlist.getSongs().stream()
                 .map(s -> {
-                    if(s.equals(GUIController.getReader().getPlayer().getCurrentSong())){
+                    if(s.equals(GUIController.READER.getPlayer().getCurrentSong())){
                         var songView = createButton(s);
                         songView.getStyleClass().add("selected");
                         return songView;
@@ -117,7 +117,7 @@ public class SongsController {
             playList.getSongs().stream()
                 .map(s -> {
                     /* tmp */
-                    if(s.equals(GUIController.getReader().getPlayer().getCurrentSong())){
+                    if(s.equals(GUIController.READER.getPlayer().getCurrentSong())) {
                         var songView = createListButton(s);
                         songView.getStyleClass().add("selected");
                         return songView;
@@ -132,20 +132,20 @@ public class SongsController {
 
     private Button createListButton(final Song song) {
         Button btn = new Button(String.format("%2s.\t%s\t-\t%s\t|\t%s\t|\t%s",
-            Mp3PlayList.getIndexFromName(song.getFile().getName()).isPresent() ?
-                Mp3PlayList.getIndexFromName(song.getFile().getName()).get().toString()
+            Mp3PlayList.getIndexFromName(song.getFile().getName()).isPresent() 
+                ? Mp3PlayList.getIndexFromName(song.getFile().getName()).get().toString()
                 :   "  ",
             song.getName(),
             song.getArtist().isPresent() ? song.getArtist().get() : "no artist",
-            song.DurationStringRep(), song.getFileFormat()) );
-        
+            song.DurationStringRep(), song.getFileFormat()));
+
             btn.setOnMouseClicked(e -> {
             listContainer.getChildren().stream()
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
 
-            var button = (Button)e.getSource();
+            var button = (Button) e.getSource();
             button.getStyleClass().add("selected");
-            GUIController.getReader().getPlayer().setSong(song);
+            GUIController.READER.getPlayer().setSong(song);
         });
         return btn;
     }

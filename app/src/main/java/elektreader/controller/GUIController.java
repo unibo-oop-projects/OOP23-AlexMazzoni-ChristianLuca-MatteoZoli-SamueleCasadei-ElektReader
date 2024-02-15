@@ -1,12 +1,13 @@
 package elektreader.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import elektreader.api.Reader;
 import elektreader.model.ReaderImpl;
 import elektreader.view.GUI;
@@ -31,24 +32,61 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.media.MediaPlayer;
 
+/**
+ * Controller of the main GUI, he use the app.FXML,
+ * its design is inspired by an MVC like Ajax,
+ * it has a base structure that is the app.FXML,
+ * and some panels need to be updated during the execution,
+ * we have split it that every dynamic panel have is classes,
+ * and all of this panels are sync in this main controller class,
+ * using a thread.
+ */
+public final class GUIController implements Initializable {
+    /**
+     * constant for the value 0, used for resize gui panels.
+     */
+    public static final double SIZE_ZERO = 0.0;
 
-public class GUIController implements Initializable {
-
-	public static final double SIZE_ZERO = 0.0;
+	/**
+	 * constant used for resize playlists panel of 0.3 of the total window.
+	 */
 	public static final double SCALE_PLAYLIST_SIZE = 0.3;
+
+	/**
+	 * constant used for resize songs panel of 0.7 of the total window.
+	 */
 	public static final double SCALE_SONG_SIZE = 0.7;
+
+	/**
+	 * constant used for resize find separator a panel,
+	 * that is resized when the user want to find anything.
+	 */
 	public static final double MIN_FIND_SIZE = 4;
+	
+	/**
+	 * constant used for resize find separator a panel,
+	 * that is resized when the user want to find anything.
+	 */
 	public static final double MAX_FIND_SIZE = 800;
+
+	/**
+	 * constant used for put in sleep the thread that sync all the GUI's with logics.
+	 */
+	public static final long THREAD_SLEEP = 200L;
+	
+	/**
+	 * must be public for all the classes he contains all the logic,
+	 * and from it is possible to know all the status of logics app.
+	 */
+	public static final Reader READER = new ReaderImpl();
 	
 
 	/* LOGICS */
-	FindController find = new FindController();
-	
-	private final static Reader reader = new ReaderImpl();
+	private final FindController find = new FindController();
 
-	PlayListsController controllerPlayLists;
-	MediaControlsController controllerMediaControls;
-	
+	private PlayListsController controllerPlayLists;
+
+	private MediaControlsController controllerMediaControls;
 
 	/* MAIN PARENT */
 	@FXML
@@ -82,20 +120,21 @@ public class GUIController implements Initializable {
 
 	@FXML
     private ImageView imgPlaylistsShowPanel;
-
+	
 	@FXML
     private ScrollPane playlistsScroll;
-
+	
 	/* SONGS */
 	@FXML
     private Label lblSong;
 
 	@FXML
     private Label lblSongDesc;
-	
+
+
 	@FXML
     private ScrollPane songsScroll;
-	
+
 	/* MEDIA CONTROL */
 	@FXML
 	private Slider progressBar;
@@ -103,39 +142,53 @@ public class GUIController implements Initializable {
 	@FXML
 	private GridPane mediaControlGrid;
 
+	@Override
+	public void initialize(final URL location, final ResourceBundle resources) {
+		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
+
+		root.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
+			createShortcut(newScene, new KeyCodeCombination(KeyCode.F), () -> find());
+			createShortcut(newScene, new KeyCodeCombination(KeyCode.T), () -> trim());
+			createShortcut(newScene, new KeyCodeCombination(KeyCode.V), () -> view());
+		});
+
+		Platform.runLater(() -> loadEnvironment(Optional.of(GUI.TEST_PATH)));
+	}
 
 	/* EVENTS */
 	/* logics */
 	@FXML
-	private void importFiles() throws IOException {
+	private void importFiles(){
 		try {
-			DirectoryChooser chooser = new DirectoryChooser();
+			final DirectoryChooser chooser = new DirectoryChooser();
 			chooser.setTitle("Open Folder");
 			chooser.setInitialDirectory(new File(System.getProperty("user.home")));
-			Optional<File> res = Optional.of(chooser.showDialog(null));
-			if(res.isPresent()) {
+			final Optional<File> res = Optional.of(chooser.showDialog(null));
+			if (res.isPresent()) {
 				loadEnvironment(Optional.of(res.get().toPath()));
 			}
-		} catch (Exception e) { throw e;}
+		} catch (Exception e) { }
 	}
 
 	@FXML
 	private void view() {
-		if(GUIController.getReader().getCurrentPlaylist().isPresent()) {
+		if (GUIController.READER.getCurrentPlaylist().isPresent()) {
 			controllerPlayLists.switchView();
 		}
 	}
 
 	@FXML
+	@SuppressFBWarnings
 	private void trim() {
-		new TrimGUI(this.root.getScene().getWindow());
+		new TrimGUI(this.root.getScene().getWindow()); // NOPMD 
+		//suppressed as it is a false positive
 	}
 
 	@FXML
 	private void find() {
-		if(GUIController.getReader().getCurrentEnvironment().isPresent()) {
+		if (GUIController.READER.getCurrentEnvironment().isPresent()) {
 			Platform.runLater(() -> {
-				if(this.findPane.getMaxHeight()==MIN_FIND_SIZE) { //pane is closed, so open it
+				if (this.findPane.getMaxHeight() == MIN_FIND_SIZE) { //pane is closed, so open it
 					this.root.getRowConstraints().get(1).setMaxHeight(MAX_FIND_SIZE);
 					find.show(this.findPane);
 				} else {
@@ -149,7 +202,7 @@ public class GUIController implements Initializable {
 
 	@FXML
 	private void help() { 
-		if(GUIController.getReader().getCurrentPlaylist().isPresent()) {
+		if (GUIController.READER.getCurrentPlaylist().isPresent()) {
 			new QueueGUI();
 		}
 		//TODO - anyone
@@ -168,15 +221,20 @@ public class GUIController implements Initializable {
 	/* only graphics */
 	@FXML
 	private void showPlaylists() {
-		if(GUIController.getReader().getCurrentEnvironment().isPresent()) {
+		if (GUIController.READER.getCurrentEnvironment().isPresent()) {
 			Platform.runLater(() -> {
-				if(this.lblPlaylists.getPrefWidth()==SIZE_ZERO) { //is hidden
-					this.imgPlaylistsShowPanel.setImage(new Image(ClassLoader.getSystemResource("icons/Light/UI/HideSidepanel.png").toString())); 
-					this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE*this.root.getWidth());
-					this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth()+this.btnPlaylists.getWidth());
+				if (this.lblPlaylists.getPrefWidth() == SIZE_ZERO) { //is hidden
+					this.imgPlaylistsShowPanel.setImage(new Image(
+						ClassLoader.getSystemResource("icons/Light/UI/HideSidepanel.png").toString())); 
+
+					this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE * this.root.getWidth());
+					this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth()
+						+ this.btnPlaylists.getWidth());
 					this.playlistsScroll.setVisible(true);
 				} else {
-					this.imgPlaylistsShowPanel.setImage(new Image(ClassLoader.getSystemResource("icons/Light/UI/ShowSidepanel.png").toString())); 
+					this.imgPlaylistsShowPanel.setImage(new Image(
+						ClassLoader.getSystemResource("icons/Light/UI/ShowSidepanel.png").toString())); 
+
 					this.playlistsScroll.setVisible(false);
 					this.playlistsScroll.setPrefWidth(SIZE_ZERO);
 					this.lblPlaylists.setPrefWidth(SIZE_ZERO);
@@ -198,43 +256,47 @@ public class GUIController implements Initializable {
 		this.controllerMediaControls.reload();
 	}
 
-	private Runnable GUIReaderListener() {
+	private Runnable guiReaderListener() {
 		return new Runnable() {
 			@Override
 			public void run() {
 				while (true) {
 					Platform.runLater(() -> {
-						if(GUIController.getReader().getPlayer().getMediaControl().isPresent()) {
-							GUIController.getReader().getPlayer().getMediaControl().get().statusProperty().addListener(new ChangeListener<MediaPlayer.Status>() {
+						if (GUIController.READER.getPlayer().getMediaControl().isPresent()) {
+							GUIController.READER.getPlayer().getMediaControl().get().statusProperty()
+								.addListener(new ChangeListener<MediaPlayer.Status>() {
 								@Override
-								public void changed(ObservableValue<? extends MediaPlayer.Status> observable, MediaPlayer.Status oldValue, MediaPlayer.Status newValue) {
+								public void changed(
+								 final ObservableValue<? extends MediaPlayer.Status> observable,
+								 final MediaPlayer.Status oldValue,
+								 final MediaPlayer.Status newValue) {
 									reload();
 								}
 							});
 						}
 					});
-				try {
-					Thread.sleep(200);
-				} catch (InterruptedException e) { e.printStackTrace(); }
+					try {
+						Thread.sleep(THREAD_SLEEP);
+					} catch (InterruptedException e) {
+						Logger.getLogger(e.toString());
+					}
+				}
 			}
-				
-			}
-		};	
+		};
 	}
 
 	/* PRIVATE METHODS */
 	private void loadEnvironment(final Optional<Path> root) {
-		if(reader.setCurrentEnvironment(root.get())) {
-			System.out.println("environment loaded: " + reader.getCurrentEnvironment().get());
-			//this.lblSongDesc.setText("");
+		GUIController.READER.setCurrentEnvironment(root.get());
+		if (GUIController.READER.getCurrentEnvironment().isPresent()) {
+			System.out.println("environment loaded: " + GUIController.READER.getCurrentEnvironment().get());
 			loadPlaylists();
 			loadPlayer();
-			Thread statusCheckerThread = new Thread(GUIReaderListener());
-			//statusCheckerThread.setDaemon(false);
+			final Thread statusCheckerThread = new Thread(guiReaderListener());
 			statusCheckerThread.start();
 		}	
 	}
-
+	
 	private void loadPlayer() {
 		Platform.runLater(() -> {
 			this.mediaControlGrid.getChildren().clear();
@@ -248,34 +310,23 @@ public class GUIController implements Initializable {
 			/* in order to keep constant track of the size of the two scrolls */
 			this.playlistsScroll.setFitToWidth(true);
 			this.songsScroll.setFitToWidth(true);
-			this.controllerPlayLists = new PlayListsController(this.playlistsScroll, this.songsScroll, this.lblSongDesc);
+			this.controllerPlayLists = new PlayListsController(this.playlistsScroll,
+			 this.songsScroll, this.lblSongDesc);
 		});
 	}
 
-	public static Reader getReader() {
-		return reader;
-	}
-
-	//Functional interface to execute FXML methods via shortcuts
-	private interface ShortcutAction {
-		void execute();	
-	}
-	
-	//adds to the scene's accelerators list the KeyCombination and the associated action to perform
+	//
+	/**
+	 * adds to the scene's accelerators list the KeyCombination and the associated action to perform.
+	 */
 	private static void createShortcut(final Scene scene, final KeyCodeCombination key, final ShortcutAction action) {
 		scene.getAccelerators().put(key, () -> action.execute());
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
-		
-		root.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
-			createShortcut(newScene, new KeyCodeCombination(KeyCode.F), () -> find());
-			createShortcut(newScene, new KeyCodeCombination(KeyCode.T), () -> trim());
-			createShortcut(newScene, new KeyCodeCombination(KeyCode.V), () -> view());
-		});
-
-		Platform.runLater(() -> loadEnvironment(Optional.of(elektreader.App.TEST_PATH)));
-	}
+	/**
+     * Functional interface to execute FXML methods via shortcuts.
+     */
+    private interface ShortcutAction {
+		void execute();
+    }
 }

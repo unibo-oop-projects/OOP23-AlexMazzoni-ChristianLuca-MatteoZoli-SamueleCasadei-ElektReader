@@ -99,7 +99,7 @@ public class MediaControlsController {
         this.volumeImage = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Audio.png").toString());
         this.progressBar = progressBar;
     
-        this.mediaControl = GUIController.getReader().getPlayer();
+        this.mediaControl = GUIController.READER.getPlayer();
         
         mediaControlGrid.add(current_meta_song, 0, 0);
         mediaControlGrid.add(base_controls, 1, 0);
@@ -149,7 +149,7 @@ public class MediaControlsController {
         this.mediaControl.getMediaControl().get().currentTimeProperty().addListener((observable, oldValue, newValue) -> 
         progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().get().getTotalDuration().toSeconds()));
         /* refresh icons and buttons */
-        if(GUIController.getReader().getPlayer().getStatus().equals(MediaControl.Status.PAUSED)) {
+        if(GUIController.READER.getPlayer().getStatus().equals(MediaControl.Status.PAUSED)) {
             this.play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
         } else {
             this.play_pause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));

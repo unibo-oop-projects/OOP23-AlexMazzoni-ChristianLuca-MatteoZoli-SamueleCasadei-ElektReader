@@ -47,7 +47,7 @@ public class PlayListsController {
         plistContainer.setPrefWidth(playlistsPane.getWidth());
         plistContainer.setSpacing(15);
 
-        GUIController.getReader().getPlaylists().stream()
+        GUIController.READER.getPlaylists().stream()
             .map(playlist -> createButton(playlist,songContainer))
             .forEach(button -> {
                 plistContainer.getChildren().add(button);
@@ -72,7 +72,8 @@ public class PlayListsController {
                 });
             var btn = (Button)event.getSource();
             btn.getStyleClass().add("selected");
-			if(GUIController.getReader().setCurrentPlaylist(Optional.of(p))); {
+            GUIController.READER.setCurrentPlaylist(Optional.of(p));
+			if(GUIController.READER.getCurrentPlaylist().isPresent()) {
                 /* i should probably alert the MediaControlsController class to get the playlist, still to decide... */
                 this.current = p;
                 songsController.load(p, onIcons);
@@ -87,9 +88,8 @@ public class PlayListsController {
      * refreshes the song view
      */
     public void reload(){
-        this.current = GUIController.getReader().getCurrentPlaylist().get();
+        this.current = GUIController.READER.getCurrentPlaylist().get();
         this.songsController.load(current, onIcons);
-
     }
 
     public List<Button> getBtnPlaylists() {
