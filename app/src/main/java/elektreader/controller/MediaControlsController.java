@@ -136,10 +136,6 @@ public class MediaControlsController {
             mediaControl.getMediaControl().get().currentTimeProperty().addListener((observable, oldValue, newValue) -> {
                 progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().get().getTotalDuration().toSeconds());
             });
-            this.playPause.setGraphic(pausePng);
-            this.prevSong.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Rewind.png").toString()));
-            this.nextSong.setGraphic(new ImageView(
-                ClassLoader.getSystemResource("icons/Light/Media/FastForward.png").toString()));
             this.currentMetaSong.setText(mediaControl.getCurrentSong().getName() 
                 + "\n" + (mediaControl.getCurrentSong().getArtist().isPresent() 
                 ? mediaControl.getCurrentSong().getArtist().get() : "No artist found"));
@@ -169,8 +165,12 @@ public class MediaControlsController {
                 this.mediaControl.nextSong();
             });
 
-        this.currentVolume.valueProperty().addListener((a, b, c) -> {
-            mediaControl.setVolume(c.doubleValue());
-        });
+            this.currentVolume.valueProperty().addListener((a, b, c) -> {
+                mediaControl.setVolume(c.doubleValue());
+            });
+
+            this.setRepSpeed.valueProperty().addListener((a, b, c) -> {
+                mediaControl.setRepSpeed(c.doubleValue());
+            });
     }
 }
