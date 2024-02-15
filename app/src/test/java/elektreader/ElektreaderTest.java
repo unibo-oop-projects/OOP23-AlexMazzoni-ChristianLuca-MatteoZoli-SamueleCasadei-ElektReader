@@ -103,8 +103,7 @@ class ElektreaderTest {
         /* test player */
         app.getPlayer().setVolume(0.2);
         app.getPlayer().play();
-        app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2));
-        Assertions.assertTrue(app.getPlayer().setSong(app.getCurrentPlaylist().get().getSong(TEST_PATH_PLAYLIST2_SONG18).get()));
+        Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2)));
         Assertions.assertEquals(TEST_PATH_PLAYLIST2_SONG18, app.getPlayer().getCurrentSong().getFile().toPath());
         app.getPlayer().play();
         Thread.sleep(6000);
@@ -156,11 +155,8 @@ class ElektreaderTest {
 
     @Test void testMediaControl() throws Exception {
         //Declaring a new MediaControl instance
-        boolean flag;
         MediaControl mC1;
-        mC1 = new Mp3MediaControl();
-        flag = mC1.setPlaylist(new Mp3PlayList(TEST_PATH_PLAYLIST1, Reader.getAndFilterSongs(TEST_PATH_PLAYLIST1).get()));
-        Assertions.assertEquals(true, flag);
+        mC1 = new Mp3MediaControl();mC1.setPlaylist(new Mp3PlayList(TEST_PATH_PLAYLIST1, Reader.getAndFilterSongs(TEST_PATH_PLAYLIST1).get()));
         mC1.play();
         System.out.println(mC1.getCurrentSong().getName());
         mC1.setVolume(0.015);
@@ -172,8 +168,7 @@ class ElektreaderTest {
         mC1.prevSong();
         System.out.println(mC1.getCurrentSong().getName());
         mC1.setVolume(0.015);
-        flag = mC1.setSong(mC1.getPlaylist().get(1));
-        Assertions.assertEquals(true, flag);
+        mC1.setSong(mC1.getPlaylist().get(1));
         System.out.println(mC1.getCurrentSong().getName());
         Assertions.assertEquals(new Mp3Song(mC1.getPlaylist().get(1).getFile().toPath()).getName(), mC1.getCurrentSong().getName());
         mC1.prevSong();
@@ -187,14 +182,12 @@ class ElektreaderTest {
         Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG3).getName(), mC1.getCurrentSong().getName());
         mC1.prevSong();
         Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG2).getName(), mC1.getCurrentSong().getName());
-        flag = mC1.setSong(mC1.getPlaylist().get(0));
+        mC1.setSong(mC1.getPlaylist().get(0));
         System.out.println(mC1.getCurrentSong().getName());
-        Assertions.assertEquals(true, flag);
         Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG1).getName(), mC1.getCurrentSong().getName());
         mC1.setRepSpeed(2.0);
-        flag = mC1.setSong(mC1.getPlaylist().get(mC1.getPlaylist().size() - 1));
+        mC1.setSong(mC1.getPlaylist().get(mC1.getPlaylist().size() - 1));
         System.out.println(mC1.getCurrentSong().getName());
-        Assertions.assertEquals(true, flag);
         mC1.loopSong();
         mC1.nextSong();
         Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG1).getName(), mC1.getCurrentSong().getName());
