@@ -44,9 +44,8 @@ public interface MediaControl {
 
     /**
      * @param playList the playlist to be set as the current one.
-     * @return true if the playlist is set as the current one correctly, false otherwise.
      */
-    boolean setPlaylist(PlayList playList);
+    void setPlaylist(PlayList playList);
     /**
      * @return current played song by our MediaPlayer.
      */
@@ -97,9 +96,8 @@ public interface MediaControl {
     boolean getRandStatus();
     /**
      * @param song the song to be set as the current one.
-     * @return true if the operation ends with a success, false otherwise.
      */
-    boolean setSong(Song song);
+    void setSong(Song song);
     /**
      * @param rate the speed rate to be assigned to our mediaPlayer.
      */
