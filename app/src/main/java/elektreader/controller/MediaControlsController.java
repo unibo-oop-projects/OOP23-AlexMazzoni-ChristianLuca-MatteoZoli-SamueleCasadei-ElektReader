@@ -28,7 +28,7 @@ public class MediaControlsController {
 
     private final Button rand;
 
-    private final Button stop;
+    private final Button stop; // NOPMD suppressed as it is a false positive
 
     private final Label currentMetaSong;
 
