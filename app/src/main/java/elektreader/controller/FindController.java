@@ -20,7 +20,7 @@ public class FindController {
 
     public void show(final Pane findPane) {
         AnchorPane mainContainer = new AnchorPane();
-        mainContainer.setPrefWidth(findPane.getHeight());
+        mainContainer.setPrefWidth(findPane.getWidth());
         VBox centerContainer = new VBox();
         centerContainer.getStyleClass().add("root");
         mainContainer.getChildren().add(centerContainer);
@@ -91,7 +91,10 @@ public class FindController {
     private HBox createSongBox(final Song song) {
         final HBox box = new HBox();
         Label type = new Label("S");
-        Label name = new Label(song.getName());
+        Label name = new Label(song.getName() + "" + 
+            GUIController.READER.getPlaylists().stream()
+                .filter(t -> t.getSongs().stream().anyMatch(s -> s.equals(song)))
+                .findFirst().get().getName());
         box.getChildren().addAll(type, name);
         box.setOnMouseClicked(event -> {
             GUIController.READER.setCurrentPlaylist(
@@ -114,9 +117,4 @@ public class FindController {
         });
         return box;
     }
-
-    // if (element.isEmpty()) {
-    //     return Optional.empty();
-    // } else {
-    //}
 }

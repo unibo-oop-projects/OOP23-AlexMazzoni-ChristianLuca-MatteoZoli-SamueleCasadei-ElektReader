@@ -2,7 +2,6 @@ package elektreader.view;
 
 import elektreader.api.Song;
 import elektreader.controller.GUIController;
-import elektreader.model.Mp3PlayList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;

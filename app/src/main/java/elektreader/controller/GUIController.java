@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import elektreader.api.Reader;
 import elektreader.api.TrimObserver;
 import elektreader.model.ReaderImpl;
@@ -196,7 +195,7 @@ public final class GUIController implements Initializable {
 					find.show(this.findPane);
 				} else {
 					this.findPane.getChildren().clear();
-					this.root.getRowConstraints().get(1).setMaxHeight(-1);
+					this.root.getRowConstraints().get(1).setMaxHeight(MIN_FIND_SIZE);
 				}
 			});
 			responsive();
