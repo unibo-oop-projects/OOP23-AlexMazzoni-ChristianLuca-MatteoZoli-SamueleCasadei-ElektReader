@@ -47,17 +47,5 @@ public interface PlayList {
      * @return the number of songs contained in this playlist
      */
     int getSize();
-
-    /**
-     * @param song the track to add
-     * @return true if the song has been added, false otherwise
-     */
-    boolean addSong(Song song);
-
-    /**
-     * @param song the song to be removed from the playlist
-     * @return true if the song has been removed (it was present), false otherwise
-     */
-    boolean removeSong(Song song);
  
 }
