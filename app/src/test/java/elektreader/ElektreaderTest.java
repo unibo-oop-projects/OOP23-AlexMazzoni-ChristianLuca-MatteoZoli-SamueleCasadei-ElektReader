@@ -142,16 +142,16 @@ class ElektreaderTest {
         Song s4 = new Mp3Song(TEST_PATH_PLAYLIST1_SONG4);
 
         Assertions.assertEquals("Fedez, Annalisa, Articolo 31 - DISCO PARADISE (Visual Video)", s1.getName());
-        Assertions.assertEquals("00:03:18", s1.DurationStringRep());
+        Assertions.assertEquals("00:03:18", s1.durationStringRep());
 
         Assertions.assertEquals("Fabio Rovazzi - ANDIAMO A COMANDARE (Official Video)", s3.getName());
-        Assertions.assertEquals("00:03:23", s3.DurationStringRep());
+        Assertions.assertEquals("00:03:23", s3.durationStringRep());
 
         Assertions.assertEquals("Fabio Rovazzi Orietta Berti La discoteca italiana", s4.getName());
-        Assertions.assertEquals("00:03:10", s4.DurationStringRep());
+        Assertions.assertEquals("00:03:10", s4.durationStringRep());
 
         Assertions.assertEquals("Mr.Rain - SUPEREROI (Official Video) [Sanremo 2023]", s5.getName());
-        Assertions.assertEquals("00:03:24", s5.DurationStringRep());
+        Assertions.assertEquals("00:03:24", s5.durationStringRep());
     }
 
     @Test void testMediaControl() throws Exception {

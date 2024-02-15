@@ -56,7 +56,7 @@ public interface Song {
     /**
      * @return song's duration in the formato h:mm:ss 
      */
-    String DurationStringRep();
+    String durationStringRep();
 
     /**
      * @param filename a filename of a song (index - name.something)

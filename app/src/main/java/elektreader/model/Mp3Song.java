@@ -35,7 +35,6 @@ public class Mp3Song implements Song{
             this.info = data.getTag();
         } catch (Exception e) {
             System.out.println(songFile+"   "+e.toString());
-            throw new IllegalStateException("file corrotto o non supportato");
         }
     }
 
@@ -70,16 +69,7 @@ public class Mp3Song implements Song{
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((songFile == null) ? 0 : songFile.hashCode());
-        result = prime * result + ((data == null) ? 0 : data.hashCode());
-        return result;
-    }
-
-    @Override
-    public String DurationStringRep() {
+    public String durationStringRep() {
         long h = TimeUnit.SECONDS.toHours(getDuration()); /* amount of hours */
         long m = TimeUnit.SECONDS.toMinutes(getDuration()%3600); /* amount of minutes, less the hours */
         long s = (getDuration()%3600)%60; /* seconds left, less minutes, less hours */
