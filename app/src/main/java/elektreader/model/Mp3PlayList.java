@@ -55,18 +55,6 @@ public final class Mp3PlayList implements PlayList {
         return this.songs.size();
     }
 
-    /* needs further implementation */
-    @Override
-    public boolean addSong(final Song song) {
-        return this.songs.add(song);
-    }
-
-    /* needs further implementation */
-    @Override
-    public boolean removeSong(final Song song) {
-        return this.songs.remove(song);
-    }
-
     @Override
     public String getName() {
         return playlistDir.getName();
@@ -105,12 +93,12 @@ public final class Mp3PlayList implements PlayList {
     @Override
     public Optional<Song> getSong(final int index) {
         Song searched;
-            try {
-                searched = this.songs.get(index);
-                return Optional.of(searched);
-            } catch (Exception e) {
-                return Optional.empty();
-            }
+        try {
+           searched = this.songs.get(index);
+           return Optional.of(searched);
+        } catch (Exception e) {
+           return Optional.empty();
+        }
     }
 
     /** 
