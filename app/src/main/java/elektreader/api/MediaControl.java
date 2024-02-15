@@ -85,7 +85,7 @@ public interface MediaControl {
     /**
      * @return the current status of the loop functionality.
      */
-    LoopStatus getLoopStatus();
+    LoopStatus isLoopStatus();
     /**
      * Shuffles the current playlist or resets it to its normal behaviour.
      */

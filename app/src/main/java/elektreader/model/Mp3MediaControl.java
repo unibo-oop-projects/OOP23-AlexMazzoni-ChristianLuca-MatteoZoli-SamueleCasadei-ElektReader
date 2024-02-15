@@ -200,7 +200,7 @@ public class Mp3MediaControl implements MediaControl {
      * @return teh loop status.
      */
     @Override
-    public LoopStatus getLoopStatus() {
+    public LoopStatus isLoopStatus() {
         return loop;
     }
 

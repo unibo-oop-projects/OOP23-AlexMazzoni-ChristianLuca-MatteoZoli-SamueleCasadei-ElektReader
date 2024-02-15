@@ -28,7 +28,7 @@ public class MediaControlsController {
 
     private final Button rand;
 
-    private final Button stop;
+    private final Button stop; // NOPMD suppressed as it is a false positive
 
     private final Label currentMetaSong;
 
@@ -75,7 +75,7 @@ public class MediaControlsController {
 
         loop.setOnMouseClicked(e -> {
             mediaControl.loopSong();
-            switch (mediaControl.getLoopStatus()) {
+            switch (mediaControl.isLoopStatus()) {
                 case OFF -> {
                     loop.setGraphic(new ImageView("icons/Light/Media/Repeat.png"));
                     break;
