@@ -48,7 +48,7 @@ public class PlayListsController {
         plistContainer.setPrefWidth(playlistsPane.getWidth());
         plistContainer.setSpacing(DEF_SPACE);
 
-        GUIController.getReader().getPlaylists().stream()
+        GUIController.READER.getPlaylists().stream()
             .map(playlist -> createButton(playlist, songContainer))
             .forEach(button -> {
                 plistContainer.getChildren().add(button);
@@ -73,7 +73,8 @@ public class PlayListsController {
             });
             var btn = (Button) event.getSource();
             btn.getStyleClass().add("selected");
-            if (GUIController.getReader().setCurrentPlaylist(Optional.of(p))) {
+            GUIController.READER.setCurrentPlaylist(Optional.of(p));
+            if (GUIController.READER.getCurrentPlaylist().isPresent()) {
                 this.current = p;
                 songsController.load(p, onIcons);
                 this.desc.setText(" - " + p.getSize() + " - " + p.getName());
@@ -86,7 +87,7 @@ public class PlayListsController {
      * refreshes the song view.
      */
     public void reload() {
-        this.current = GUIController.getReader().getCurrentPlaylist().get();
+        this.current = GUIController.READER.getCurrentPlaylist().get();
         this.songsController.load(current, onIcons);
     }
 

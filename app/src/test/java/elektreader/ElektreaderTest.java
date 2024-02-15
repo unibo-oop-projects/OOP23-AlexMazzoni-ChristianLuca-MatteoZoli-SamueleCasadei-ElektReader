@@ -77,11 +77,11 @@ class ElektreaderTest {
 
         /* test environment */
         /* test invalid path */
-        Assertions.assertFalse(app.setCurrentEnvironment(TEST_INVALID_PATH));
+        app.setCurrentEnvironment(TEST_INVALID_PATH);
         Assertions.assertEquals(Optional.empty(), app.getCurrentEnvironment());
         
         /* test valid path */
-        Assertions.assertTrue(app.setCurrentEnvironment(TEST_PATH));
+        app.setCurrentEnvironment(TEST_PATH);
         Assertions.assertEquals(TEST_PATH, app.getCurrentEnvironment().get());
         
         /* test playlist */ 
@@ -89,21 +89,21 @@ class ElektreaderTest {
         Assertions.assertEquals(app.getPlaylists().size(), app.getNPlaylists());
 
         // test valid playlist 2
-        Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2)));
+        app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2));
         Assertions.assertEquals(TEST_PATH_PLAYLIST2, app.getCurrentPlaylist().get().getPath());
 
         // test invalid playlist 
-        Assertions.assertFalse(app.setCurrentPlaylist(app.getPlaylist(TEST_INVALID_PLAYLIST)));
+        app.setCurrentPlaylist(app.getPlaylist(TEST_INVALID_PLAYLIST));
         Assertions.assertEquals(Optional.empty(), app.getCurrentPlaylist());
         
         // test valid playlist 1
-        Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST1)));
+        app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST1));
         Assertions.assertEquals(TEST_PATH_PLAYLIST1, app.getCurrentPlaylist().get().getPath());
 
         /* test player */
         app.getPlayer().setVolume(0.2);
         app.getPlayer().play();
-        Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2)));
+        app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2));
         Assertions.assertTrue(app.getPlayer().setSong(app.getCurrentPlaylist().get().getSong(TEST_PATH_PLAYLIST2_SONG18).get()));
         Assertions.assertEquals(TEST_PATH_PLAYLIST2_SONG18, app.getPlayer().getCurrentSong().getFile().toPath());
         app.getPlayer().play();

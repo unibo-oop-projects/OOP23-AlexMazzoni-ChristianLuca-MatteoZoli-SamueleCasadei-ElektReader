@@ -61,7 +61,7 @@ public class SongsController {
             this.btnSongs.stream()
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
             container.getStyleClass().add("selected");
-            GUIController.getReader().getPlayer().setSong(song);
+            GUIController.READER.getPlayer().setSong(song);
              //GUIController.getReader().getPlayer().setSong(song);
         });
 
@@ -98,7 +98,7 @@ public class SongsController {
             songPane.getChildren().clear();
             this.btnSongs = playlist.getSongs().stream()
                 .map(s -> {
-                    if (s.equals(GUIController.getReader().getPlayer().getCurrentSong())) {
+                    if (s.equals(GUIController.READER.getPlayer().getCurrentSong())) {
                         var songView = createButton(s);
                         songView.getStyleClass().add("selected");
                         return songView;
@@ -115,7 +115,7 @@ public class SongsController {
             songPane.getChildren().add(listContainer);
             playList.getSongs().stream()
                 .map(s -> {
-                    if (s.equals(GUIController.getReader().getPlayer().getCurrentSong())) {
+                    if (s.equals(GUIController.READER.getPlayer().getCurrentSong())) {
                         var songView = createListButton(s);
                         songView.getStyleClass().add("selected");
                         return songView;
@@ -142,7 +142,7 @@ public class SongsController {
 
             var button = (Button) e.getSource();
             button.getStyleClass().add("selected");
-            GUIController.getReader().getPlayer().setSong(song);
+            GUIController.READER.getPlayer().setSong(song);
         });
         return btn;
     }

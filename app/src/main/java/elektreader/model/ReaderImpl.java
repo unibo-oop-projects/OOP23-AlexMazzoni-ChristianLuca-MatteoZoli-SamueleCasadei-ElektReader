@@ -13,7 +13,15 @@ import elektreader.api.MediaControl;
 import elektreader.api.PlayList;
 import elektreader.api.Reader;
 
-public class ReaderImpl implements Reader{
+/**
+ * this class implement the main app logics,
+ * includes all the other logic classes, like:
+ * - playlists
+ * - songs
+ * - mediacontrol 
+ * from this class is possible to load, reproduce and manipulate an environment.
+*/
+public final class ReaderImpl implements Reader {
 
     private Optional<Path> root = Optional.empty();
 
@@ -23,27 +31,13 @@ public class ReaderImpl implements Reader{
 
     private Optional<MediaControl> player = Optional.empty();
 
-    private void resetEnvironment() {
-        
-        /* needs to be intialized before calling setCurrentPlaylist */
-        this.player = this.root.isEmpty() ? Optional.empty() : Optional.of(new Mp3MediaControl());
-        setCurrentPlaylist(Optional.empty());
-        
-        // if(this.playlists.isPresent() && !this.playlists.get().isEmpty()){
-        //     setCurrentPlaylist(Optional.of(this.playlists.get().stream().findFirst().get()));
-        // }
-        // else {
-        //     setCurrentPlaylist(Optional.empty());
-        // }
-    }
-
     @Override
-    public boolean setCurrentEnvironment(final Path root) {
+    public void setCurrentEnvironment(final Path root) {
         try (Stream<Path> paths = Files.walk(root)) {
-            var tmpPlaylist = paths.filter(Files::isDirectory)
+            final var tmpPlaylist = paths.filter(Files::isDirectory)
                 .map(t -> {
-                    var songs = Reader.getAndFilterSongs(t);
-                    if(songs.isPresent()) {
+                    final var songs = Reader.getAndFilterSongs(t);
+                    if (songs.isPresent()) {
                         return Optional.of(new Mp3PlayList(t, songs.get()));
                     }
                     return Optional.empty();
@@ -53,14 +47,16 @@ public class ReaderImpl implements Reader{
                 .map(PlayList.class::cast) // Cast the list of Mp3PlayList to a list of PlayList (because is Object)
                 .toList();
                 this.playlists = tmpPlaylist.isEmpty() ? Optional.empty() : Optional.of(tmpPlaylist);
-        } catch (IOException e) { System.out.println("root -> "+e.toString() + " is not valid"); }
-        if(this.playlists.isEmpty()) {
+        } catch (IOException e) {
+            System.out.println("root -> " + e.toString() + " is not valid");
+        }
+
+        if (this.playlists.isEmpty()) {
             this.root = Optional.empty();
         } else {
             this.root = Optional.of(root);
         }
         resetEnvironment();
-        return this.root.isPresent();
     }
 
     @Override
@@ -74,21 +70,20 @@ public class ReaderImpl implements Reader{
     }
 
     @Override
-    public boolean setCurrentPlaylist(final Optional<PlayList> playlist) {
-        if(!this.playlists.isPresent() || !playlist.isPresent()) {
+    public void setCurrentPlaylist(final Optional<PlayList> playlist) {
+        if (!this.playlists.isPresent() || !playlist.isPresent()) {
             this.currentPlaylist = Optional.empty();
-            return false;
+        } else {
+            this.currentPlaylist = this.playlists.get().stream().filter(t -> t.equals(playlist.get())).findFirst();
+            if (this.currentPlaylist.isPresent()) {
+                this.player.get().setPlaylist(this.currentPlaylist.get());
+            }
         }
-        this.currentPlaylist = this.playlists.get().stream().filter(t -> t.equals(playlist.get())).findFirst();
-        if(this.currentPlaylist.isPresent()) {
-            this.player.get().setPlaylist(this.currentPlaylist.get());
-        }
-        return this.currentPlaylist.isPresent();
     }
 
     @Override
     public List<PlayList> getPlaylists() {
-        if(this.playlists.isEmpty()) {
+        if (this.playlists.isEmpty()) {
             return new ArrayList<>(Collections.emptyList());
         }
         return this.playlists.get();
@@ -101,15 +96,23 @@ public class ReaderImpl implements Reader{
 
     @Override
     public Optional<PlayList> getPlaylist(final Path path) {
-        if(!this.playlists.isPresent()) return Optional.empty();
+        if (!this.playlists.isPresent()) {
+            return Optional.empty();
+        }
         return this.playlists.get().stream().filter(t -> t.getPath().equals(path)).findFirst();
     }
 
     @Override
     public MediaControl getPlayer() {
-        if(this.root.isEmpty()) {
+        if (this.root.isEmpty()) {
             throw new IllegalStateException("need to set an environment");
         }
         return this.player.get();
+    }
+
+    private void resetEnvironment() {
+        /* needs to be intialized before calling setCurrentPlaylist */
+        this.player = this.root.isEmpty() ? Optional.empty() : Optional.of(new Mp3MediaControl());
+        setCurrentPlaylist(Optional.empty());
     }
 }

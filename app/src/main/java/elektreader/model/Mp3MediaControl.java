@@ -1,6 +1,9 @@
 package elektreader.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import elektreader.api.MediaControl;
 import elektreader.api.PlayList;
@@ -9,7 +12,10 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-public class Mp3MediaControl implements MediaControl{
+/**
+ * This is an implementation of our mediaPlayer, used to manipulate songs.
+ */
+public class Mp3MediaControl implements MediaControl {
 
     private Optional<MediaPlayer> mediaPlayer;
     private Optional<List<Song>> playlist, playlistCopy;
@@ -18,11 +24,15 @@ public class Mp3MediaControl implements MediaControl{
     private LoopStatus loop = LoopStatus.OFF;
     private double currentVolume;
 
+    /**
+     * At the moment of creation, our fields will 
+     * be set at empty or default values. 
+     */
     public Mp3MediaControl() {
         this.mediaPlayer = Optional.empty();
         this.playlist = Optional.empty();
         this.playlistCopy = Optional.empty();
-        /*Debug*/this.currentVolume = 1.0;
+        this.currentVolume = 1.0;
         this.index = 0;
     }
 
@@ -42,7 +52,7 @@ public class Mp3MediaControl implements MediaControl{
             return this.playlist.get().get(index);
         } else {
             throw new IllegalStateException("No playlist set.");
-        }   
+        }
     }
 
     //This method returns the size of the current playlist.
@@ -53,6 +63,11 @@ public class Mp3MediaControl implements MediaControl{
         return this.playlist.get().size();
     }
 
+    /**
+     * @param playList the playlist to be set as the current one.
+     * @return true if is set, false, otherwise.
+     */
+    @Override
     public boolean setPlaylist(final PlayList playList) {
         if (this.mediaPlayer.isPresent()) {
             this.stop();
@@ -63,14 +78,21 @@ public class Mp3MediaControl implements MediaControl{
         this.mediaPlayer = Optional.of(new MediaPlayer(new Media(this.getCurrentSong().getFile().toURI().toString())));
         /*Debug*/this.mediaPlayer.get().setVolume(currentVolume);
         this.mediaPlayer.get().setOnEndOfMedia(this::nextSong);
-        return this.playlist.isPresent() ? true : false;
+        return this.playlist.isPresent();
     }
 
+    /**
+     * @return the song set as the current one.
+     */
+    @Override
     public Song getCurrentSong() {
         return this.getSongAtCertainIndex(this.index);
     }
 
     //ONLY DEBUG VIA TEST!
+    /**
+     * @return the current playlist set (if present).
+     */
     public List<Song> getPlaylist() {
         if (this.playlist.isEmpty()) {
             throw new IllegalStateException("Playlist is currently empty.");
@@ -78,6 +100,9 @@ public class Mp3MediaControl implements MediaControl{
         return this.playlist.get();
     }
 
+    /**
+     * Starts the mediaPlayer.
+     */
     @Override
     public void play() {
         if (this.mediaPlayer.isPresent()) {
@@ -85,6 +110,9 @@ public class Mp3MediaControl implements MediaControl{
         }
     }
 
+    /**
+     * Pauses the mediaPlayer.
+     */
     @Override
     public void pause() {
         if (this.mediaPlayer.isPresent()) {
@@ -92,6 +120,9 @@ public class Mp3MediaControl implements MediaControl{
         }
     }
 
+    /**
+     * Stops the mediaPlayer.
+     */
     @Override
     public void stop() {
         if (this.mediaPlayer.isPresent()) {
@@ -99,12 +130,15 @@ public class Mp3MediaControl implements MediaControl{
         }
     }
 
+    /**
+     * Increments the index to set the current song to be player. It stares at loop status too.
+     */
     @Override
     public void nextSong() {
         if (this.mediaPlayer.isPresent()) {
             switch (loop) {
                 case OFF -> {
-                    if (this.index == (this.getPlaylistSize()-1)) {
+                    if (this.index == (this.getPlaylistSize() - 1)) {
                         return;
                     }
                     this.index++;
@@ -117,11 +151,17 @@ public class Mp3MediaControl implements MediaControl{
                 case TRACK -> {
                     break;
                 }
+                default -> {
+                    break;
+                }
             }
             this.currentSong();
         }
     }
 
+    /**
+     * Reduces the index to set the prev song as the current one.
+     */
     @Override
     public void prevSong() {
         if (this.mediaPlayer.isPresent()) {
@@ -133,6 +173,9 @@ public class Mp3MediaControl implements MediaControl{
         }
     }
 
+    /**
+     * Sets loop to the song or to the playlist.
+     */
     @Override
     public void loopSong() {
         switch (loop) {
@@ -148,14 +191,23 @@ public class Mp3MediaControl implements MediaControl{
                 loop = LoopStatus.OFF;
                 break;
             }
+            default -> {
+                break;
+            }
         }
     }
 
+    /**
+     * @return teh loop status.
+     */
     @Override
     public LoopStatus getLoopStatus() {
         return loop;
     }
 
+    /**
+     * Sets the rand status.
+     */
     @Override
     public void rand() {
         if (!randOn) {
@@ -171,11 +223,18 @@ public class Mp3MediaControl implements MediaControl{
         randOn = !randOn;
     }
 
+    /**
+     * @return true if randOn is true, false otherwise.
+     */
     @Override
     public boolean getRandStatus() {
-        return randOn ? true : false;
+        return randOn;
     }
 
+    /**
+     * @param song the song to be set as the current one.
+     * @return true if song is set, false otherwise.
+     */
     @Override
     public boolean setSong(final Song song) {
         if (this.playlist.isPresent()) {
@@ -190,6 +249,9 @@ public class Mp3MediaControl implements MediaControl{
         }
     }
 
+    /**
+     * @param rate sets the current rep speed of our mediaPlayer (if present).
+     */
     @Override
     public void setRepSpeed(final double rate) {
         if (this.mediaPlayer.isPresent()) {
@@ -197,6 +259,9 @@ public class Mp3MediaControl implements MediaControl{
         }
     }
 
+    /**
+     * @param duration the progress to be set as the current one.
+     */
     @Override
     public void setProgress(final Duration duration) {
         if (this.mediaPlayer.isPresent()) {
@@ -204,6 +269,9 @@ public class Mp3MediaControl implements MediaControl{
         }
     }
 
+    /**
+     * @return the current duration of our mediaPlayer (if present).
+     */
     @Override
     public double getDuration() {
         if (this.mediaPlayer.isPresent()) {
@@ -212,6 +280,9 @@ public class Mp3MediaControl implements MediaControl{
         return MediaPlayer.INDEFINITE;
     }
 
+    /**
+     * @param volume the value to be set as the current one.
+     */
     @Override
     public void setVolume(final double volume) {
         if (this.mediaPlayer.isPresent()) {
@@ -220,6 +291,9 @@ public class Mp3MediaControl implements MediaControl{
         }
     }
 
+    /**
+     * @return current volume (if mediaPlayer is present).
+     */
     @Override
     public double getVolume() {
         if (this.mediaPlayer.isPresent()) {
@@ -228,6 +302,9 @@ public class Mp3MediaControl implements MediaControl{
         return 0.0;
     }
 
+    /**
+     * @return the next song (if the playlist is present).
+     */
     @Override
     public Optional<Song> getNextSong() {
         if (this.playlist.isPresent() && this.index < getPlaylistSize() - 1) {
@@ -237,6 +314,9 @@ public class Mp3MediaControl implements MediaControl{
         }
     }
 
+    /**
+     * @return current progress of our mediaPlayer (if this one is present).
+     */
     @Override
     public double getProgress() {
         if (this.mediaPlayer.isPresent()) {
@@ -245,10 +325,18 @@ public class Mp3MediaControl implements MediaControl{
         return -1;
     }
 
+    /**
+     * @return our mediaPlayer (If present).
+     */
+    @Override
     public Optional<MediaPlayer> getMediaControl() {
         return this.mediaPlayer;
     }
 
+    /**
+     * @return Current status of our mediaPlayer.
+     */
+    @Override
     public Status getStatus() {
         if (this.mediaPlayer.isPresent()) {
             if (this.mediaPlayer.get().getStatus().equals(MediaPlayer.Status.PLAYING)) {
