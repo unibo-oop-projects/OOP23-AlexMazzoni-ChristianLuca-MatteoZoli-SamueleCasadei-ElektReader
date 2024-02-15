@@ -24,7 +24,7 @@ public class PlayListsController {
     /* to implement the switch between song views */
     private PlayList current;
     private boolean onIcons = true;
-    private final int defSpace = 15;
+    static final int DEF_SPACE = 15;
 
     /**
      * Gets the playlist list from the static method getReader of GUI Controller.
@@ -46,7 +46,7 @@ public class PlayListsController {
         songContainer.setPrefWidth(songsPane.getWidth());
 
         plistContainer.setPrefWidth(playlistsPane.getWidth());
-        plistContainer.setSpacing(defSpace);
+        plistContainer.setSpacing(DEF_SPACE);
 
         GUIController.getReader().getPlaylists().stream()
             .map(playlist -> createButton(playlist, songContainer))
@@ -77,7 +77,6 @@ public class PlayListsController {
                 this.current = p;
                 songsController.load(p, onIcons);
                 this.desc.setText(" - " + p.getSize() + " - " + p.getName());
-                responsive();
             }
         });
         return btnPlaylist;
@@ -89,13 +88,6 @@ public class PlayListsController {
     public void reload() {
         this.current = GUIController.getReader().getCurrentPlaylist().get();
         this.songsController.load(current, onIcons);
-    }
-
-    /**
-     * @return the list of playlist buttons currently loaded
-     */
-    public List<Button> getBtnPlaylists() {
-        return this.btnPlaylists;
     }
 
     /**

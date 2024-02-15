@@ -38,16 +38,6 @@ public interface PlayList {
     String getName();
 
     /**
-     * @return the queue of songs used for the actual reproduction of tracks
-     */
-    Iterable<Song> getQueue();
-
-    /**
-     * shuffles the reproduction queue.
-     */
-    void shuffleQueue();
-
-    /**
      * @return the complessive duration of all the songs in this playlist in the 
      * time stamp format h:mm:ss
      */

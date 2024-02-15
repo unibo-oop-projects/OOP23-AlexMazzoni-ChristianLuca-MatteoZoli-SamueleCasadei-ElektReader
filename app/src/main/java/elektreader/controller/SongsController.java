@@ -2,6 +2,7 @@ package elektreader.controller;
 
 
 import java.util.List;
+
 import elektreader.api.PlayList;
 import elektreader.api.Song;
 import elektreader.model.Mp3PlayList;
@@ -23,8 +24,8 @@ public class SongsController {
     private final VBox listContainer = new VBox();
     private final FlowPane songPane;
     private final ScrollPane pane;
-    private final double containerW = 120, containerH = 140, btnW = 50, btnH = 50,
-        imgfitW = 50, imgfitH = 56, defSpace = 2, defGap = 15, insets = 5, margin = 10;
+    static final double CONTAINER_W = 120, CONTAINER_H = 140, BTN_SIZE = 50,
+        IMGFIT_W = 50, IMGFIT_H = 56, DEFSPACE = 2, DEFGAP = 15, INS = 5, MARGIN = 10;
 
     /**
      * @param songContainer the pane that will graphically contain the songs
@@ -33,8 +34,8 @@ public class SongsController {
      */
     public SongsController(final FlowPane songContainer, final ScrollPane pane) {
         this.songPane = songContainer;
-        this.songPane.setHgap(defGap);
-        this.songPane.setVgap(defGap);
+        this.songPane.setHgap(DEFGAP);
+        this.songPane.setVgap(DEFGAP);
         songPane.setPrefWidth(pane.getWidth());
         this.pane = pane;
     }
@@ -45,17 +46,17 @@ public class SongsController {
         ImageView img = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/AudioWave.png").toString());
         Label duration = new Label(song.durationStringRep());
         Label title = new Label(song.getName());
-        container.setPrefSize(containerW, containerH);
+        container.setPrefSize(CONTAINER_W, CONTAINER_H);
         container.getStyleClass().add("songcontainer");
-        VBox.setMargin(container, new Insets(margin));
-        container.setPadding(new Insets(insets));
+        VBox.setMargin(container, new Insets(MARGIN));
+        container.setPadding(new Insets(INS));
 
         // adding a Tooltip in order to make possible to reade song titles if they're too long
         Tooltip btnTooltip = new Tooltip(duration.getText() + "\n" + title.getText());
         btnTooltip.setStyle("-fx-font-size: 12pt;");
         Tooltip.install(container, btnTooltip);
 
-        container.setSpacing(defSpace);
+        container.setSpacing(DEFSPACE);
         container.setOnMouseClicked(event -> {
             this.btnSongs.stream()
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
@@ -64,12 +65,12 @@ public class SongsController {
              //GUIController.getReader().getPlayer().setSong(song);
         });
 
-        icon.setPrefSize(btnW, btnH);
-        icon.setPadding(new Insets(insets));
+        icon.setPrefSize(BTN_SIZE, BTN_SIZE);
+        icon.setPadding(new Insets(INS));
         icon.getStyleClass().add("songbtn");
 
-        img.setFitHeight(imgfitH);
-        img.setFitWidth(imgfitW);
+        img.setFitHeight(IMGFIT_H);
+        img.setFitWidth(IMGFIT_W);
         img.setPreserveRatio(true);
         icon.setGraphic(img);
 
@@ -122,7 +123,7 @@ public class SongsController {
                     return createListButton(s);
                 })
                 .forEach(b -> listContainer.getChildren().add(b));
-            listContainer.setSpacing(defSpace);
+            listContainer.setSpacing(DEFSPACE);
             listContainer.fillWidthProperty();
     }
 

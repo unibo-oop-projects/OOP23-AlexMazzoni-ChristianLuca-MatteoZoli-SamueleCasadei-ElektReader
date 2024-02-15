@@ -1,6 +1,7 @@
 package elektreader.model;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -11,8 +12,12 @@ import java.util.regex.Pattern;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.AudioHeader;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.TagException;
 
 import elektreader.api.Song;
 /**
@@ -24,7 +29,7 @@ public final class Mp3Song implements Song {
     private AudioFile data;
     private AudioHeader header;
     private Tag info;
-    private final int timeUnit = 60;
+    static final int TIME_UNIT = 60;
 
     /**
      * @param songPath the file path, already filtered from illegal arguments 
@@ -36,7 +41,7 @@ public final class Mp3Song implements Song {
             this.data = AudioFileIO.read(songFile);
             this.header = data.getAudioHeader();
             this.info = data.getTag();
-        } catch (Exception e) {
+        } catch (CannotReadException | TagException | ReadOnlyFileException | InvalidAudioFrameException | IOException e) {
             System.out.println(songFile + "   " + e.toString());
         }
     }
@@ -74,8 +79,8 @@ public final class Mp3Song implements Song {
     @Override
     public String durationStringRep() {
         long h = TimeUnit.SECONDS.toHours(getDuration()); /* amount of hours */
-        long m = TimeUnit.SECONDS.toMinutes(getDuration() % (timeUnit * timeUnit)); /* amount of minutes, less the hours */
-        long s = (getDuration() % (timeUnit * timeUnit)) % timeUnit; /* seconds left, less minutes, less hours */
+        long m = TimeUnit.SECONDS.toMinutes(getDuration() % (TIME_UNIT * TIME_UNIT)); /* amount of minutes, less the hours */
+        long s = (getDuration() % (TIME_UNIT * TIME_UNIT)) % TIME_UNIT; /* seconds left, less minutes, less hours */
         return String.format("%02d:%02d:%02d", h, m, s);
     }
 

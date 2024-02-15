@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import elektreader.api.PlayList;
 import elektreader.api.Reader;
 import elektreader.api.Song;
@@ -22,9 +21,6 @@ public final class Mp3PlayList implements PlayList {
 
     private final File playlistDir;
     private List<Song> songs;
-    private List<Song> queue;
-    private final int timeUnit = 60;
-
 
     /**
      * @param playlist the filesystem path of the playlist to be set
@@ -37,7 +33,6 @@ public final class Mp3PlayList implements PlayList {
             .map(Song.class::cast)
             .toList();
         this.songs = convertedMp3;
-        this.queue = convertedMp3;
     }
 
     @Override
@@ -45,34 +40,14 @@ public final class Mp3PlayList implements PlayList {
         return List.copyOf(this.songs);
     }
 
-    /* could be removed soon */
-    @Override
-    public Iterable<Song> getQueue() {
-        return this.queue;
-    }
-
-    /* could be removed soon */
-    @Override
-    public void shuffleQueue() {
-        Random rnd = new Random();
-        /* i'm using a temporary variable due to the fact that Collectors
-         * doesn't have a toQueue() method.
-         */
-        Collection<Song> tmp = this.queue.stream()
-            .sorted((s1, s2) -> rnd.nextInt() - rnd.nextInt())
-            .toList();
-        /* the queue needs to be empty before adding the new order */
-        this.queue.clear();
-        this.queue.addAll(tmp);
-    }
-
     @Override
     public String getTotalDuration() {
         var secs = this.songs.stream()
             .mapToInt(Song::getDuration) /* map on duration to get every song's duration */
             .sum(); /* sum every duration */
-        return String.format("%02d:%02d:%02d", secs / (timeUnit * timeUnit), (secs % (timeUnit * timeUnit))
-            / timeUnit, (secs % (timeUnit * timeUnit)) % timeUnit);
+        return String.format("%02d:%02d:%02d", secs / (Mp3Song.TIME_UNIT * Mp3Song.TIME_UNIT),
+            (secs % (Mp3Song.TIME_UNIT * Mp3Song.TIME_UNIT))
+            / Mp3Song.TIME_UNIT, (secs % (Mp3Song.TIME_UNIT * Mp3Song.TIME_UNIT)) % Mp3Song.TIME_UNIT);
     }
 
     @Override
