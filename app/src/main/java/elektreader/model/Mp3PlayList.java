@@ -105,12 +105,12 @@ public final class Mp3PlayList implements PlayList {
     @Override
     public Optional<Song> getSong(final int index) {
         Song searched;
-        try {
-            searched = this.songs.get(index);
-            return Optional.of(searched);
-        } catch (RuntimeException e) {
-            return Optional.empty();
-        }
+            try {
+                searched = this.songs.get(index);
+                return Optional.of(searched);
+            } catch (Exception e) {
+                return Optional.empty();
+            }
     }
 
     /** 

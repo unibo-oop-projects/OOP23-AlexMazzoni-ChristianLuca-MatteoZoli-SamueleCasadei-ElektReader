@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import elektreader.api.PlayList;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,6 +35,10 @@ public class PlayListsController {
      * @param desc the description label on the song panel, it lists the number of songs in the playlist and,
      * also, the name of the playlist
      */
+    @SuppressFBWarnings(
+        value = "EI2",
+        justification = "i need the parameters to be modifiable from external classes"
+    )
     public PlayListsController(final ScrollPane playlistsPane, final ScrollPane songsPane, final Label desc) {
 
         this.btnPlaylists = new ArrayList<>(Collections.emptyList());
@@ -60,7 +66,6 @@ public class PlayListsController {
 
         playlistsPane.setContent(plistContainer);
         songsPane.setContent(songContainer);
-        songsPane.setOnMouseEntered(event -> responsive());
     }
 
     private Button createButton(final PlayList p) {

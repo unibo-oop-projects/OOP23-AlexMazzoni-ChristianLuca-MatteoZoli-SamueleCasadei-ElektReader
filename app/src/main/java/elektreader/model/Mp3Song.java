@@ -19,6 +19,7 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import elektreader.api.Song;
 /**
  * this class represents the abstraction of a song data.
@@ -34,6 +35,10 @@ public final class Mp3Song implements Song {
     /**
      * @param songPath the file path, already filtered from illegal arguments 
      */
+    @SuppressFBWarnings(
+        value = "LG",
+        justification = "jaudiotagger prints make it harder to debug"
+    )
     public Mp3Song(final Path songPath) {
         songFile = songPath.toFile();
         try {

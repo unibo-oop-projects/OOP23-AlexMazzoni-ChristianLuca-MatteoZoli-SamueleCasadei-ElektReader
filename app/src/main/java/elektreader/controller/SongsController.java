@@ -3,6 +3,7 @@ package elektreader.controller;
 
 import java.util.List;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import elektreader.api.PlayList;
 import elektreader.api.Song;
 import elektreader.model.Mp3PlayList;
@@ -33,6 +34,10 @@ public class SongsController {
      * @param pane the scroll pane which will contain songContainer, i keep that in
      * order to resize
      */
+    @SuppressFBWarnings(
+        value = "EI2",
+        justification = "i need the parameters to be modifiable from external classes"
+    )
     public SongsController(final FlowPane songContainer, final ScrollPane pane) {
         this.songPane = songContainer;
         this.songPane.setHgap(DEFGAP);
