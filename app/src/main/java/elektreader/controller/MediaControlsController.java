@@ -6,8 +6,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import elektreader.api.MediaControl;
-import elektreader.api.Song;
 
 /**
  * This class is used to fill mediaControl graphic part of the software, 
@@ -34,11 +34,9 @@ public class MediaControlsController {
 
     private final Label nextMetaSong;
 
+    private final Slider setRepSpeed;
+
     private final Slider currentVolume;
-
-    //private Label volume;
-
-    //private ImageView volumeImage;
 
     private final Slider progressBar;
 
@@ -52,6 +50,10 @@ public class MediaControlsController {
      * @param mediaControlGrid the Parent that must be filled.
      * @param progressBar the Slider that must represent current Duration of current Song played.
      */
+    @SuppressFBWarnings(
+        value = "EI2",
+        justification = "i need the parameters to be modifiable from external classes"
+    )
     public MediaControlsController(final GridPane mediaControlGrid, final Slider progressBar) {
         mediaControlGrid.getChildren().clear();
 
@@ -112,62 +114,18 @@ public class MediaControlsController {
         this.nextMetaSong = new Label();
 
         this.currentVolume = new Slider(0, 1, 1);
+        this.setRepSpeed = new Slider(0.5, 2, 1);
+        this.setRepSpeed.setMaxWidth(WIDTH);
         this.currentVolume.setStyle("-fx-text-fill: black");
         this.currentVolume.setPrefHeight(HEIGHT);
         this.currentVolume.setPrefWidth(WIDTH);
-        //this.volumeImage = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Audio.png").toString());
         this.progressBar = progressBar;
 
         mediaControlGrid.add(currentMetaSong, 0, 0);
+        mediaControlGrid.add(setRepSpeed, 2, 0);
         mediaControlGrid.add(baseControls, 1, 0);
-        mediaControlGrid.add(nextMetaSong, 3, 0);
-        mediaControlGrid.add(currentVolume, 2, 0);
-        //mediaControlGrid.add(volume, 3, 0);
-    }
-
-    /**
-     * @param song the Song to be set as the current one into our graphic.
-     */
-    public void loadSong(final Song song) {
-        this.mediaControl.getMediaControl().get().currentTimeProperty().addListener((observable, oldValue, newValue) -> 
-            progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().get().getTotalDuration().toSeconds()));
-
-        this.playPause.setGraphic(pausePng);
-
-        this.playPause.setOnMouseClicked(event -> {
-            if (this.mediaControl.getStatus().equals(MediaControl.Status.PLAYING)) {
-                this.mediaControl.pause();
-                playPause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
-            } else {
-                this.mediaControl.play();
-                playPause.setGraphic(pausePng);
-            }
-        });
-        this.prevSong.setOnMouseClicked(event -> {
-            this.mediaControl.prevSong();
-            this.loadSong(mediaControl.getCurrentSong());
-        });
-        this.prevSong.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Rewind.png").toString()));
-        this.nextSong.setOnMouseClicked(event -> {
-            this.mediaControl.nextSong();
-            this.loadSong(mediaControl.getCurrentSong());
-        });
-        this.nextSong.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/FastForward.png").toString()));
-        this.currentMetaSong.setText(song.getName() 
-            + "\n" 
-            + (song.getArtist().isPresent() 
-            ? song.getArtist().get() : "No artist found"));
-        final var nxtSong = mediaControl.getNextSong().isPresent() 
-            ? mediaControl.getNextSong().get().getName() 
-            + "\n" 
-            + (mediaControl.getNextSong().get().getArtist().isPresent() 
-            ? mediaControl.getNextSong().get().getArtist().get() 
-            : " No artist found") 
-            : "End of playlist";
-        this.nextMetaSong.setText(nxtSong);
-        this.currentVolume.valueProperty().addListener((a, b, c) -> {
-            mediaControl.setVolume(c.doubleValue());
-        });
+        mediaControlGrid.add(nextMetaSong, 4, 0);
+        mediaControlGrid.add(currentVolume, 3, 0);
     }
 
     /**
@@ -178,10 +136,6 @@ public class MediaControlsController {
             mediaControl.getMediaControl().get().currentTimeProperty().addListener((observable, oldValue, newValue) -> {
                 progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().get().getTotalDuration().toSeconds());
             });
-            this.playPause.setGraphic(pausePng);
-            this.prevSong.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Rewind.png").toString()));
-            this.nextSong.setGraphic(new ImageView(
-                ClassLoader.getSystemResource("icons/Light/Media/FastForward.png").toString()));
             this.currentMetaSong.setText(mediaControl.getCurrentSong().getName() 
                 + "\n" + (mediaControl.getCurrentSong().getArtist().isPresent() 
                 ? mediaControl.getCurrentSong().getArtist().get() : "No artist found"));
@@ -211,8 +165,12 @@ public class MediaControlsController {
                 this.mediaControl.nextSong();
             });
 
-        this.currentVolume.valueProperty().addListener((a, b, c) -> {
-            mediaControl.setVolume(c.doubleValue());
-        });
+            this.currentVolume.valueProperty().addListener((a, b, c) -> {
+                mediaControl.setVolume(c.doubleValue());
+            });
+
+            this.setRepSpeed.valueProperty().addListener((a, b, c) -> {
+                mediaControl.setRepSpeed(c.doubleValue());
+            });
     }
 }
