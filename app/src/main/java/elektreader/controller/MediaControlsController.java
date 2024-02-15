@@ -75,7 +75,7 @@ public class MediaControlsController {
 
         loop.setOnMouseClicked(e -> {
             mediaControl.loopSong();
-            switch (mediaControl.getLoopStatus()) {
+            switch (mediaControl.isLoopStatus()) {
                 case OFF -> {
                     loop.setGraphic(new ImageView("icons/Light/Media/Repeat.png"));
                     break;
