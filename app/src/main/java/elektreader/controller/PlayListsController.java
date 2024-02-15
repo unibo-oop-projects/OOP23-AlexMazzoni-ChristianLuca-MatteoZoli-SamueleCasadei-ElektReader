@@ -11,7 +11,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-/* this class represent the controller to the Playlist view, which is controlled
+/**
+ * this class represent the controller to the Playlist view, which is controlled
  * by the GUI controller class.
  */
 public class PlayListsController {
@@ -23,11 +24,11 @@ public class PlayListsController {
     /* to implement the switch between song views */
     private PlayList current;
     private boolean onIcons = true;
-    private final int def_spac = 15;
+    private final int defSpace = 15;
 
     /**
      * Gets the playlist list from the static method getReader of GUI Controller.
-     * @param playlistsList the playlists panel in which the class grafts the buttons
+     * @param playlistsPane the playlists panel in which the class grafts the buttons
      * @param songsPane the songs panel to build the the new song controller
      * @param desc the description label on the song panel, it lists the number of songs in the playlist and,
      * also, the name of the playlist
@@ -45,7 +46,7 @@ public class PlayListsController {
         songContainer.setPrefWidth(songsPane.getWidth());
 
         plistContainer.setPrefWidth(playlistsPane.getWidth());
-        plistContainer.setSpacing(def_spac);
+        plistContainer.setSpacing(defSpace);
 
         GUIController.getReader().getPlaylists().stream()
             .map(playlist -> createButton(playlist, songContainer))
@@ -69,26 +70,25 @@ public class PlayListsController {
             this.btnPlaylists.stream()
                 .forEach(btn -> {
                     btn.getStyleClass().removeIf(style -> style.equals("selected"));
-                });
-            var btn = (Button)event.getSource();
+            });
+            var btn = (Button) event.getSource();
             btn.getStyleClass().add("selected");
-			if(GUIController.getReader().setCurrentPlaylist(Optional.of(p))); {
+            if (GUIController.getReader().setCurrentPlaylist(Optional.of(p))) {
                 this.current = p;
                 songsController.load(p, onIcons);
-                this.desc.setText(" - "+p.getSize()+" - "+p.getName());
+                this.desc.setText(" - " + p.getSize() + " - " + p.getName());
                 responsive();
             }
-		});
+        });
         return btnPlaylist;
     }
 
     /**
      * refreshes the song view.
      */
-    public void reload(){
+    public void reload() {
         this.current = GUIController.getReader().getCurrentPlaylist().get();
         this.songsController.load(current, onIcons);
-
     }
 
     /**
@@ -101,7 +101,7 @@ public class PlayListsController {
     /**
      * adjusts the size of panels and relative content, also call responsive for the songs controller.
      */
-    public void responsive(){
+    public void responsive() {
         this.plistContainer.fillWidthProperty();
         this.songsController.responsive();
     }
@@ -109,7 +109,7 @@ public class PlayListsController {
     /**
      * switches and reloads the type of view, from icons to list or viceversa.
      */
-    public void switchView(){
+    public void switchView() {
         onIcons = !onIcons;
         songsController.load(current, onIcons);
     }

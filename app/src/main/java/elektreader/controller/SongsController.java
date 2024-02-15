@@ -14,15 +14,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-/* a controller for songs graphics, link graphics and logics */
+/**
+ * a controller for songs graphics, link graphics and logics.
+ */
 public class SongsController {
-    
+
     private List<VBox> btnSongs;
     private final VBox listContainer = new VBox();
     private final FlowPane songPane;
     private final ScrollPane pane;
-    private final double container_w = 120, container_h = 140, btn_w = 50, btn_h = 50,
-        imgfit_w = 50, imgfit_h = 56, def_spac = 2, def_gap = 15, insets = 5, margin = 10;
+    private final double containerW = 120, containerH = 140, btnW = 50, btnH = 50,
+        imgfitW = 50, imgfitH = 56, defSpace = 2, defGap = 15, insets = 5, margin = 10;
 
     /**
      * @param songContainer the pane that will graphically contain the songs
@@ -31,44 +33,43 @@ public class SongsController {
      */
     public SongsController(final FlowPane songContainer, final ScrollPane pane) {
         this.songPane = songContainer;
-        this.songPane.setHgap(def_gap);
-        this.songPane.setVgap(def_gap);
+        this.songPane.setHgap(defGap);
+        this.songPane.setVgap(defGap);
         songPane.setPrefWidth(pane.getWidth());
         this.pane = pane;
     }
-    
+ 
     private VBox createButton(final Song song) {
         VBox container = new VBox();
         Label icon = new Label();
         ImageView img = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/AudioWave.png").toString());
         Label duration = new Label(song.durationStringRep());
         Label title = new Label(song.getName());
-        container.setPrefSize(container_w, container_h);
+        container.setPrefSize(containerW, containerH);
         container.getStyleClass().add("songcontainer");
         VBox.setMargin(container, new Insets(margin));
         container.setPadding(new Insets(insets));
 
         // adding a Tooltip in order to make possible to reade song titles if they're too long
-        Tooltip btnTooltip = new Tooltip(duration.getText() + "\n"+title.getText());
+        Tooltip btnTooltip = new Tooltip(duration.getText() + "\n" + title.getText());
         btnTooltip.setStyle("-fx-font-size: 12pt;");
         Tooltip.install(container, btnTooltip);
 
-        container.setSpacing(def_spac);
-        container.setOnMouseClicked( event -> {
+        container.setSpacing(defSpace);
+        container.setOnMouseClicked(event -> {
             this.btnSongs.stream()
                 .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
-            
             container.getStyleClass().add("selected");
             GUIController.getReader().getPlayer().setSong(song);
              //GUIController.getReader().getPlayer().setSong(song);
         });
 
-        icon.setPrefSize(btn_w, btn_h);
+        icon.setPrefSize(btnW, btnH);
         icon.setPadding(new Insets(insets));
         icon.getStyleClass().add("songbtn");
 
-        img.setFitHeight(imgfit_w);
-        img.setFitWidth(imgfit_h);
+        img.setFitHeight(imgfitH);
+        img.setFitWidth(imgfitW);
         img.setPreserveRatio(true);
         icon.setGraphic(img);
 
@@ -96,7 +97,7 @@ public class SongsController {
             songPane.getChildren().clear();
             this.btnSongs = playlist.getSongs().stream()
                 .map(s -> {
-                    if(s.equals(GUIController.getReader().getPlayer().getCurrentSong())){
+                    if (s.equals(GUIController.getReader().getPlayer().getCurrentSong())) {
                         var songView = createButton(s);
                         songView.getStyleClass().add("selected");
                         return songView;
@@ -113,8 +114,7 @@ public class SongsController {
             songPane.getChildren().add(listContainer);
             playList.getSongs().stream()
                 .map(s -> {
-                    /* tmp */
-                    if(s.equals(GUIController.getReader().getPlayer().getCurrentSong())) {
+                    if (s.equals(GUIController.getReader().getPlayer().getCurrentSong())) {
                         var songView = createListButton(s);
                         songView.getStyleClass().add("selected");
                         return songView;
@@ -122,7 +122,7 @@ public class SongsController {
                     return createListButton(s);
                 })
                 .forEach(b -> listContainer.getChildren().add(b));
-            listContainer.setSpacing(def_spac);
+            listContainer.setSpacing(defSpace);
             listContainer.fillWidthProperty();
     }
 
@@ -154,5 +154,4 @@ public class SongsController {
         listContainer.setPrefWidth(songPane.getPrefWidth());
         listContainer.getChildren().stream().forEach(b -> b.prefWidth(listContainer.getPrefWidth()));
     }
-
 }

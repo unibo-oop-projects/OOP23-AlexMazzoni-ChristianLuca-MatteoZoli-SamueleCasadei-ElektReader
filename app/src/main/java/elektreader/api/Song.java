@@ -62,13 +62,13 @@ public interface Song {
      * @param filename a filename of a song (index - name.something)
      * @return the raw title of the file (name)
      */
-    static String getTitle(Path filename){
+    static String getTitle(Path filename) {
         String tmp = filename.toFile().getName();
         Matcher matcher = Pattern.compile("(.*?)\\.\\w+$").matcher(tmp);
         /* a file must certainly have the extension, this part removes it,
          * this regex researches the pattern (alphanumeric_string.something)
          */
-        if(matcher.find()) {
+        if (matcher.find()) {
             /* tmp will now be (alphanumeric_string) */
             tmp = matcher.group(1);
         }

@@ -15,13 +15,16 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 
 import elektreader.api.Song;
-
-public class Mp3Song implements Song{
+/**
+ * this class represents the abstraction of a song data.
+ */
+public final class Mp3Song implements Song {
 
     private final File songFile;
     private AudioFile data;
     private AudioHeader header;
     private Tag info;
+    private final int timeUnit = 60;
 
     /**
      * @param songPath the file path, already filtered from illegal arguments 
@@ -29,12 +32,12 @@ public class Mp3Song implements Song{
     public Mp3Song(final Path songPath) {
         songFile = songPath.toFile();
         try {
-            Logger.getLogger("org.jaudiotagger").setLevel(Level.OFF);   
+            Logger.getLogger("org.jaudiotagger").setLevel(Level.OFF);
             this.data = AudioFileIO.read(songFile);
             this.header = data.getAudioHeader();
             this.info = data.getTag();
         } catch (Exception e) {
-            System.out.println(songFile+"   "+e.toString());
+            System.out.println(songFile + "   " + e.toString());
         }
     }
 
@@ -50,7 +53,7 @@ public class Mp3Song implements Song{
 
     @Override
     public Optional<String> getGenre() {
-        return info.getFirst(FieldKey.GENRE).equals("") ? Optional.empty() :Optional.of(info.getFirst(FieldKey.GENRE));
+        return info.getFirst(FieldKey.GENRE).equals("") ? Optional.empty() : Optional.of(info.getFirst(FieldKey.GENRE));
     }
 
     @Override
@@ -60,7 +63,7 @@ public class Mp3Song implements Song{
 
     @Override
     public Optional<String> getAlbumName() {
-        return info.getFirst(FieldKey.ALBUM).equals("") ? Optional.empty() :Optional.of(info.getFirst(FieldKey.ALBUM));
+        return info.getFirst(FieldKey.ALBUM).equals("") ? Optional.empty() : Optional.of(info.getFirst(FieldKey.ALBUM));
     }
 
     @Override
@@ -71,20 +74,18 @@ public class Mp3Song implements Song{
     @Override
     public String durationStringRep() {
         long h = TimeUnit.SECONDS.toHours(getDuration()); /* amount of hours */
-        long m = TimeUnit.SECONDS.toMinutes(getDuration()%3600); /* amount of minutes, less the hours */
-        long s = (getDuration()%3600)%60; /* seconds left, less minutes, less hours */
-        return String.format("%02d:%02d:%02d",h,m,s);
+        long m = TimeUnit.SECONDS.toMinutes(getDuration() % (timeUnit * timeUnit)); /* amount of minutes, less the hours */
+        long s = (getDuration() % (timeUnit * timeUnit)) % timeUnit; /* seconds left, less minutes, less hours */
+        return String.format("%02d:%02d:%02d", h, m, s);
     }
 
     @Override
     public String getFileFormat() {
         Matcher match =  Pattern.compile(".+\\.(\\w+$)").matcher(getFile().getName());
-        if(match.matches()){
+        if (match.matches()) {
             return match.group(1);
-        }
-        else {
+        } else {
             return "";
         }
     }
-    
 }
