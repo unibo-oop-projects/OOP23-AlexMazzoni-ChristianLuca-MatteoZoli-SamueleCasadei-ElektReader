@@ -57,7 +57,7 @@ public class MediaControlsController {
 
         final HBox baseControls = new HBox();
 
-        this.mediaControl = GUIController.getReader().getPlayer();
+        this.mediaControl = GUIController.READER.getPlayer();
 
         this.playPause = new Button();
         playPause.setGraphic(new ImageView("icons/Light/Media/Play.png"));
@@ -117,8 +117,6 @@ public class MediaControlsController {
         this.currentVolume.setPrefWidth(WIDTH);
         //this.volumeImage = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Audio.png").toString());
         this.progressBar = progressBar;
-
-        this.mediaControl = GUIController.READER.getPlayer();
 
         mediaControlGrid.add(currentMetaSong, 0, 0);
         mediaControlGrid.add(baseControls, 1, 0);

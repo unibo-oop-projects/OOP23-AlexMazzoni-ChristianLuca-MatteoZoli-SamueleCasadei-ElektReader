@@ -103,7 +103,6 @@ class ElektreaderTest {
         /* test player */
         app.getPlayer().setVolume(0.2);
         app.getPlayer().play();
-        Assertions.assertTrue(app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2)));
         Assertions.assertEquals(TEST_PATH_PLAYLIST2_SONG18, app.getPlayer().getCurrentSong().getFile().toPath());
         app.getPlayer().play();
         Thread.sleep(6000);

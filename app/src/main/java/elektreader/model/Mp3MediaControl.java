@@ -38,7 +38,7 @@ public class Mp3MediaControl implements MediaControl {
 
     //This method set the current song as the Media given to our Mediaplyer.
     private void currentSong() {
-        Song currSong = this.getCurrentSong();
+        final Song currSong = this.getCurrentSong();
         this.stop();
         this.mediaPlayer = Optional.of(new MediaPlayer(new Media(currSong.getFile().toURI().toString())));
         this.mediaPlayer.get().setVolume(this.currentVolume);
@@ -91,6 +91,7 @@ public class Mp3MediaControl implements MediaControl {
     /**
      * @return the current playlist set (if present).
      */
+    @Override
     public List<Song> getPlaylist() {
         if (this.playlist.isEmpty()) {
             throw new IllegalStateException("Playlist is currently empty.");
@@ -136,7 +137,7 @@ public class Mp3MediaControl implements MediaControl {
         if (this.mediaPlayer.isPresent()) {
             switch (loop) {
                 case OFF -> {
-                    if (this.index == (this.getPlaylistSize() - 1)) {
+                    if (this.index == this.getPlaylistSize() - 1) {
                         return;
                     }
                     this.index++;
@@ -210,7 +211,7 @@ public class Mp3MediaControl implements MediaControl {
     public void rand() {
         if (!randOn) {
             index = 0;
-            List<Song> tmpList = new ArrayList<>();
+            final List<Song> tmpList = new ArrayList<>();
             tmpList.addAll(playlist.get());
             Collections.shuffle(tmpList);
             playlist = Optional.of(tmpList);
