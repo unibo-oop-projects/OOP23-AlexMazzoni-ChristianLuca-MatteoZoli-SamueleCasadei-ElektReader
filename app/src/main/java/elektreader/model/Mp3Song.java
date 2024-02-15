@@ -42,7 +42,7 @@ public final class Mp3Song implements Song {
             this.header = data.getAudioHeader();
             this.info = data.getTag();
         } catch (CannotReadException | TagException | ReadOnlyFileException | InvalidAudioFrameException | IOException e) {
-            System.out.println(songFile + "   " + e.toString());
+            System.out.println(songFile.toString() + " " + e);
         }
     }
 
@@ -53,12 +53,12 @@ public final class Mp3Song implements Song {
 
     @Override
     public Optional<String> getArtist() {
-        return info.getFirst(FieldKey.ARTIST).equals("") ? Optional.empty() : Optional.of(info.getFirst(FieldKey.ARTIST));
+        return "".equals(info.getFirst(FieldKey.ARTIST)) ? Optional.empty() : Optional.of(info.getFirst(FieldKey.ARTIST));
     }
 
     @Override
     public Optional<String> getGenre() {
-        return info.getFirst(FieldKey.GENRE).equals("") ? Optional.empty() : Optional.of(info.getFirst(FieldKey.GENRE));
+        return "".equals(info.getFirst(FieldKey.GENRE)) ? Optional.empty() : Optional.of(info.getFirst(FieldKey.GENRE));
     }
 
     @Override
@@ -68,7 +68,7 @@ public final class Mp3Song implements Song {
 
     @Override
     public Optional<String> getAlbumName() {
-        return info.getFirst(FieldKey.ALBUM).equals("") ? Optional.empty() : Optional.of(info.getFirst(FieldKey.ALBUM));
+        return "".equals(info.getFirst(FieldKey.ALBUM)) ? Optional.empty() : Optional.of(info.getFirst(FieldKey.ALBUM));
     }
 
     @Override
@@ -78,15 +78,18 @@ public final class Mp3Song implements Song {
 
     @Override
     public String durationStringRep() {
-        long h = TimeUnit.SECONDS.toHours(getDuration()); /* amount of hours */
-        long m = TimeUnit.SECONDS.toMinutes(getDuration() % (TIME_UNIT * TIME_UNIT)); /* amount of minutes, less the hours */
-        long s = (getDuration() % (TIME_UNIT * TIME_UNIT)) % TIME_UNIT; /* seconds left, less minutes, less hours */
+        /* amount of hours */
+        final long h = TimeUnit.SECONDS.toHours(getDuration());
+        /* amount of minutes, less the hours */
+        final long m = TimeUnit.SECONDS.toMinutes(getDuration() % (TIME_UNIT * TIME_UNIT));
+        /* seconds left, less minutes, less hours */
+        final long s = (getDuration() % (TIME_UNIT * TIME_UNIT)) % TIME_UNIT;
         return String.format("%02d:%02d:%02d", h, m, s);
     }
 
     @Override
     public String getFileFormat() {
-        Matcher match =  Pattern.compile(".+\\.(\\w+$)").matcher(getFile().getName());
+        final Matcher match =  Pattern.compile(".+\\.(\\w+$)").matcher(getFile().getName());
         if (match.matches()) {
             return match.group(1);
         } else {

@@ -26,6 +26,7 @@ public class SongsController {
     private final ScrollPane pane;
     static final double CONTAINER_W = 120, CONTAINER_H = 140, BTN_SIZE = 50,
         IMGFIT_W = 50, IMGFIT_H = 56, DEFSPACE = 2, DEFGAP = 15, INS = 5, MARGIN = 10;
+    static final String SEL_STRING = "selected";
 
     /**
      * @param songContainer the pane that will graphically contain the songs
@@ -41,28 +42,27 @@ public class SongsController {
     }
  
     private VBox createButton(final Song song) {
-        VBox container = new VBox();
-        Label icon = new Label();
-        ImageView img = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/AudioWave.png").toString());
-        Label duration = new Label(song.durationStringRep());
-        Label title = new Label(song.getName());
+        final VBox container = new VBox();
+        final Label icon = new Label();
+        final ImageView img = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/AudioWave.png").toString());
+        final Label duration = new Label(song.durationStringRep());
+        final Label title = new Label(song.getName());
         container.setPrefSize(CONTAINER_W, CONTAINER_H);
         container.getStyleClass().add("songcontainer");
         VBox.setMargin(container, new Insets(MARGIN));
         container.setPadding(new Insets(INS));
 
         // adding a Tooltip in order to make possible to reade song titles if they're too long
-        Tooltip btnTooltip = new Tooltip(duration.getText() + "\n" + title.getText());
+        final Tooltip btnTooltip = new Tooltip(duration.getText() + "\n" + title.getText());
         btnTooltip.setStyle("-fx-font-size: 12pt;");
         Tooltip.install(container, btnTooltip);
 
         container.setSpacing(DEFSPACE);
         container.setOnMouseClicked(event -> {
             this.btnSongs.stream()
-                .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
-            container.getStyleClass().add("selected");
+                .forEach(button -> button.getStyleClass().removeIf(style -> SEL_STRING.equals(style)));
+            container.getStyleClass().add(SEL_STRING);
             GUIController.READER.getPlayer().setSong(song);
-             //GUIController.getReader().getPlayer().setSong(song);
         });
 
         icon.setPrefSize(BTN_SIZE, BTN_SIZE);
@@ -99,8 +99,8 @@ public class SongsController {
             this.btnSongs = playlist.getSongs().stream()
                 .map(s -> {
                     if (s.equals(GUIController.READER.getPlayer().getCurrentSong())) {
-                        var songView = createButton(s);
-                        songView.getStyleClass().add("selected");
+                        final var songView = createButton(s);
+                        songView.getStyleClass().add(SEL_STRING);
                         return songView;
                     }
                     return createButton(s);
@@ -116,8 +116,8 @@ public class SongsController {
             playList.getSongs().stream()
                 .map(s -> {
                     if (s.equals(GUIController.READER.getPlayer().getCurrentSong())) {
-                        var songView = createListButton(s);
-                        songView.getStyleClass().add("selected");
+                        final var songView = createListButton(s);
+                        songView.getStyleClass().add(SEL_STRING);
                         return songView;
                     }
                     return createListButton(s);
@@ -128,7 +128,7 @@ public class SongsController {
     }
 
     private Button createListButton(final Song song) {
-        Button btn = new Button(String.format("%2s.\t%s\t-\t%s\t|\t%s\t|\t%s",
+        final Button btn = new Button(String.format("%2s.\t%s\t-\t%s\t|\t%s\t|\t%s",
             Mp3PlayList.getIndexFromName(song.getFile().getName()).isPresent() 
                 ? Mp3PlayList.getIndexFromName(song.getFile().getName()).get().toString()
                 :   "  ",
@@ -138,10 +138,10 @@ public class SongsController {
 
             btn.setOnMouseClicked(e -> {
             listContainer.getChildren().stream()
-                .forEach(button -> button.getStyleClass().removeIf(style -> style.equals("selected")));
+                .forEach(button -> button.getStyleClass().removeIf(style -> SEL_STRING.equals(style)));
 
-            var button = (Button) e.getSource();
-            button.getStyleClass().add("selected");
+            final var button = (Button) e.getSource();
+            button.getStyleClass().add(SEL_STRING);
             GUIController.READER.getPlayer().setSong(song);
         });
         return btn;

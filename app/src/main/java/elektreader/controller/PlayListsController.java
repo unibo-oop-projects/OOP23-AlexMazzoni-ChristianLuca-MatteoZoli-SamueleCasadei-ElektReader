@@ -37,7 +37,7 @@ public class PlayListsController {
 
         this.btnPlaylists = new ArrayList<>(Collections.emptyList());
         this.desc = desc;
-        FlowPane songContainer = new FlowPane();
+        final FlowPane songContainer = new FlowPane();
         this.songsController = new SongsController(songContainer, songsPane);
         this.plistContainer = new VBox();
         /* now the playlist container will keep its children resized to its current width */
@@ -49,7 +49,7 @@ public class PlayListsController {
         plistContainer.setSpacing(DEF_SPACE);
 
         GUIController.READER.getPlaylists().stream()
-            .map(playlist -> createButton(playlist, songContainer))
+            .map(playlist -> createButton(playlist))
             .forEach(button -> {
                 plistContainer.getChildren().add(button);
                 btnPlaylists.add(button);
@@ -63,15 +63,15 @@ public class PlayListsController {
         songsPane.setOnMouseEntered(event -> responsive());
     }
 
-    private Button createButton(final PlayList p, final FlowPane songsList) {
-        Button btnPlaylist = new Button("#" + p.getName());
+    private Button createButton(final PlayList p) {
+        final Button btnPlaylist = new Button("#" + p.getName());
         btnPlaylist.getStyleClass().add("playlistbtn");
         btnPlaylist.setOnMouseClicked(event -> {
             this.btnPlaylists.stream()
                 .forEach(btn -> {
-                    btn.getStyleClass().removeIf(style -> style.equals("selected"));
+                    btn.getStyleClass().removeIf(style -> "selected".equals(style));
             });
-            var btn = (Button) event.getSource();
+            final var btn = (Button) event.getSource();
             btn.getStyleClass().add("selected");
             GUIController.READER.setCurrentPlaylist(Optional.of(p));
             if (GUIController.READER.getCurrentPlaylist().isPresent()) {
