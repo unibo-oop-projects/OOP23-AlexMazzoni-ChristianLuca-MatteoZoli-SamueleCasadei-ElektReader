@@ -2,9 +2,11 @@ package elektreader.api;
 
 import java.io.File;
 
-public interface TrackGUIObserver {
-    
-    
+/**
+ * Interface to describe the behaviour of the trim observer.
+ */
+public interface TrimObserver {
+
     /**
      * Chooses a file to pass to the trimmer.
      *
@@ -19,5 +21,5 @@ public interface TrackGUIObserver {
      * @param end the end parameter of the track
      * @param name the name parameter of the track
      */
-    void getParameters(String start, String end, String name);
+    void retrieveParameters(String start, String end, String name);
 }
