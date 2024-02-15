@@ -9,10 +9,11 @@ import java.util.logging.Logger;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import elektreader.api.Reader;
+import elektreader.api.TrackGUIObserver;
 import elektreader.model.ReaderImpl;
 import elektreader.view.GUI;
 import elektreader.view.QueueGUI;
-import elektreader.view.TrimGUI;
+import elektreader.view.TrimGUIImpl;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -180,7 +181,8 @@ public final class GUIController implements Initializable {
 	@FXML
 	@SuppressFBWarnings
 	private void trim() {
-		new TrimGUI(this.root.getScene().getWindow()); // NOPMD 
+		TrackGUIObserver controller = new TrackTrimmerController(this.root.getScene().getWindow());
+		//new TrimGUI(this.root.getScene().getWindow()); // NOPMD 
 		//suppressed as it is a false positive
 	}
 
