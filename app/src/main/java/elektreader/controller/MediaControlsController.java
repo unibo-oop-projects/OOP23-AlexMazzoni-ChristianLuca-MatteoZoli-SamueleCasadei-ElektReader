@@ -118,6 +118,8 @@ public class MediaControlsController {
         //this.volumeImage = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Audio.png").toString());
         this.progressBar = progressBar;
 
+        this.mediaControl = GUIController.READER.getPlayer();
+
         mediaControlGrid.add(currentMetaSong, 0, 0);
         mediaControlGrid.add(baseControls, 1, 0);
         mediaControlGrid.add(nextMetaSong, 3, 0);
@@ -211,9 +213,8 @@ public class MediaControlsController {
                 this.mediaControl.nextSong();
             });
 
-            this.currentVolume.valueProperty().addListener((a, b, c) -> {
-                mediaControl.setVolume(c.doubleValue());
-            });
-        //});
+        this.currentVolume.valueProperty().addListener((a, b, c) -> {
+            mediaControl.setVolume(c.doubleValue());
+        });
     }
 }
