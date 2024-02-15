@@ -33,7 +33,7 @@ class ElektreaderTest {
     /* quello realistico 'MUSICA'       : https://drive.google.com/file/d/1d6UC0DYF2jKUqH-y1h0XfPCt3EnY_g7O/view?usp=sharing */
     /* quello impossibile 'ECCEZIONI'   : https://drive.google.com/file/d/1p5uUBHkpwvWBuhb3-DAqtkr6cMcKpsSN/view?usp=sharing */
     
-    final Path TEST_PATH = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment");
+    final Path TEST_PATH = Paths.get(System.getProperty("user.home"),"elektreaderTEST","MUSICA");
     final Path TEST_INVALID_PATH = Paths.get(System.getProperty("user.home"),"Desktop", "Musica");
 
     final Path TEST_INVALID_PLAYLIST = Paths.get(TEST_PATH.toString(), "balli di coppia"); 

@@ -14,7 +14,7 @@ public class Mp3MediaControl implements MediaControl{
     private Optional<MediaPlayer> mediaPlayer;
     private Optional<List<Song>> playlist, playlistCopy;
     private int index;
-    private boolean randOn = false;
+    private boolean randOn;
     private LoopStatus loop = LoopStatus.OFF;
     private double currentVolume;
 
@@ -101,13 +101,6 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void nextSong() {
-        // if (this.mediaPlayer.isPresent()) {
-        //     if (this.index == (this.getPlaylistSize()-1)) {
-        //         return;
-        //     }
-        //     this.index++;
-        //     this.currentSong();
-        // }
         if (this.mediaPlayer.isPresent()) {
             switch (loop) {
                 case OFF -> {
@@ -142,13 +135,6 @@ public class Mp3MediaControl implements MediaControl{
 
     @Override
     public void loopSong() {
-        // if (this.mediaPlayer.isPresent()) {
-        //     this.stop();
-        //     Media media = this.mediaPlayer.get().getMedia();
-        //     this.mediaPlayer = Optional.of(new MediaPlayer(media));
-        //     this.mediaPlayer.get().setCycleCount(MediaPlayer.INDEFINITE);
-        //     this.play();
-        // }
         switch (loop) {
             case OFF -> {
                 loop = LoopStatus.PLAYLIST;
@@ -185,6 +171,7 @@ public class Mp3MediaControl implements MediaControl{
         randOn = !randOn;
     }
 
+    @Override
     public boolean getRandStatus() {
         return randOn ? true : false;
     }

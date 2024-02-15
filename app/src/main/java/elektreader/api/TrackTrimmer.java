@@ -2,6 +2,9 @@ package elektreader.api;
 
 import java.nio.file.Path;
 
+/**
+ * Interface that defines user's action to trim a track
+ */
 public interface TrackTrimmer {
 
     /**
@@ -14,6 +17,7 @@ public interface TrackTrimmer {
      * @param start The start time of the trim.
      * @param end The end time of the trim.
      * @param name The name to be given to the trimmed track.
+     * @return true if a new track has been created.
      */
     boolean trim(String start, String end, String name);
 

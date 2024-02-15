@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import elektreader.api.Reader;
 import elektreader.model.ReaderImpl;
 import elektreader.view.GUI;
@@ -112,14 +113,16 @@ public class GUIController implements Initializable {
 
 	@FXML
 	private void view() {
-		if(GUIController.getReader().getCurrentPlaylist().isPresent()) {
+		if (GUIController.getReader().getCurrentPlaylist().isPresent()) {
 			controllerPlayLists.switchView();
 		}
 	}
 
 	@FXML
+	@SuppressFBWarnings
 	private void trim() {
-		TrimGUI trim = new TrimGUI(this.root.getScene().getWindow());
+		TrimGUI trim = new TrimGUI(this.root.getScene().getWindow()); // NOPMD 
+		//suppressed as it is a false positive
 	}
 
 	@FXML
