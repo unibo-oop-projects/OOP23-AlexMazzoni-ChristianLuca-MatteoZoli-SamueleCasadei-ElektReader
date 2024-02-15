@@ -1,12 +1,12 @@
 package elektreader.controller;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import elektreader.api.PlayList;
 import elektreader.api.Song;
-import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -47,39 +47,76 @@ public class FindController {
         AnchorPane.setBottomAnchor(this.container, (double) 20);
 
         centerContainer.getChildren().addAll(anchorInputContainer, anchorLabelContainer);
-    
+
         findPane.getChildren().add(centerContainer);
 
-        input.onInputMethodTextChangedProperty().addListener((observable, oldValue, newValue) -> {
+        input.textProperty().addListener((observable, oldValue, newValue) -> {
             if(oldValue!=null && newValue!=null) {
-                if (oldValue.equals(newValue)) {
-                    container.getChildren().clear();
-                }
-    
-                for (final var element : GUIController.READER.getPlaylists()) {
-                    final var box = createBox(find(newValue.toString()));
+                container.getChildren().clear();
+
+                if (newValue.toString().matches("^\\d+:\\d+(?::\\d+)?$")) { // ricerca per durata
+                    find(t -> t.getTotalDuration().equals(newValue.toString()), s -> s.durationStringRep().equals(newValue.toString()));
+                } else if (newValue.toString().matches("^\\d+$")) { // ricerca per indice
+                    find(t -> false, t -> {
+                        var index = Song.getIndexFromName(t.getFile().getName());
+                        if (index.isPresent()) {
+                            return String.valueOf(index.get()).equals(newValue.toString());
+                        } 
+                        return index.isPresent();
+                    });
+                } else {    // ricerca per stringa generica (titolo)
+                    find(t -> t.getName().startsWith(newValue.toString()), t -> t.getName().startsWith(newValue.toString()));
                 }
             } else {
                 container.getChildren().clear();
             }
         });
-    
     }
 
-    private <T extends PlayList & Song> Optional<HBox> createBox(final Optional<T> element) {
-        if (element.isEmpty()) {
-            return Optional.empty();
-        } else {
-            final HBox box = new HBox();
+    private void find(Predicate<? super PlayList> playlistPredicate, Predicate<? super Song> songPredicate) {
+        container.getChildren().addAll(GUIController.READER.getPlaylists().stream()
+            .filter(t -> playlistPredicate.test(t))
+            .map(t -> createPlaylistBox(t))
+            .toList()
+        );
 
-            return Optional.of(box);
-        }
+        container.getChildren().addAll(GUIController.READER.getPlaylists().stream()
+            .flatMap(t -> t.getSongs().stream())
+            .filter(t -> songPredicate.test(t))
+            .map(t -> createSongBox(t))
+            .toList()
+        );
     }
 
-    private <T extends PlayList & Song> T find(String string) {
-        if(GUIController.READER.getPlaylists().stream().anyMatch(t -> t.getName().matches(string))) {
-            return null;
-        }
-        return null;
+    private HBox createSongBox(final Song song) {
+        final HBox box = new HBox();
+        Label type = new Label("S");
+        Label name = new Label(song.getName());
+        box.getChildren().addAll(type, name);
+        box.setOnMouseClicked(event -> {
+            GUIController.READER.setCurrentPlaylist(
+                GUIController.READER.getPlaylists().stream()
+                    .filter(t -> t.getSongs().stream().anyMatch(s -> s.equals(song)))
+                    .findAny()
+            );
+            GUIController.READER.getPlayer().setSong(song);
+        });
+        return box;
     }
+
+    private HBox createPlaylistBox(final PlayList playlist) {
+        final HBox box = new HBox();
+        Label type = new Label("P");
+        Label name = new Label(playlist.getName());
+        box.getChildren().addAll(type, name);
+        box.setOnMouseClicked(event -> {
+            GUIController.READER.setCurrentPlaylist(Optional.of(playlist));
+        });
+        return box;
+    }
+
+    // if (element.isEmpty()) {
+    //     return Optional.empty();
+    // } else {
+    //}
 }

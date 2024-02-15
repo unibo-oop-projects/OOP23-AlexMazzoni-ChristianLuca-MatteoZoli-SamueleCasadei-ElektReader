@@ -40,8 +40,8 @@ public class QueueGUI {
 
     private Node createLabel(final Song song) {
         return new Label(String.format("%2s.\t%s\t-\t%s\t|\t%s\t|\t%s",
-        Mp3PlayList.getIndexFromName(song.getFile().getName()).isPresent() 
-            ? Mp3PlayList.getIndexFromName(song.getFile().getName()).get().toString()
+        Song.getIndexFromName(song.getFile().getName()).isPresent() 
+            ? Song.getIndexFromName(song.getFile().getName()).get().toString()
             :   "  ",
         song.getName(),
         song.getArtist().isPresent() ? song.getArtist().get() : "no artist",

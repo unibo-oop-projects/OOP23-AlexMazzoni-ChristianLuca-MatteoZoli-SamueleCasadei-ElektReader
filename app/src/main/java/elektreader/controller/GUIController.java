@@ -106,6 +106,9 @@ public final class GUIController implements Initializable {
 	private Button btnTrim;
 
 	@FXML
+	private Button btnQueue;
+
+	@FXML
     private Button btnHelp;
 
 	@FXML
@@ -193,7 +196,7 @@ public final class GUIController implements Initializable {
 					find.show(this.findPane);
 				} else {
 					this.findPane.getChildren().clear();
-					this.root.getRowConstraints().get(1).setMaxHeight(MIN_FIND_SIZE);
+					this.root.getRowConstraints().get(1).setMaxHeight(-1);
 				}
 			});
 			responsive();
@@ -201,11 +204,14 @@ public final class GUIController implements Initializable {
 	}
 
 	@FXML
-	private void help() { 
+	private void queue() { 
 		if (GUIController.READER.getCurrentPlaylist().isPresent()) {
 			new QueueGUI();
 		}
-		//TODO - anyone
+	}
+
+	@FXML
+	private void help() { 
 		/* codice per trovare le canzoni duplicate (inutile e poco efficente) */
 		// songs = files.stream().filter(t -> {
         //     if((int)files.stream()

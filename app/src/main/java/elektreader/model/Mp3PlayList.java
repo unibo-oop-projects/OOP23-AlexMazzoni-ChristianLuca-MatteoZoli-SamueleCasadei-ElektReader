@@ -133,8 +133,8 @@ public final class Mp3PlayList implements PlayList {
     private List<Path> establishOrder(final Collection<Path> songs) {
         int counter = 1;
         List<Path> withIndex = songs.stream()
-            .filter(p -> getIndexFromName(p.toFile().getName()).isPresent())
-            .sorted((p1, p2) -> getIndexFromName(p1.toFile().getName()).get() - getIndexFromName(p2.toFile().getName()).get())
+            .filter(p -> Song.getIndexFromName(p.toFile().getName()).isPresent())
+            .sorted((p1, p2) -> Song.getIndexFromName(p1.toFile().getName()).get() - Song.getIndexFromName(p2.toFile().getName()).get())
             .collect(Collectors.toList());
 
         /* i need to use a temporary list in order to avoid concurrent modification and mantain counter in the scope
@@ -146,7 +146,7 @@ public final class Mp3PlayList implements PlayList {
         }
         withIndex = tmp;
         for (final Path path : songs.stream()
-            .filter(p -> getIndexFromName(p.toFile().getName()).isEmpty())
+            .filter(p -> Song.getIndexFromName(p.toFile().getName()).isEmpty())
             .toList()
         ) {
             final Path newPath = changeIndex(path, counter++);
@@ -174,24 +174,6 @@ public final class Mp3PlayList implements PlayList {
                 + (i >= 100 ? String.valueOf(i) : String.format("%02d", i)) + " - " + p.toFile().getName());
             Reader.saveFile(p.toFile(), newFile);
             return newFile.toPath();
-        }
-    }
-
-    /**
-     * @param name the name of the song file
-     * @return the index of the file, knowing every file name is structured
-     * like "index - actual name.mp3"
-     */
-    public static Optional<Integer> getIndexFromName(final String name) {
-        final Pattern pattern = Pattern.compile("\\d+\\s*-\\s*.+$");
-        final Matcher match = pattern.matcher(name);
-        /* if the filename matches the standard pattern... */
-        if (match.matches()) {
-            /* the index can be picked and returned */
-            return Optional.of(Integer.valueOf(name.split(" ")[0]));
-        } else {
-            /* if it doesn't match, that means i can't read the index */
-            return Optional.empty();
         }
     }
 }

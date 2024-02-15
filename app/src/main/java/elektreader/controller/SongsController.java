@@ -6,7 +6,6 @@ import java.util.List;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import elektreader.api.PlayList;
 import elektreader.api.Song;
-import elektreader.model.Mp3PlayList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -134,8 +133,8 @@ public class SongsController {
 
     private Button createListButton(final Song song) {
         final Button btn = new Button(String.format("%2s.\t%s\t-\t%s\t|\t%s\t|\t%s",
-            Mp3PlayList.getIndexFromName(song.getFile().getName()).isPresent() 
-                ? Mp3PlayList.getIndexFromName(song.getFile().getName()).get().toString()
+            Song.getIndexFromName(song.getFile().getName()).isPresent() 
+                ? Song.getIndexFromName(song.getFile().getName()).get().toString()
                 :   "  ",
             song.getName(),
             song.getArtist().isPresent() ? song.getArtist().get() : "no artist",

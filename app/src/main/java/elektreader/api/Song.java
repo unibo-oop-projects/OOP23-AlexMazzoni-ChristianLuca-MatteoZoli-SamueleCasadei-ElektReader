@@ -85,4 +85,22 @@ public interface Song {
         /* if there's no index, that means we already got the plain name */
         return tmp;
     }
+
+    /**
+     * @param name the name of the song file
+     * @return the index of the file, knowing every file name is structured
+     * like "index - actual name.mp3"
+     */
+    public static Optional<Integer> getIndexFromName(final String name) {
+        final Pattern pattern = Pattern.compile("\\d+\\s*-\\s*.+$");
+        final Matcher match = pattern.matcher(name);
+        /* if the filename matches the standard pattern... */
+        if (match.matches()) {
+            /* the index can be picked and returned */
+            return Optional.of(Integer.valueOf(name.split(" ")[0]));
+        } else {
+            /* if it doesn't match, that means i can't read the index */
+            return Optional.empty();
+        }
+    }
 }
