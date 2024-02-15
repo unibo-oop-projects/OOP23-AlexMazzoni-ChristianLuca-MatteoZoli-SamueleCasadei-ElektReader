@@ -94,7 +94,7 @@ public interface Reader {
             return SUPPORTED_FILES.stream().anyMatch(type -> song.toString().matches(".*\\." + type)) 
                 && song.toFile().length() > minimumSize;
         } catch (IOException e) {
-            System.out.println("la canzone " + song + " non e supportata: " + e.toString());
+            //System.out.println("la canzone " + song + " non e supportata: " + e.toString());
             return false;
         }
     }
@@ -118,7 +118,7 @@ public interface Reader {
                 }
             }
         } catch (IOException e) { 
-            System.out.println("the current environment can't handle this playlist, this is not a valid playlist");
+            System.out.println("the current environment can't handle this playlist, this is not a valid playlist"); //NOPMD
         }
         return !songs.isEmpty() ? Optional.of(songs) : Optional.empty();
     }

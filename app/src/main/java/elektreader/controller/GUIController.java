@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import elektreader.api.Reader;
-import elektreader.api.TrimObserver;
 import elektreader.model.ReaderImpl;
 import elektreader.view.GUI;
 import elektreader.view.QueueGUI;
@@ -87,8 +86,6 @@ public final class GUIController implements Initializable {
 
 	private MediaControlsController controllerMediaControls;
 
-	private TrimObserver controllerTrim;
-
 	/* MAIN PARENT */
 	@FXML
     private GridPane root;
@@ -162,7 +159,7 @@ public final class GUIController implements Initializable {
 	/* EVENTS */
 	/* logics */
 	@FXML
-	private void importFiles(){
+	private void importFiles() { //NOPMD
 		try {
 			final DirectoryChooser chooser = new DirectoryChooser();
 			chooser.setTitle("Open Folder");
@@ -171,23 +168,25 @@ public final class GUIController implements Initializable {
 			if (res.isPresent()) {
 				loadEnvironment(Optional.of(res.get().toPath()));
 			}
-		} catch (Exception e) { }
+		} catch (IllegalArgumentException e) { //NOPMD
+			
+		}
 	}
 
 	@FXML
-	private void view() {
+	private void view() { //NOPMD
 		if (GUIController.READER.getCurrentPlaylist().isPresent()) {
 			controllerPlayLists.switchView();
 		}
 	}
 
 	@FXML
-	private void trim() {
-		controllerTrim = new TrackTrimmerController(this.root.getScene().getWindow());
+	private void trim() { //NOPMD
+		new TrackTrimmerController(this.root.getScene().getWindow());
 	}
 
 	@FXML
-	private void find() {
+	private void find() { //NOPMD
 		if (GUIController.READER.getCurrentEnvironment().isPresent()) {
 			Platform.runLater(() -> {
 				if (this.root.getRowConstraints().get(1).getMaxHeight() <= MIN_FIND_SIZE) { //pane is closed, so open it
@@ -203,14 +202,14 @@ public final class GUIController implements Initializable {
 	}
 
 	@FXML
-	private void queue() { 
+	private void queue() { //NOPMD
 		if (GUIController.READER.getCurrentPlaylist().isPresent()) {
 			new QueueGUI();
 		}
 	}
 
 	@FXML
-	private void help() { 
+	private void help() { //NOPMD
 		/* codice per trovare le canzoni duplicate (inutile e poco efficente) */
 		// songs = files.stream().filter(t -> {
         //     if((int)files.stream()
@@ -225,7 +224,7 @@ public final class GUIController implements Initializable {
 
 	/* only graphics */
 	@FXML
-	private void showPlaylists() {
+	private void showPlaylists() { //NOPMD
 		if (GUIController.READER.getCurrentEnvironment().isPresent()) {
 			Platform.runLater(() -> {
 				if (this.lblPlaylists.getPrefWidth() == SIZE_ZERO) { //is hidden
@@ -294,7 +293,7 @@ public final class GUIController implements Initializable {
 	private void loadEnvironment(final Optional<Path> root) {
 		GUIController.READER.setCurrentEnvironment(root.get());
 		if (GUIController.READER.getCurrentEnvironment().isPresent()) {
-			System.out.println("environment loaded: " + GUIController.READER.getCurrentEnvironment().get());
+			System.out.println("environment loaded: " + GUIController.READER.getCurrentEnvironment().get()); //NOPMD
 			loadPlaylists();
 			loadPlayer();
 			final Thread statusCheckerThread = new Thread(guiReaderListener());

@@ -26,8 +26,10 @@ public final class GUI extends Application {
     /**
      * Default PATH of the environment contained in the JAR.
      */
-    public static final Path TEST_PATH = Paths.get(System.getProperty("user.home"), "elektreaderTEST", "Environment");
+    //public static final Path TEST_PATH = Paths.get(ClassLoader.getSystemResource("MUSICA").getPath());
+    public static final Path TEST_PATH = Paths.get("/app/src/main/resources/MUSICA");
 
+    
     /**
      * constant used for calculate the screen size (80%).
      */
@@ -55,7 +57,7 @@ public final class GUI extends Application {
             //mainStage.setOnCloseRequest(Event::consume);
             mainStage.show();
         } catch (IOException e) {
-            System.out.println(e.toString());
+            System.out.println(e.toString()); //NOPMD
         }
     }
 }

@@ -12,60 +12,85 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class FindController {
-    
+/**
+ * this class is responsable to create a panel for search and, 
+ * manipulate songs and playlist used by GUIController can update,
+ * the GUIController reader.
+ */
+public final class FindController {
+
+    /**
+     * padding value for parent containers.
+     */
+    private static final Double PADDING = 20.0; 
+
+    /**
+     * padding value for label searched songs and playlists.
+     */
+    private static final Double LABEL_PADDING = 60.0; 
+
+    /**
+     * spacing value for label searched songs and playlists.
+     */
+    private static final Double SPACING = 15.0; 
+
+    /**
+     * container that contains all the result of the find query.
+     */
     private VBox container;
 
-    public FindController() {}
-
+    /**
+     * @param findPane parent panels
+     * show all the query need for search.
+     */
     public void show(final Pane findPane) {
-        AnchorPane mainContainer = new AnchorPane();
+        final AnchorPane mainContainer = new AnchorPane();
         mainContainer.setPrefWidth(findPane.getWidth());
-        VBox centerContainer = new VBox();
+        final VBox centerContainer = new VBox();
         centerContainer.getStyleClass().add("root");
         mainContainer.getChildren().add(centerContainer);
-        AnchorPane.setTopAnchor(centerContainer, (double) 20);
-        AnchorPane.setLeftAnchor(centerContainer, (double) 20);
-        AnchorPane.setRightAnchor(centerContainer, (double) 20);
-        AnchorPane.setBottomAnchor(centerContainer, (double) 20);
+        AnchorPane.setTopAnchor(centerContainer, PADDING);
+        AnchorPane.setLeftAnchor(centerContainer, PADDING);
+        AnchorPane.setRightAnchor(centerContainer, PADDING);
+        AnchorPane.setBottomAnchor(centerContainer, PADDING);
         
-        AnchorPane anchorInputContainer = new AnchorPane();
-        TextField input = new TextField();
+        final AnchorPane anchorInputContainer = new AnchorPane();
+        final TextField input = new TextField();
         input.setPromptText("Find...");
         anchorInputContainer.getChildren().add(input);
-        AnchorPane.setTopAnchor(input, (double) 20);
-        AnchorPane.setLeftAnchor(input, (double) 20);
-        AnchorPane.setRightAnchor(input, (double) 20);
+        AnchorPane.setTopAnchor(input, PADDING);
+        AnchorPane.setLeftAnchor(input, PADDING);
+        AnchorPane.setRightAnchor(input, PADDING);
 
-        AnchorPane anchorLabelContainer = new AnchorPane();
+        final AnchorPane anchorLabelContainer = new AnchorPane();
         this.container = new VBox();
-        this.container.setSpacing(15);
+        this.container.setSpacing(SPACING);
         anchorLabelContainer.getChildren().add(this.container);
-        AnchorPane.setTopAnchor(this.container, (double) 20);
-        AnchorPane.setLeftAnchor(this.container, (double) 60);
-        AnchorPane.setRightAnchor(this.container, (double) 60);
-        AnchorPane.setBottomAnchor(this.container, (double) 20);
+        AnchorPane.setTopAnchor(this.container, PADDING);
+        AnchorPane.setLeftAnchor(this.container, LABEL_PADDING);
+        AnchorPane.setRightAnchor(this.container, LABEL_PADDING);
+        AnchorPane.setBottomAnchor(this.container, PADDING);
 
         centerContainer.getChildren().addAll(anchorInputContainer, anchorLabelContainer);
 
         findPane.getChildren().add(centerContainer);
 
         input.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(oldValue!=null && newValue!=null) {
+            if (oldValue != null && newValue != null) {
                 container.getChildren().clear();
 
-                if (newValue.toString().matches("^\\d+:\\d+(?::\\d+)?$")) { // ricerca per durata
-                    find(t -> t.getTotalDuration().equals(newValue.toString()), s -> s.durationStringRep().equals(newValue.toString()));
-                } else if (newValue.toString().matches("^\\d+$")) { // ricerca per indice
+                if (newValue.matches("^\\d+:\\d+(?::\\d+)?$")) { // ricerca per durata
+                    find(t -> t.getTotalDuration().equals(newValue), s -> s.durationStringRep().equals(newValue));
+                } else if (newValue.matches("^\\d+$")) { // ricerca per indice
                     find(t -> false, t -> {
-                        var index = Song.getIndexFromName(t.getFile().getName());
+                        final var index = Song.getIndexFromName(t.getFile().getName());
                         if (index.isPresent()) {
-                            return String.valueOf(index.get()).equals(newValue.toString());
+                            return String.valueOf(index.get()).equals(newValue);
                         } 
                         return index.isPresent();
                     });
                 } else {    // ricerca per stringa generica (titolo)
-                    find(t -> t.getName().startsWith(newValue.toString()), t -> t.getName().startsWith(newValue.toString()));
+                    find(t -> t.getName().startsWith(newValue), t -> t.getName().startsWith(newValue));
                 }
             } else {
                 container.getChildren().clear();
@@ -73,7 +98,7 @@ public class FindController {
         });
     }
 
-    private void find(Predicate<? super PlayList> playlistPredicate, Predicate<? super Song> songPredicate) {
+    private void find(final Predicate<? super PlayList> playlistPredicate, final Predicate<? super Song> songPredicate) {
         container.getChildren().addAll(GUIController.READER.getPlaylists().stream()
             .filter(t -> playlistPredicate.test(t))
             .map(t -> createPlaylistBox(t))
@@ -90,9 +115,9 @@ public class FindController {
 
     private HBox createSongBox(final Song song) {
         final HBox box = new HBox();
-        Label type = new Label("S");
-        Label name = new Label(song.getName() + "" + 
-            GUIController.READER.getPlaylists().stream()
+        final Label type = new Label("S");
+        final Label name = new Label(song.getName() + "\t-\t"
+            + GUIController.READER.getPlaylists().stream()
                 .filter(t -> t.getSongs().stream().anyMatch(s -> s.equals(song)))
                 .findFirst().get().getName());
         box.getChildren().addAll(type, name);
@@ -109,8 +134,8 @@ public class FindController {
 
     private HBox createPlaylistBox(final PlayList playlist) {
         final HBox box = new HBox();
-        Label type = new Label("P");
-        Label name = new Label(playlist.getName());
+        final Label type = new Label("P");
+        final Label name = new Label(playlist.getName());
         box.getChildren().addAll(type, name);
         box.setOnMouseClicked(event -> {
             GUIController.READER.setCurrentPlaylist(Optional.of(playlist));

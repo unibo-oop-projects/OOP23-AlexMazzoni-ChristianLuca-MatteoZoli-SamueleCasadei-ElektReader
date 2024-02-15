@@ -16,7 +16,7 @@ import javafx.application.Application;
  */
 public final class App {
 
-    private App() {}
+    private App() { }
 
     /**
      * @param args arguments,

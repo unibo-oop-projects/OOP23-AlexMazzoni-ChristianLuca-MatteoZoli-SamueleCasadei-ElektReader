@@ -48,7 +48,7 @@ public final class ReaderImpl implements Reader {
                 .toList();
                 this.playlists = tmpPlaylist.isEmpty() ? Optional.empty() : Optional.of(tmpPlaylist);
         } catch (IOException e) {
-            System.out.println("root -> " + e.toString() + " is not valid");
+            System.out.println("root -> " + e.toString() + " is not valid"); //NOPMD
         }
 
         if (this.playlists.isEmpty()) {
