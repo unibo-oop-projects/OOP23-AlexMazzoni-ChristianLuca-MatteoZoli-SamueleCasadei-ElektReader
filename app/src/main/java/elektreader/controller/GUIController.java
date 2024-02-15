@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import elektreader.api.Reader;
+import elektreader.api.TrimObserver;
 import elektreader.model.ReaderImpl;
 import elektreader.view.GUI;
 import elektreader.view.QueueGUI;
@@ -86,6 +87,8 @@ public final class GUIController implements Initializable {
 	private PlayListsController controllerPlayLists;
 
 	private MediaControlsController controllerMediaControls;
+
+	private TrimObserver controllerTrim;
 
 	/* MAIN PARENT */
 	@FXML
@@ -178,7 +181,7 @@ public final class GUIController implements Initializable {
 
 	@FXML
 	private void trim() {
-		new TrackTrimmerController(this.root.getScene().getWindow());
+		controllerTrim = new TrackTrimmerController(this.root.getScene().getWindow());
 	}
 
 	@FXML
