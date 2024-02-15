@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import elektreader.api.PlayList;
 import elektreader.api.Reader;
 import elektreader.api.Song;
@@ -21,10 +20,7 @@ import elektreader.api.Song;
 public final class Mp3PlayList implements PlayList {
 
     private final File playlistDir;
-    private List<Song> songs;
-    private List<Song> queue;
-    private final int timeUnit = 60;
-
+    private final List<Song> songs;
 
     /**
      * @param playlist the filesystem path of the playlist to be set
@@ -32,12 +28,11 @@ public final class Mp3PlayList implements PlayList {
      */
     public Mp3PlayList(final Path playlist, final Collection<Path> tracks) {
         playlistDir = playlist.toFile();
-        List<Song> convertedMp3 = establishOrder(tracks).stream()
+        final List<Song> convertedMp3 = establishOrder(tracks).stream()
             .map(p -> new Mp3Song(p))
             .map(Song.class::cast)
             .toList();
         this.songs = convertedMp3;
-        this.queue = convertedMp3;
     }
 
     @Override
@@ -45,34 +40,14 @@ public final class Mp3PlayList implements PlayList {
         return List.copyOf(this.songs);
     }
 
-    /* could be removed soon */
-    @Override
-    public Iterable<Song> getQueue() {
-        return this.queue;
-    }
-
-    /* could be removed soon */
-    @Override
-    public void shuffleQueue() {
-        Random rnd = new Random();
-        /* i'm using a temporary variable due to the fact that Collectors
-         * doesn't have a toQueue() method.
-         */
-        Collection<Song> tmp = this.queue.stream()
-            .sorted((s1, s2) -> rnd.nextInt() - rnd.nextInt())
-            .toList();
-        /* the queue needs to be empty before adding the new order */
-        this.queue.clear();
-        this.queue.addAll(tmp);
-    }
-
     @Override
     public String getTotalDuration() {
-        var secs = this.songs.stream()
+        final var secs = this.songs.stream()
             .mapToInt(Song::getDuration) /* map on duration to get every song's duration */
             .sum(); /* sum every duration */
-        return String.format("%02d:%02d:%02d", secs / (timeUnit * timeUnit), (secs % (timeUnit * timeUnit))
-            / timeUnit, (secs % (timeUnit * timeUnit)) % timeUnit);
+        return String.format("%02d:%02d:%02d", secs / (Mp3Song.TIME_UNIT * Mp3Song.TIME_UNIT),
+            (secs % (Mp3Song.TIME_UNIT * Mp3Song.TIME_UNIT))
+            / Mp3Song.TIME_UNIT, (secs % (Mp3Song.TIME_UNIT * Mp3Song.TIME_UNIT)) % Mp3Song.TIME_UNIT);
     }
 
     @Override
@@ -116,7 +91,7 @@ public final class Mp3PlayList implements PlayList {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Mp3PlayList other = (Mp3PlayList) obj;
+        final Mp3PlayList other = (Mp3PlayList) obj;
         if (playlistDir == null) {
             if (other.playlistDir != null) {
                 return false;
@@ -130,18 +105,19 @@ public final class Mp3PlayList implements PlayList {
     @Override
     public Optional<Song> getSong(final int index) {
         Song searched;
-        try {
-            searched = this.songs.get(index);
-            return Optional.of(searched);
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+            try {
+                searched = this.songs.get(index);
+                return Optional.of(searched);
+            } catch (Exception e) {
+                return Optional.empty();
+            }
     }
 
     /** 
      * @param path the path of the song to be found in this playlist
      * @return the song, Optional.empty() if not present 
      */
+    @Override
     public Optional<Song> getSong(final Path path) {
         return this.songs.stream()
             .filter(s -> s.getFile().toPath().equals(path)) /* filter all the songs that match with the specifed path */
@@ -164,37 +140,37 @@ public final class Mp3PlayList implements PlayList {
         /* i need to use a temporary list in order to avoid concurrent modification and mantain counter in the scope
          * which would be impossible using streams
          */
-        List<Path> tmp = new ArrayList<>();
-        for (Path song : withIndex) {
-            tmp.add(withIndex.indexOf(song), setIndex(song, counter++));
+        final List<Path> tmp = new ArrayList<>();
+        for (final Path song : withIndex) {
+            tmp.add(withIndex.indexOf(song), changeIndex(song, counter++));
         }
         withIndex = tmp;
-        for (Path song : songs.stream()
+        for (final Path path : songs.stream()
             .filter(p -> getIndexFromName(p.toFile().getName()).isEmpty())
             .toList()
         ) {
-            song = setIndex(song, counter++);
-            withIndex.add(song);
+            final Path newPath = changeIndex(path, counter++);
+            withIndex.add(newPath);
         }
         return withIndex;
     }
 
-    private Path setIndex(final Path p, final int i) {
+    private Path changeIndex(final Path p, final int i) {
         /* i use pattern to know if the file name matches the pattern, if it does, it means that the index must be overwritten.
          * otherwise it means that the index must be added
          */
-        Pattern pattern = Pattern.compile("\\d+\\s*-\\s*.+");
-        Matcher match = pattern.matcher(p.toFile().getName());
+        final Pattern pattern = Pattern.compile("\\d+\\s*-\\s*.+");
+        final Matcher match = pattern.matcher(p.toFile().getName());
         if (match.matches()) {
             /* in this case, p matches the pattern, so the index will be replaced */
-            String newName = p.toFile().getName().replaceFirst("\\d+",
-                (i >= 100 ? String.valueOf(i) : String.format("%02d", i)));
-            File newFile = new File(p.toFile().getParent() + File.separator + newName);
+            final String newName = p.toFile().getName().replaceFirst("\\d+",
+                i >= 100 ? String.valueOf(i) : String.format("%02d", i));
+            final File newFile = new File(p.toFile().getParent() + File.separator + newName);
             Reader.saveFile(p.toFile(), newFile);
             return newFile.toPath();
         } else {
             /* here, the index is added to the start of the name */
-            File newFile = new File(p.toFile().getParent() + File.separator
+            final File newFile = new File(p.toFile().getParent() + File.separator
                 + (i >= 100 ? String.valueOf(i) : String.format("%02d", i)) + " - " + p.toFile().getName());
             Reader.saveFile(p.toFile(), newFile);
             return newFile.toPath();
@@ -207,8 +183,8 @@ public final class Mp3PlayList implements PlayList {
      * like "index - actual name.mp3"
      */
     public static Optional<Integer> getIndexFromName(final String name) {
-        Pattern pattern = Pattern.compile("\\d+\\s*-\\s*.+$");
-        Matcher match = pattern.matcher(name);
+        final Pattern pattern = Pattern.compile("\\d+\\s*-\\s*.+$");
+        final Matcher match = pattern.matcher(name);
         /* if the filename matches the standard pattern... */
         if (match.matches()) {
             /* the index can be picked and returned */

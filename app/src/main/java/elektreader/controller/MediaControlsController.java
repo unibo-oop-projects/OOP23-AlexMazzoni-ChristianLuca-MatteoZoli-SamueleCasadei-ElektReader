@@ -15,35 +15,38 @@ import elektreader.api.Song;
  */
 public class MediaControlsController {
 
-    private Button playPause;
+    private final Button playPause;
 
-    private Button prevSong; 
+    private final ImageView pausePng = new ImageView(ClassLoader.getSystemResource(
+        "icons/Light/Media/Pause.png").toString());
 
-    private Button nextSong;
+    private final Button prevSong; 
 
-    private Button loop;
+    private final Button nextSong;
 
-    private Button rand;
+    private final Button loop;
 
-    private Button stop;
+    private final Button rand;
 
-    private Label currentMetaSong;
+    private final Button stop;
 
-    private Label nextMetaSong;
+    private final Label currentMetaSong;
 
-    private Slider currentVolume;
+    private final Label nextMetaSong;
+
+    private final Slider currentVolume;
 
     //private Label volume;
 
     //private ImageView volumeImage;
 
-    private Slider progressBar;
+    private final Slider progressBar;
 
-    private MediaControl mediaControl;
+    private final MediaControl mediaControl;
 
-    private final double height = 30.0;
+    static final double HEIGHT = 30.0;
 
-    private final double width = 70.0;
+    static final double WIDTH = 70.0;
 
     /**
      * @param mediaControlGrid the Parent that must be filled.
@@ -52,7 +55,9 @@ public class MediaControlsController {
     public MediaControlsController(final GridPane mediaControlGrid, final Slider progressBar) {
         mediaControlGrid.getChildren().clear();
 
-        HBox baseControls = new HBox();
+        final HBox baseControls = new HBox();
+
+        this.mediaControl = GUIController.READER.getPlayer();
 
         this.playPause = new Button();
         playPause.setGraphic(new ImageView("icons/Light/Media/Play.png"));
@@ -108,16 +113,15 @@ public class MediaControlsController {
 
         this.currentVolume = new Slider(0, 1, 1);
         this.currentVolume.setStyle("-fx-text-fill: black");
-        this.currentVolume.setPrefHeight(height);
-        this.currentVolume.setPrefWidth(width);
+        this.currentVolume.setPrefHeight(HEIGHT);
+        this.currentVolume.setPrefWidth(WIDTH);
         //this.volumeImage = new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Audio.png").toString());
         this.progressBar = progressBar;
 
-        this.mediaControl = GUIController.READER.getPlayer();
-
         mediaControlGrid.add(currentMetaSong, 0, 0);
         mediaControlGrid.add(baseControls, 1, 0);
-        mediaControlGrid.add(nextMetaSong, 2, 0);
+        mediaControlGrid.add(nextMetaSong, 3, 0);
+        mediaControlGrid.add(currentVolume, 2, 0);
         //mediaControlGrid.add(volume, 3, 0);
     }
 
@@ -128,7 +132,7 @@ public class MediaControlsController {
         this.mediaControl.getMediaControl().get().currentTimeProperty().addListener((observable, oldValue, newValue) -> 
             progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().get().getTotalDuration().toSeconds()));
 
-        this.playPause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
+        this.playPause.setGraphic(pausePng);
 
         this.playPause.setOnMouseClicked(event -> {
             if (this.mediaControl.getStatus().equals(MediaControl.Status.PLAYING)) {
@@ -136,7 +140,7 @@ public class MediaControlsController {
                 playPause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
             } else {
                 this.mediaControl.play();
-                playPause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
+                playPause.setGraphic(pausePng);
             }
         });
         this.prevSong.setOnMouseClicked(event -> {
@@ -153,7 +157,7 @@ public class MediaControlsController {
             + "\n" 
             + (song.getArtist().isPresent() 
             ? song.getArtist().get() : "No artist found"));
-        var nxtSong = mediaControl.getNextSong().isPresent() 
+        final var nxtSong = mediaControl.getNextSong().isPresent() 
             ? mediaControl.getNextSong().get().getName() 
             + "\n" 
             + (mediaControl.getNextSong().get().getArtist().isPresent() 
@@ -174,14 +178,14 @@ public class MediaControlsController {
             mediaControl.getMediaControl().get().currentTimeProperty().addListener((observable, oldValue, newValue) -> {
                 progressBar.setValue(newValue.toSeconds() / mediaControl.getMediaControl().get().getTotalDuration().toSeconds());
             });
-            this.playPause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
+            this.playPause.setGraphic(pausePng);
             this.prevSong.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Rewind.png").toString()));
             this.nextSong.setGraphic(new ImageView(
                 ClassLoader.getSystemResource("icons/Light/Media/FastForward.png").toString()));
             this.currentMetaSong.setText(mediaControl.getCurrentSong().getName() 
                 + "\n" + (mediaControl.getCurrentSong().getArtist().isPresent() 
                 ? mediaControl.getCurrentSong().getArtist().get() : "No artist found"));
-            var nxtSong = mediaControl.getNextSong().isPresent() 
+            final var nxtSong = mediaControl.getNextSong().isPresent() 
                 ? mediaControl.getNextSong().get().getName() 
                 + "\n" 
                 + (mediaControl.getNextSong().get().getArtist().isPresent() 
@@ -196,7 +200,7 @@ public class MediaControlsController {
                     playPause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Play.png").toString()));
                 } else {
                     this.mediaControl.play();
-                    playPause.setGraphic(new ImageView(ClassLoader.getSystemResource("icons/Light/Media/Pause.png").toString()));
+                    playPause.setGraphic(pausePng);
                 }
             });
             this.prevSong.setOnMouseClicked(event -> {
