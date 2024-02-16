@@ -1,5 +1,7 @@
 package elektreader.view;
 
+import java.io.File;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import elektreader.api.TrimGUI;
 import elektreader.controller.TrackTrimmerController;
@@ -52,7 +54,12 @@ public class TrimGUIImpl implements TrimGUI {
 		final Label fifthLabel = new Label("5.");
 		resultLabel = new Label();
 		final Button fileBtn = new Button("Select track");
+		final Button fileBtnDemo = new Button("Select track Demo");
 		fileBtn.setOnMouseClicked(e -> this.openFileChooser());
+		fileBtnDemo.setOnMouseClicked(e -> 
+			this.controller.chooseFile(new File (System.getProperty("user.home") 
+				+ File.separator + ".ElektReader" 
+				+ File.separator + "01 - bachata.mp3")));
 		final TextField startCut = new TextField("Insert start (hh:mm:ss or seconds)");
 		final TextField endCut = new TextField("Insert end (hh:mm:ss or seconds)");
 		final TextField newName = new TextField("Insert the name for the trimmed track");
@@ -62,21 +69,22 @@ public class TrimGUIImpl implements TrimGUI {
 		final Button trimBtn = new Button("Trim");
 		trimBtn.setOnMouseClicked(e -> 
 			this.retrieveParameters(startCut.getText(), endCut.getText(), newName.getText()));
-		pane.add(firstLabel, 0, 0);
-		pane.add(secondLabel, 0, 1);
-		pane.add(thirdLabel, 0, 2);
-		pane.add(fourthLabel, 0, 3);
-		pane.add(fifthLabel, 0, 4);
-		pane.add(fileBtn, 1, 0);
-		pane.add(startCut, 1, 1);
-		pane.add(endCut, 1, 2);
-		pane.add(newName, 1, 3);
-		pane.add(trimBtn, 1, 4);
+		pane.add(firstLabel, 0, 1);
+		pane.add(secondLabel, 0, 2);
+		pane.add(thirdLabel, 0, 3);
+		pane.add(fourthLabel, 0, 4);
+		pane.add(fifthLabel, 0, 5);
+		pane.add(fileBtnDemo, 1, 0);
+		pane.add(fileBtn, 1, 1);
+		pane.add(startCut, 1, 2);
+		pane.add(endCut, 1, 3);
+		pane.add(newName, 1, 4);
+		pane.add(trimBtn, 1, 5);
 		// CHECKSTYLE: MagicNumber OFF
 		//5 and 6 are not magic numbers: they're used to place two nodes on the pane 
 		//and they're used only once so it isn't useful replacing them with a constant.
-		pane.add(trackLabel, 1, 5);
-		pane.add(resultLabel, 1, 6);
+		pane.add(trackLabel, 1, 6);
+		pane.add(resultLabel, 1, 7);
 		// CHECKSTYLE: MagicNumber ON
 		pane.setStyle("-fx-background-color: #000000");
 		trackLabel.setStyle(WHITE_STRING);
