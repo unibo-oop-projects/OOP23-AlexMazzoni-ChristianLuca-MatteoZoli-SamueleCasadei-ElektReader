@@ -56,10 +56,7 @@ public class TrimGUIImpl implements TrimGUI {
         final Button fileBtn = new Button("Select track");
         final Button fileBtnDemo = new Button("Select track Demo");
         fileBtn.setOnMouseClicked(e -> this.openFileChooser());
-        fileBtnDemo.setOnMouseClicked(e -> 
-            this.controller.chooseFile(new File(System.getProperty("user.home") 
-                + File.separator + ".ElektReader" 
-                + File.separator + "01 - bachata.mp3")));
+        fileBtnDemo.setOnMouseClicked(e -> setFileDemo());
         final TextField startCut = new TextField("Insert start (hh:mm:ss or seconds)");
         final TextField endCut = new TextField("Insert end (hh:mm:ss or seconds)");
         final TextField newName = new TextField("Insert the name for the trimmed track");
@@ -135,5 +132,15 @@ public class TrimGUIImpl implements TrimGUI {
     )
     private void retrieveParameters(final String start, final String end, final String name) {
         this.controller.retrieveParameters(start, end, name);
+    }
+
+    @SuppressFBWarnings(
+        value = "UwF",
+        justification = "controller is initialized in its constructor"
+    )
+    private void setFileDemo() {
+        this.controller.chooseFile(new File(System.getProperty("user.home") 
+            + File.separator + ".ElektReader" 
+            + File.separator + "01 - bachata.mp3"));
     }
 }

@@ -79,7 +79,7 @@ final class ElektreaderTest {
         TEST_TRIM_MP3 = Paths.get(TEST_PATH.toString(), "01 - bachata.mp3");
     }
 
-    final String OPERATION_SUCCESSFULL = "Operation successfull";
+    final static String OPERATION_SUCCESSFULL = "Operation successfull";
     /*
      * If you are using JavaFX components in a non-GUI application or a unit test,
      *  you need to call the Platform.startup(Runnable) method with an empty runnable before using any JavaFX classes.
@@ -214,18 +214,19 @@ final class ElektreaderTest {
         mC1.stop();
     }
 
+    
     @Test void testTrim() {
         final TrackTrimmer trimmer = new TrackTrimmerImpl();
-        
-        Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:00", "0:20", "FirstTestMp3"));
+
+        Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:00", "0:25", "FirstTestMp3"));
 
         trimmer.setTrack(TEST_TRIM_MP3);
         Assertions.assertEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:00", "0:20", "SecondTestMp3"));
         final File secondTestMp3 = new File(TEST_PATH.toString() + FileSystems.getDefault().getSeparator() + "SecondTestMp3.mp3");
         Assertions.assertTrue(secondTestMp3.exists());
-        secondTestMp3.delete();
+        Assertions.assertTrue(secondTestMp3.delete());
         Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("", "", "ThirdTestMp3"));
-        Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:25", "0:20", "FourthTestMp3"));
-        Assertions.assertThrows(NumberFormatException.class, () -> trimmer.trim("ciao", "0:20", "FifthTestMp3"));
+        Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:25", "0:30", "FourthTestMp3"));
+        Assertions.assertThrows(NumberFormatException.class, () -> trimmer.trim("ciao", "0:40", "FifthTestMp3"));
     }
 }
