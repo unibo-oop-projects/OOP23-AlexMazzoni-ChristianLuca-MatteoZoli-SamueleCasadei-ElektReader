@@ -1,15 +1,11 @@
 package elektreader.controller;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -160,6 +156,7 @@ public final class GUIController implements Initializable {
 			createShortcut(newScene, new KeyCodeCombination(KeyCode.V), () -> view());
 		});
 
+		/* downloads files from resources and copies them into an hidden directory */
 		final String[] titles = {"01 - bachata.mp3", "02 - Becky G, NATTI NATASHA - Sin Pijama (Official Video).mp3",
 			"03 - Fabio Rovazzi - ANDIAMO A COMANDARE (Official Video).mp3", "04 - la bomba.mp3", "05 - ritmo vuelta.mp3"};
 
