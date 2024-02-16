@@ -154,6 +154,8 @@ public final class GUIController implements Initializable {
             createShortcut(newScene, new KeyCodeCombination(KeyCode.F), () -> find());
             createShortcut(newScene, new KeyCodeCombination(KeyCode.T), () -> trim());
             createShortcut(newScene, new KeyCodeCombination(KeyCode.V), () -> view());
+            createShortcut(newScene, new KeyCodeCombination(KeyCode.N), () -> importFiles());
+            createShortcut(newScene, new KeyCodeCombination(KeyCode.Q), () -> queue());
         });
 
         /* downloads files from resources and copies them into an hidden directory */
