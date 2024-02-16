@@ -14,6 +14,12 @@ plugins {
     id("org.danilopianini.gradle-java-qa") version "0.40.0"
 }
 
+sourceSets {
+    main {
+        java.srcDirs += file("src/main/resources/MUSICA")
+    }
+}
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()

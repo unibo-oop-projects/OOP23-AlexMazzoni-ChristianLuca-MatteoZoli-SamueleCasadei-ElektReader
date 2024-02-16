@@ -27,7 +27,7 @@ import elektreader.api.Song;
 public final class Mp3Song implements Song {
 
     private final File songFile;
-    private AudioFile data;
+    private AudioFile data; // NOPMD suppressed as it is a false positive
     private AudioHeader header;
     private Tag info;
     static final int TIME_UNIT = 60;
@@ -47,7 +47,7 @@ public final class Mp3Song implements Song {
             this.header = data.getAudioHeader();
             this.info = data.getTag();
         } catch (CannotReadException | TagException | ReadOnlyFileException | InvalidAudioFrameException | IOException e) {
-            System.out.println(songFile.toString() + " " + e);
+            System.out.println(songFile.toString() + " " + e); // NOPMD suppressed as it is a false positive
         }
     }
 

@@ -1,12 +1,16 @@
 package elektreader.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
-import java.net.URISyntaxException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
@@ -156,15 +160,26 @@ public final class GUIController implements Initializable {
 			createShortcut(newScene, new KeyCodeCombination(KeyCode.V), () -> view());
 		});
 
-		Path jar = Path.of(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
-		System.out.println(jar);
-		//FileSystem fs = FileSystems.newFileSystem(jar);
+		final String[] titles = {"01 - bachata.mp3", "02 - Becky G, NATTI NATASHA - Sin Pijama (Official Video).mp3",
+			"03 - Fabio Rovazzi - ANDIAMO A COMANDARE (Official Video).mp3", "04 - la bomba.mp3", "05 - ritmo vuelta.mp3"};
+
+		File dirMusic = new File(System.getProperty("user.home") + File.separator + ".ElektReader");
+		dirMusic.mkdir();
+		InputStream is;
+		File tmp;
+		
+		for (String title : titles){
+			is = ClassLoader.getSystemResourceAsStream("MUSICA/" + title);
+			tmp = new File(dirMusic.getPath() + File.separator + title);
+			try {
+				Files.copy(is, tmp.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 		Platform.runLater(() -> {
-			try {
-				loadEnvironment(Optional.of(
-					Paths.get(ClassLoader.getSystemResource("MUSICA").toURI())));
-			} catch (URISyntaxException e) { } //NOPMD
+			loadEnvironment(Optional.of(dirMusic.toPath()));
 		});
 	}
 

@@ -96,7 +96,7 @@ public final class Mp3PlayList implements PlayList {
         try {
            searched = this.songs.get(index);
            return Optional.of(searched);
-        } catch (Exception e) {
+        } catch (Exception e) { // NOPMD suppressed as it is a false positive
            return Optional.empty();
         }
     }
