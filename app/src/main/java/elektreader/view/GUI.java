@@ -45,7 +45,10 @@ public final class GUI extends Application {
             mainStage.setTitle(PROGRAM_NAME);
             mainStage.setScene(scene);
             mainStage.setResizable(true);
-            //mainStage.setOnCloseRequest(Event::consume);
+            mainStage.setOnCloseRequest(event -> {
+                mainStage.close();
+                System.exit(0);
+            });
             mainStage.show();
         } catch (IOException e) {
             System.out.println(e.toString()); //NOPMD
