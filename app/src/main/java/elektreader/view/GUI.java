@@ -1,7 +1,5 @@
 package elektreader.view;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.awt.Toolkit;
 import java.io.IOException;
 
@@ -23,13 +21,6 @@ public final class GUI extends Application {
      */
     public static final String PROGRAM_NAME = "ElektReader";
 
-    /**
-     * Default PATH of the environment contained in the JAR.
-     */
-    //public static final Path TEST_PATH = Paths.get(ClassLoader.getSystemResource("MUSICA").getPath());
-    public static final Path TEST_PATH = Paths.get("/app/src/main/resources/MUSICA");
-
-    
     /**
      * constant used for calculate the screen size (80%).
      */

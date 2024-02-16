@@ -1,10 +1,17 @@
 package elektreader.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Enumeration;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.logging.Logger;
 
 import elektreader.api.Reader;
@@ -77,7 +84,6 @@ public final class GUIController implements Initializable {
 	 * and from it is possible to know all the status of logics app.
 	 */
 	public static final Reader READER = new ReaderImpl();
-	
 
 	/* LOGICS */
 	private final FindController find = new FindController();
@@ -153,7 +159,11 @@ public final class GUIController implements Initializable {
 			createShortcut(newScene, new KeyCodeCombination(KeyCode.V), () -> view());
 		});
 
-		Platform.runLater(() -> loadEnvironment(Optional.of(GUI.TEST_PATH)));
+		Platform.runLater(() -> {
+			try {
+				loadEnvironment(Optional.of(Paths.get(getClass().getResource("/" + "MUSICA").toURI())));
+			} catch (URISyntaxException e) { } //NOPMD
+		});
 	}
 
 	/* EVENTS */
@@ -168,9 +178,7 @@ public final class GUIController implements Initializable {
 			if (res.isPresent()) {
 				loadEnvironment(Optional.of(res.get().toPath()));
 			}
-		} catch (IllegalArgumentException e) { //NOPMD
-			
-		}
+		} catch (IllegalArgumentException e) { } //NOPMD
 	}
 
 	@FXML

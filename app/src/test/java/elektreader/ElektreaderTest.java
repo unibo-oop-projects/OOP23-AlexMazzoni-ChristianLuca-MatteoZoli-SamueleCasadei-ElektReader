@@ -1,9 +1,15 @@
 package elektreader;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -33,34 +39,66 @@ class ElektreaderTest {
     /* quello realistico 'MUSICA'       : https://drive.google.com/file/d/1d6UC0DYF2jKUqH-y1h0XfPCt3EnY_g7O/view?usp=sharing */
     /* quello impossibile 'ECCEZIONI'   : https://drive.google.com/file/d/1p5uUBHkpwvWBuhb3-DAqtkr6cMcKpsSN/view?usp=sharing */
     
-    final Path TEST_PATH = Paths.get(System.getProperty("user.home"),"elektreaderTEST","Environment");
-    final Path TEST_INVALID_PATH = Paths.get(System.getProperty("user.home"),"Desktop", "Musica");
+    final Path TEST_PATH;
+    final Path TEST_INVALID_PATH;
+    final Path TEST_INVALID_PLAYLIST; 
+    final Path TEST_PATH_PLAYLIST1;
+    final Path TEST_PATH_PLAYLIST1_SONG1;
+    final Path TEST_PATH_PLAYLIST1_SONG2;
+    final Path TEST_PATH_PLAYLIST1_SONG3;
+    final Path TEST_PATH_PLAYLIST1_SONG4;
+    final Path TEST_PATH_PLAYLIST1_SONG5;
+    final Path TEST_PATH_PLAYLIST2;
+    final Path TEST_PATH_PLAYLIST2_SONG10;
+    final Path TEST_PATH_PLAYLIST2_SONG18;
+    final Path TEST_INVALID_SONG;
+    final Path TEST_TRIM_MP3;
+    final Path TEST_TRIM_WAV;
 
-    final Path TEST_INVALID_PLAYLIST = Paths.get(TEST_PATH.toString(), "balli di coppia"); 
+    ElektreaderTest() throws URISyntaxException, IOException {
+        // final InputStream in = Objects.requireNonNull(
+        //     ClassLoader.getSystemResourceAsStream("")
+        // ); 
+        // System.out.println(in.toString());
+        // String line;
+        // try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
+        //     while (br.ready()) {                
+        //         line = br.readLine();
+        //         System.out.println(line);
+        //     }
+        // }
 
-    final Path TEST_PATH_PLAYLIST1 = Paths.get(TEST_PATH.toString(), "italiani");
-    
-    final Path TEST_PATH_PLAYLIST1_SONG1 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "01 - Fedez, Annalisa, Articolo 31 - DISCO PARADISE (Visual Video).mp3");
+        
 
-    final Path TEST_PATH_PLAYLIST1_SONG2 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "02 - Claudio Baglioni - Avrai [Testo - 4K].mp3");
+        TEST_PATH = Paths.get(getClass().getResource("MUSICA").toURI()).toFile().toPath();
+        TEST_INVALID_PATH = Paths.get(System.getProperty("user.home"),"Desktop", "Musica");
 
-    final Path TEST_PATH_PLAYLIST1_SONG3 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "03 - Fabio Rovazzi - ANDIAMO A COMANDARE (Official Video).mp3");
-
-    final Path TEST_PATH_PLAYLIST1_SONG4 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "04 - Fabio Rovazzi Orietta Berti La discoteca italiana.mp3");
-
-    final Path TEST_PATH_PLAYLIST1_SONG5 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "05 - Mr.Rain - SUPEREROI (Official Video) [Sanremo 2023].mp3");
-
-    final Path TEST_PATH_PLAYLIST2 = Paths.get(TEST_PATH.toString(), "Saggio EXPLORA");
-
-    final Path TEST_PATH_PLAYLIST2_SONG10 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "10 - farfalle.mp3");
-
-    final Path TEST_PATH_PLAYLIST2_SONG18 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "18 - latinos.mp3");
-
-    final Path TEST_INVALID_SONG = Paths.get(TEST_PATH_PLAYLIST1.toString(), "05 - Lo Stato Sociale - Una Vita In Vacanza (Sanremo 2018).mp3");
-    
-    final Path TEST_TRIM_MP3 = Paths.get(TEST_PATH.toString(), "01 - bachata.mp3");
-
-    final Path TEST_TRIM_WAV = Paths.get(TEST_PATH.toString(), "03 - MAZURKA- EULALIA.wav");
+        TEST_INVALID_PLAYLIST = Paths.get(TEST_PATH.toString(), "balli di coppia"); 
+        
+        TEST_PATH_PLAYLIST1 = Paths.get(TEST_PATH.toString(), "italiani");
+        
+        TEST_PATH_PLAYLIST1_SONG1 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "01 - Fedez, Annalisa, Articolo 31 - DISCO PARADISE (Visual Video).mp3");
+        
+        TEST_PATH_PLAYLIST1_SONG2 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "02 - Claudio Baglioni - Avrai [Testo - 4K].mp3");
+        
+        TEST_PATH_PLAYLIST1_SONG3 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "03 - Fabio Rovazzi - ANDIAMO A COMANDARE (Official Video).mp3");
+        
+        TEST_PATH_PLAYLIST1_SONG4 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "04 - Fabio Rovazzi Orietta Berti La discoteca italiana.mp3");
+        
+        TEST_PATH_PLAYLIST1_SONG5 = Paths.get(TEST_PATH_PLAYLIST1.toString(), "05 - Mr.Rain - SUPEREROI (Official Video) [Sanremo 2023].mp3");
+        
+        TEST_PATH_PLAYLIST2 = Paths.get(TEST_PATH.toString(), "Saggio EXPLORA");
+        
+        TEST_PATH_PLAYLIST2_SONG10 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "10 - farfalle.mp3");
+        
+        TEST_PATH_PLAYLIST2_SONG18 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "18 - latinos.mp3");
+        
+        TEST_INVALID_SONG = Paths.get(TEST_PATH_PLAYLIST1.toString(), "05 - Lo Stato Sociale - Una Vita In Vacanza (Sanremo 2018).mp3");
+        
+        TEST_TRIM_MP3 = Paths.get(TEST_PATH.toString(), "01 - bachata.mp3");
+        
+        TEST_TRIM_WAV = Paths.get(TEST_PATH.toString(), "03 - MAZURKA- EULALIA.wav");
+    }
 
     final String OPERATION_SUCCESSFULL = "Operation successfull";
     /*
