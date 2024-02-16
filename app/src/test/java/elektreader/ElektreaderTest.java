@@ -46,7 +46,7 @@ final class ElektreaderTest {
     final Path TEST_PATH_SONG5;
 
     ElektreaderTest() throws URISyntaxException, IOException {
-        TEST_PATH = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "MUSICA");
+        TEST_PATH = Paths.get(System.getProperty("user.home") + File.separator + ".ElektReader");
         TEST_INVALID_PATH = Paths.get(System.getProperty("user.home"),"Desktop", "Musica");
 
         TEST_INVALID_PLAYLIST = Paths.get(TEST_PATH.toString(), "balli di coppia"); 
@@ -64,7 +64,7 @@ final class ElektreaderTest {
         TEST_PATH_SONG5 = Paths.get(TEST_PATH_PLAYLIST.toString(), "05 - ritmo vuelta.mp3");
     }
 
-    final String OPERATION_SUCCESSFULL = "Operation successfull";
+    final static String OPERATION_SUCCESSFULL = "Operation successfull";
     /*
      * If you are using JavaFX components in a non-GUI application or a unit test,
      *  you need to call the Platform.startup(Runnable) method with an empty runnable before using any JavaFX classes.
@@ -119,7 +119,7 @@ final class ElektreaderTest {
         /* test on playlist with dynamic and small size */
         Assertions.assertEquals(5, plist1.getSize());
         Assertions.assertEquals("00:18:07", plist1.getTotalDuration());
-        Assertions.assertEquals("MUSICA", plist1.getName());       
+        Assertions.assertEquals(".ElektReader", plist1.getName());       
     }
 
     @Test void testSongs() throws Exception {
@@ -183,18 +183,19 @@ final class ElektreaderTest {
         mC1.stop();
     }
 
+    
     @Test void testTrim() {
         final TrackTrimmer trimmer = new TrackTrimmerImpl();
-        
-        Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:00", "0:20", "FirstTestMp3"));
+
+        Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:00", "0:25", "FirstTestMp3"));
 
         trimmer.setTrack(TEST_PATH_SONG1);
         Assertions.assertEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:00", "0:20", "SecondTestMp3"));
         final File secondTestMp3 = new File(TEST_PATH.toString() + FileSystems.getDefault().getSeparator() + "SecondTestMp3.mp3");
         Assertions.assertTrue(secondTestMp3.exists());
-        secondTestMp3.delete();
+        Assertions.assertTrue(secondTestMp3.delete());
         Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("", "", "ThirdTestMp3"));
-        Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:25", "0:20", "FourthTestMp3"));
-        Assertions.assertThrows(NumberFormatException.class, () -> trimmer.trim("ciao", "0:20", "FifthTestMp3"));
+        Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:40", "0:30", "FourthTestMp3"));
+        Assertions.assertThrows(NumberFormatException.class, () -> trimmer.trim("ciao", "0:40", "FifthTestMp3"));
     }
 }
