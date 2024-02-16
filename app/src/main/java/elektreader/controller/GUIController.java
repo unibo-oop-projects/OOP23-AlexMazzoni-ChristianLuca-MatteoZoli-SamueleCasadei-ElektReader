@@ -1,7 +1,10 @@
 package elektreader.controller;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -153,9 +156,15 @@ public final class GUIController implements Initializable {
 			createShortcut(newScene, new KeyCodeCombination(KeyCode.V), () -> view());
 		});
 
+		Path jar = Path.of(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+		System.out.println(jar);
+		//FileSystem fs = FileSystems.newFileSystem(jar);
+
 		Platform.runLater(() -> {
-			loadEnvironment(Optional.of(
-				Paths.get(System.getProperty("user.dir"), "app", "src", "main", "resources", "MUSICA")));
+			try {
+				loadEnvironment(Optional.of(
+					Paths.get(ClassLoader.getSystemResource("MUSICA").toURI())));
+			} catch (URISyntaxException e) { } //NOPMD
 		});
 	}
 
