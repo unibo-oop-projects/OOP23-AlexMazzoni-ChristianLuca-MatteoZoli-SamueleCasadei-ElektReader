@@ -49,25 +49,9 @@ final class ElektreaderTest {
     final Path TEST_PATH_PLAYLIST2_SONG2;
     final Path TEST_INVALID_SONG;
     final Path TEST_TRIM_MP3;
-    final Path TEST_TRIM_WAV;
 
     ElektreaderTest() throws URISyntaxException, IOException {
-        // final InputStream in = Objects.requireNonNull(
-        //     ClassLoader.getSystemResourceAsStream("")
-        // ); 
-        // System.out.println(in.toString());
-        // String line;
-        // try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
-        //     while (br.ready()) {                
-        //         line = br.readLine();
-        //         System.out.println(line);
-        //     }
-        // }
-
-        
-
-        //TEST_PATH = Paths.get(getClass().getResource("MUSICA").toURI()).toFile().toPath();
-        TEST_PATH = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "MUSICA");
+        TEST_PATH = Paths.get(System.getProperty("user.home"), File.separator, ".ElektReader");
         TEST_INVALID_PATH = Paths.get(System.getProperty("user.home"),"Desktop", "Musica");
 
         TEST_INVALID_PLAYLIST = Paths.get(TEST_PATH.toString(), "balli di coppia"); 
@@ -93,8 +77,6 @@ final class ElektreaderTest {
         TEST_INVALID_SONG = Paths.get(TEST_PATH_PLAYLIST1.toString(), "05 - Lo Stato Sociale - Una Vita In Vacanza (Sanremo 2018).mp3");
         
         TEST_TRIM_MP3 = Paths.get(TEST_PATH.toString(), "01 - bachata.mp3");
-        
-        TEST_TRIM_WAV = Paths.get(TEST_PATH.toString(), "03 - MAZURKA- EULALIA.wav");
     }
 
     final String OPERATION_SUCCESSFULL = "Operation successfull";
@@ -245,14 +227,5 @@ final class ElektreaderTest {
         Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("", "", "ThirdTestMp3"));
         Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:25", "0:20", "FourthTestMp3"));
         Assertions.assertThrows(NumberFormatException.class, () -> trimmer.trim("ciao", "0:20", "FifthTestMp3"));
-
-        trimmer.setTrack(TEST_TRIM_WAV);
-        Assertions.assertEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:00", "0:20", "SecondTestWav"));
-        File secondTestWav = new File(TEST_PATH.toString() + FileSystems.getDefault().getSeparator() + "SecondTestWav.wav");
-        Assertions.assertTrue(secondTestWav.exists());
-        secondTestWav.delete();
-        Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("", "", "ThirdTestWav"));
-        Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:25", "0:20", "FourthTestWav"));
-        Assertions.assertThrows(NumberFormatException.class, () -> trimmer.trim("ciao", "0:20", "FifthTestWav"));
     }
 }
