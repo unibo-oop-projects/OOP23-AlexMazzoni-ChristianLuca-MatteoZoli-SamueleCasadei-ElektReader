@@ -56,7 +56,7 @@ public class PlayListsController {
         plistContainer.setSpacing(DEF_SPACE);
 
         GUIController.READER.getPlaylists().stream()
-            .forEach( p -> {
+            .forEach(p -> {
                 final var btn = createButton(p);
                 plistContainer.getChildren().add(btn);
                 btnPlaylists.put(btn, p);
