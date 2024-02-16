@@ -1,17 +1,11 @@
 package elektreader.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Enumeration;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 import java.util.logging.Logger;
 
 import elektreader.api.Reader;
@@ -52,10 +46,10 @@ public final class GUIController implements Initializable {
      */
     public static final double SIZE_ZERO = 0.0;
 
-	/**
-	 * constant used for resize playlists panel of 0.3 of the total window.
-	 */
-	public static final double SCALE_PLAYLIST_SIZE = 0.3;
+    /**
+     * constant used for resize playlists panel of 0.3 of the total window.
+     */
+    public static final double SCALE_PLAYLIST_SIZE = 0.3;
 
 	/**
 	 * constant used for resize songs panel of 0.7 of the total window.
@@ -160,9 +154,8 @@ public final class GUIController implements Initializable {
 		});
 
 		Platform.runLater(() -> {
-			try {
-				loadEnvironment(Optional.of(Paths.get(getClass().getResource("/" + "MUSICA").toURI())));
-			} catch (URISyntaxException e) { } //NOPMD
+			loadEnvironment(Optional.of(
+				Paths.get(System.getProperty("user.dir"), "app", "src", "main", "resources", "MUSICA")));
 		});
 	}
 
@@ -197,7 +190,8 @@ public final class GUIController implements Initializable {
 	private void find() { //NOPMD
 		if (GUIController.READER.getCurrentEnvironment().isPresent()) {
 			Platform.runLater(() -> {
-				if (this.root.getRowConstraints().get(1).getMaxHeight() <= MIN_FIND_SIZE) { //pane is closed, so open it
+				if (this.root.getRowConstraints().get(1)
+						.getMaxHeight() <= MIN_FIND_SIZE) { //pane is closed, so open it
 					this.root.getRowConstraints().get(1).setMaxHeight(MAX_FIND_SIZE);
 					find.show(this.findPane);
 				} else {
@@ -327,9 +321,12 @@ public final class GUIController implements Initializable {
 		});
 	}
 
-	//
+	
 	/**
 	 * adds to the scene's accelerators list the KeyCombination and the associated action to perform.
+	 * @param scene
+	 * @param key
+	 * @param action
 	 */
 	private static void createShortcut(final Scene scene, final KeyCodeCombination key, final ShortcutAction action) {
 		scene.getAccelerators().put(key, () -> action.execute());

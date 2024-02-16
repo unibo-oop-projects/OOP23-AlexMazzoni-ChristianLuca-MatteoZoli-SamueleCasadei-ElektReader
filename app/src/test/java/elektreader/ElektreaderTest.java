@@ -1,15 +1,11 @@
 package elektreader;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -33,7 +29,7 @@ import javafx.application.Platform;
  * Tests per testare la logica generale dell lettore
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class ElektreaderTest { 
+final class ElektreaderTest { 
     /* mi raccomando per i test posizionare le cartelle nel percorso specificato "user.home/elektreaderTEST/${ENVIRONMENT}" */
     /* il piu leggero 'environment'     : https://drive.google.com/file/d/17WTQxkTmtdlTbGVU20vWhc3YzxP1zktA/view?usp=sharing */
     /* quello realistico 'MUSICA'       : https://drive.google.com/file/d/1d6UC0DYF2jKUqH-y1h0XfPCt3EnY_g7O/view?usp=sharing */
@@ -49,8 +45,8 @@ class ElektreaderTest {
     final Path TEST_PATH_PLAYLIST1_SONG4;
     final Path TEST_PATH_PLAYLIST1_SONG5;
     final Path TEST_PATH_PLAYLIST2;
-    final Path TEST_PATH_PLAYLIST2_SONG10;
-    final Path TEST_PATH_PLAYLIST2_SONG18;
+    final Path TEST_PATH_PLAYLIST2_SONG1;
+    final Path TEST_PATH_PLAYLIST2_SONG2;
     final Path TEST_INVALID_SONG;
     final Path TEST_TRIM_MP3;
     final Path TEST_TRIM_WAV;
@@ -70,7 +66,8 @@ class ElektreaderTest {
 
         
 
-        TEST_PATH = Paths.get(getClass().getResource("MUSICA").toURI()).toFile().toPath();
+        //TEST_PATH = Paths.get(getClass().getResource("MUSICA").toURI()).toFile().toPath();
+        TEST_PATH = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "MUSICA");
         TEST_INVALID_PATH = Paths.get(System.getProperty("user.home"),"Desktop", "Musica");
 
         TEST_INVALID_PLAYLIST = Paths.get(TEST_PATH.toString(), "balli di coppia"); 
@@ -89,9 +86,9 @@ class ElektreaderTest {
         
         TEST_PATH_PLAYLIST2 = Paths.get(TEST_PATH.toString(), "Saggio EXPLORA");
         
-        TEST_PATH_PLAYLIST2_SONG10 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "10 - farfalle.mp3");
+        TEST_PATH_PLAYLIST2_SONG1 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "01 - flashmob.mp3");
         
-        TEST_PATH_PLAYLIST2_SONG18 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "18 - latinos.mp3");
+        TEST_PATH_PLAYLIST2_SONG2 = Paths.get(TEST_PATH_PLAYLIST2.toString(), "02 - la bomba.mp3");
         
         TEST_INVALID_SONG = Paths.get(TEST_PATH_PLAYLIST1.toString(), "05 - Lo Stato Sociale - Una Vita In Vacanza (Sanremo 2018).mp3");
         
@@ -113,7 +110,7 @@ class ElektreaderTest {
 
     /* TESTS */
     @Test void testEnvironment() throws Exception { /* test all the environment */
-        Reader app = new ReaderImpl();
+        final Reader app = new ReaderImpl();
 
         /* test environment */
         /* test invalid path */
@@ -144,41 +141,41 @@ class ElektreaderTest {
         app.getPlayer().setVolume(0.2);
         app.getPlayer().play();
         app.setCurrentPlaylist(app.getPlaylist(TEST_PATH_PLAYLIST2));
-        app.getPlayer().setSong(app.getCurrentPlaylist().get().getSong(TEST_PATH_PLAYLIST2_SONG18).get());
-        Assertions.assertEquals(TEST_PATH_PLAYLIST2_SONG18, app.getPlayer().getCurrentSong().getFile().toPath());
+        app.getPlayer().setSong(app.getCurrentPlaylist().get().getSong(TEST_PATH_PLAYLIST2_SONG2).get());
+        Assertions.assertEquals(TEST_PATH_PLAYLIST2_SONG2, app.getPlayer().getCurrentSong().getFile().toPath());
         app.getPlayer().play();
     }
 
     @Test void testPlaylists() {
-        Reader app = new ReaderImpl();
+        final Reader app = new ReaderImpl();
         app.setCurrentEnvironment(TEST_PATH_PLAYLIST1);
 
-        PlayList plist1 = new Mp3PlayList(TEST_PATH_PLAYLIST1, app.getPlaylist(TEST_PATH_PLAYLIST1).get().getSongs().stream()
+        final PlayList plist1 = new Mp3PlayList(TEST_PATH_PLAYLIST1, app.getPlaylist(TEST_PATH_PLAYLIST1).get().getSongs().stream()
             .map(s -> s.getFile().toPath())
             .toList());
 
         app.setCurrentEnvironment(TEST_PATH_PLAYLIST2);
-        PlayList plist2 = new Mp3PlayList(TEST_PATH_PLAYLIST2, app.getPlaylist(TEST_PATH_PLAYLIST2).get().getSongs().stream()
+        final PlayList plist2 = new Mp3PlayList(TEST_PATH_PLAYLIST2, app.getPlaylist(TEST_PATH_PLAYLIST2).get().getSongs().stream()
             .map(s -> s.getFile().toPath())
             .toList());
 
         /* test on playlist with dynamic and small size */
-        Assertions.assertEquals(13, plist1.getSize());
-        Assertions.assertEquals("00:45:08", plist1.getTotalDuration());
+        Assertions.assertEquals(6, plist1.getSize());
+        Assertions.assertEquals("00:21:57", plist1.getTotalDuration());
         Assertions.assertEquals("italiani", plist1.getName());
 
         /* test on a playlist with static and big size */
-        Assertions.assertEquals(24, plist2.getSize());
-        Assertions.assertEquals("01:26:09", plist2.getTotalDuration());
+        Assertions.assertEquals(2, plist2.getSize());
+        Assertions.assertEquals("00:06:42", plist2.getTotalDuration());
         Assertions.assertEquals("Saggio EXPLORA", plist2.getName());
         
     }
 
     @Test void testSongs() throws Exception {
-        Song s1 = new Mp3Song(TEST_PATH_PLAYLIST1_SONG1);
-        Song s3 = new Mp3Song(TEST_PATH_PLAYLIST1_SONG3);
-        Song s5 = new Mp3Song(TEST_PATH_PLAYLIST1_SONG5);
-        Song s4 = new Mp3Song(TEST_PATH_PLAYLIST1_SONG4);
+        final Song s1 = new Mp3Song(TEST_PATH_PLAYLIST1_SONG1);
+        final Song s3 = new Mp3Song(TEST_PATH_PLAYLIST1_SONG3);
+        final Song s5 = new Mp3Song(TEST_PATH_PLAYLIST1_SONG5);
+        final Song s4 = new Mp3Song(TEST_PATH_PLAYLIST1_SONG4);
 
         Assertions.assertEquals("Fedez, Annalisa, Articolo 31 - DISCO PARADISE (Visual Video)", s1.getName());
         Assertions.assertEquals("00:03:18", s1.durationStringRep());
@@ -198,36 +195,26 @@ class ElektreaderTest {
         MediaControl mC1;
         mC1 = new Mp3MediaControl();mC1.setPlaylist(new Mp3PlayList(TEST_PATH_PLAYLIST1, Reader.getAndFilterSongs(TEST_PATH_PLAYLIST1).get()));
         mC1.play();
-        System.out.println(mC1.getCurrentSong().getName());
         mC1.setVolume(0.015);
         Assertions.assertEquals(0.015, mC1.getVolume());
         //Testing various void method useful for reproduction, song choice, queue gestion ecc.
-        System.out.println(mC1.getDuration());
         mC1.nextSong();
-        System.out.println(mC1.getCurrentSong().getName());
         mC1.prevSong();
-        System.out.println(mC1.getCurrentSong().getName());
         mC1.setVolume(0.015);
         mC1.setSong(mC1.getPlaylist().get(1));
-        System.out.println(mC1.getCurrentSong().getName());
         Assertions.assertEquals(new Mp3Song(mC1.getPlaylist().get(1).getFile().toPath()).getName(), mC1.getCurrentSong().getName());
         mC1.prevSong();
-        System.out.println(mC1.getCurrentSong().getName());
         Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG1).getName(), mC1.getCurrentSong().getName());
         mC1.nextSong();
-        System.out.println(mC1.getCurrentSong().getName());
         Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG2).getName(), mC1.getCurrentSong().getName());
         mC1.nextSong();
-        System.out.println(mC1.getCurrentSong().getName());
         Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG3).getName(), mC1.getCurrentSong().getName());
         mC1.prevSong();
         Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG2).getName(), mC1.getCurrentSong().getName());
         mC1.setSong(mC1.getPlaylist().get(0));
-        System.out.println(mC1.getCurrentSong().getName());
         Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG1).getName(), mC1.getCurrentSong().getName());
         mC1.setRepSpeed(2.0);
         mC1.setSong(mC1.getPlaylist().get(mC1.getPlaylist().size() - 1));
-        System.out.println(mC1.getCurrentSong().getName());
         mC1.loopSong();
         mC1.nextSong();
         Assertions.assertEquals(new Mp3Song(TEST_PATH_PLAYLIST1_SONG1).getName(), mC1.getCurrentSong().getName());
@@ -246,13 +233,13 @@ class ElektreaderTest {
     }
 
     @Test void testTrim() {
-        TrackTrimmer trimmer = new TrackTrimmerImpl();
+        final TrackTrimmer trimmer = new TrackTrimmerImpl();
         
         Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:00", "0:20", "FirstTestMp3"));
 
         trimmer.setTrack(TEST_TRIM_MP3);
         Assertions.assertEquals(OPERATION_SUCCESSFULL, trimmer.trim("0:00", "0:20", "SecondTestMp3"));
-        File secondTestMp3 = new File(TEST_PATH.toString() + FileSystems.getDefault().getSeparator() + "SecondTestMp3.mp3");
+        final File secondTestMp3 = new File(TEST_PATH.toString() + FileSystems.getDefault().getSeparator() + "SecondTestMp3.mp3");
         Assertions.assertTrue(secondTestMp3.exists());
         secondTestMp3.delete();
         Assertions.assertNotEquals(OPERATION_SUCCESSFULL, trimmer.trim("", "", "ThirdTestMp3"));

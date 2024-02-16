@@ -53,7 +53,7 @@ public final class FindController {
         AnchorPane.setLeftAnchor(centerContainer, PADDING);
         AnchorPane.setRightAnchor(centerContainer, PADDING);
         AnchorPane.setBottomAnchor(centerContainer, PADDING);
-        
+
         final AnchorPane anchorInputContainer = new AnchorPane();
         final TextField input = new TextField();
         input.setPromptText("Find...");
