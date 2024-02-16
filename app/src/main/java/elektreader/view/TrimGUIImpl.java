@@ -21,25 +21,20 @@ import javafx.stage.Window;
 public class TrimGUIImpl implements TrimGUI {
 
     private static final int TEXTFIELD_WIDTH = 220;
-	private static final int PANE_HEIGHT = 300;
-	private static final int PANE_WIDTH = 270;
-	private static final int GAP_UNITS = 10;
-	private static final int PADDING_UNITS = 15;
-	private static final String WHITE_STRING = "-fx-mid-text-color: #ffffff";
+    private static final int PANE_HEIGHT = 300;
+    private static final int PANE_WIDTH = 270;
+    private static final int GAP_UNITS = 10;
+    private static final int PADDING_UNITS = 15;
+    private static final String WHITE_STRING = "-fx-mid-text-color: #ffffff";
 
-	private final Label resultLabel, trackLabel;
+    private final Label resultLabel, trackLabel;
 
-	private TrackTrimmerController controller;
+    private TrackTrimmerController controller;
 
-	/**
+    /**
 	 * Constructor for TrimGui.
 	 * @param primaryStage
 	 */
-	//Nonostante il tag spotBugs lo vede comunque come un warning
-	@SuppressFBWarnings(
-		value = "UwF",
-		justification = "controller is initialized in its constructor"
-	)
     public TrimGUIImpl(final Window primaryStage) {
         final Stage trimStage = new Stage();
 		trimStage.initModality(Modality.WINDOW_MODAL);
@@ -57,12 +52,7 @@ public class TrimGUIImpl implements TrimGUI {
 		final Label fifthLabel = new Label("5.");
 		resultLabel = new Label();
 		final Button fileBtn = new Button("Select track");
-		fileBtn.setOnMouseClicked(e -> {
-			final FileChooser fileChooser = new FileChooser();
-			fileChooser.getExtensionFilters().add(
-				new ExtensionFilter("MP3, wav", "*.mp3", "*.wav"));
-			this.controller.chooseFile(fileChooser.showOpenDialog(null));
-		});
+		fileBtn.setOnMouseClicked(e -> this.openFileChooser());
 		final TextField startCut = new TextField("Insert start (hh:mm:ss or seconds)");
 		final TextField endCut = new TextField("Insert end (hh:mm:ss or seconds)");
 		final TextField newName = new TextField("Insert the name for the trimmed track");
@@ -71,7 +61,7 @@ public class TrimGUIImpl implements TrimGUI {
 		newName.setPrefWidth(TEXTFIELD_WIDTH);
 		final Button trimBtn = new Button("Trim");
 		trimBtn.setOnMouseClicked(e -> 
-			this.controller.retrieveParameters(startCut.getText(), endCut.getText(), newName.getText()));
+			this.retrieveParameters(startCut.getText(), endCut.getText(), newName.getText()));
 		pane.add(firstLabel, 0, 0);
 		pane.add(secondLabel, 0, 1);
 		pane.add(thirdLabel, 0, 2);
@@ -117,4 +107,23 @@ public class TrimGUIImpl implements TrimGUI {
 		this.resultLabel.setText(message);
 	}
 	// CHECKSTYLE: DesignForExtension ON
+
+	@SuppressFBWarnings(
+		value = "UwF",
+		justification = "controller is initialized in its constructor"
+	)
+	private void openFileChooser() {
+		final FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().add(
+			new ExtensionFilter("MP3, wav", "*.mp3", "*.wav"));
+		this.controller.chooseFile(fileChooser.showOpenDialog(null));
+	}
+
+	@SuppressFBWarnings(
+		value = "UwF",
+		justification = "controller is initialized in its constructor"
+	)
+	private void retrieveParameters(final String start, final String end, final String name) {
+		this.controller.retrieveParameters(start, end, name);
+	}
 }
