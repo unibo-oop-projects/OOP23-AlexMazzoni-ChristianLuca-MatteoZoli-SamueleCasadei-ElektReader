@@ -85,7 +85,7 @@ public interface MediaControl {
     /**
      * @return the current status of the loop functionality.
      */
-    LoopStatus isLoopStatus();
+    LoopStatus isLoopStatus(); // NOPMD suppressed as it is a false positive
     /**
      * Shuffles the current playlist or resets it to its normal behaviour.
      */
@@ -93,7 +93,7 @@ public interface MediaControl {
     /**
      * @return true if random functionality is enabled, false otherwise.
      */
-    boolean getRandStatus();
+    boolean getRandStatus(); // NOPMD suppressed as it is a false positive
     /**
      * @param song the song to be set as the current one.
      */

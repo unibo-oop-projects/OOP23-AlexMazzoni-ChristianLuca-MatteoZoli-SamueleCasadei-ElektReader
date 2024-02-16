@@ -23,6 +23,7 @@ public class PlayListsController {
     private final SongsController songsController;
     private final VBox plistContainer;
     private final Label desc;
+    static final String SEL = "selected";
 
     /* to implement the switch between song views */
     private boolean onIcons = true;
@@ -74,10 +75,10 @@ public class PlayListsController {
         btnPlaylist.setOnMouseClicked(event -> {
             this.btnPlaylists.keySet().stream()
                 .forEach(btn -> {
-                    btn.getStyleClass().removeIf(style -> "selected".equals(style));
+                    btn.getStyleClass().removeIf(style -> SEL.equals(style));
             });
             final var btn = (Button) event.getSource();
-            btn.getStyleClass().add("selected");
+            btn.getStyleClass().add(SEL);
             GUIController.READER.setCurrentPlaylist(Optional.of(p));
             if (GUIController.READER.getCurrentPlaylist().isPresent()) {
                 songsController.load(p, onIcons);
@@ -92,9 +93,9 @@ public class PlayListsController {
      */
     public void reload() {
         this.btnPlaylists.keySet().stream()
-                .peek(btn -> btn.getStyleClass().removeIf(style -> "selected".equals(style)))
+                .peek(btn -> btn.getStyleClass().removeIf(style -> SEL.equals(style)))
                 .filter(t -> this.btnPlaylists.get(t).equals(GUIController.READER.getCurrentPlaylist().get()))
-                .forEach(t -> t.getStyleClass().add("selected"));
+                .forEach(t -> t.getStyleClass().add(SEL));
         this.songsController.load(GUIController.READER.getCurrentPlaylist().get(), onIcons);
     }
 

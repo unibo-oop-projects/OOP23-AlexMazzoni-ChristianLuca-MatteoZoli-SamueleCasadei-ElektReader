@@ -91,7 +91,7 @@ public interface Song {
      * @return the index of the file, knowing every file name is structured
      * like "index - actual name.mp3"
      */
-    public static Optional<Integer> getIndexFromName(final String name) {
+    static Optional<Integer> getIndexFromName(final String name) {
         final Pattern pattern = Pattern.compile("\\d+\\s*-\\s*.+$");
         final Matcher match = pattern.matcher(name);
         /* if the filename matches the standard pattern... */
