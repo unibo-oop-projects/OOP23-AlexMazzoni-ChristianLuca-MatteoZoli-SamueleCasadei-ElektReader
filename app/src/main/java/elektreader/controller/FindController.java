@@ -82,10 +82,10 @@ public final class FindController {
                 if (newValue.matches("^\\d+:\\d+(?::\\d+)?$")) { // ricerca per durata
                     find(t -> t.getTotalDuration().equals(newValue), s -> s.durationStringRep().equals(newValue));
                 } else if (newValue.matches("^\\d+$")) { // ricerca per indice
-                    find(t -> false, t -> {
+                    find(t -> Integer.parseInt(newValue) == t.getSize(), t -> {
                         final var index = Song.getIndexFromName(t.getFile().getName());
                         if (index.isPresent()) {
-                            return String.valueOf(index.get()).equals(newValue);
+                            return Integer.parseInt(newValue) == index.get();
                         } 
                         return index.isPresent();
                     });
