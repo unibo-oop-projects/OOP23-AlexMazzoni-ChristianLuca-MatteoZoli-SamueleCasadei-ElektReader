@@ -122,7 +122,8 @@ public final class Mp3PlayList implements PlayList {
         int counter = 1;
         List<Path> withIndex = songs.stream()
             .filter(p -> Song.getIndexFromName(p.toFile().getName()).isPresent())
-            .sorted((p1, p2) -> Song.getIndexFromName(p1.toFile().getName()).get() - Song.getIndexFromName(p2.toFile().getName()).get())
+            .sorted((p1, p2) -> Song.getIndexFromName(p1.toFile().getName()).get()
+                - Song.getIndexFromName(p2.toFile().getName()).get())
             .collect(Collectors.toList());
 
         /* i need to use a temporary list in order to avoid concurrent modification and mantain counter in the scope
