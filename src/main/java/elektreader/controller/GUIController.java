@@ -55,96 +55,87 @@ public final class GUIController implements Initializable {
      */
     public static final double SCALE_PLAYLIST_SIZE = 0.3;
 
-    //CHECKSTYLE: FileTabCharacter OFF
+    /**
+     *
+     */
     public static final double SCALE_SONG_SIZE = 0.7;
-    //CHECKSTYLE: FileTabCharacter ON
 
-	/**
-	 * constant used for resize find separator a panel,
-	 * that is resized when the user want to find anything.
-	 */
-	public static final double MIN_FIND_SIZE = 4;
-	
-	/**
-	 * constant used for resize find separator a panel,
-	 * that is resized when the user want to find anything.
-	 */
-	public static final double MAX_FIND_SIZE = 800;
+    /**
+     *
+     */
+    public static final double MIN_FIND_SIZE = 4;
 
-	/**
-	 * constant used for put in sleep the thread that sync all the GUI's with logics.
-	 */
-	public static final long THREAD_SLEEP = 1000L;
-	
-	/**
-	 * must be public for all the classes he contains all the logic,
-	 * and from it is possible to know all the status of logics app.
-	 */
-	public static final Reader READER = new ReaderImpl();
+    /**
+     *
+     */
+    public static final double MAX_FIND_SIZE = 800;
 
-	/* LOGICS */
-	private final FindController find = new FindController();
+    /**
+     *
+     */
+    public static final long THREAD_SLEEP = 1000L;
 
-	private PlayListsController controllerPlayLists;
+    /**
+     *
+     */
+    public static final Reader READER = new ReaderImpl();
 
-	private MediaControlsController controllerMediaControls;
+    private final FindController find = new FindController();
 
-	/* MAIN PARENT */
-	@FXML
+    private PlayListsController controllerPlayLists;
+
+    private MediaControlsController controllerMediaControls;
+
+    @FXML
     private GridPane root;
 
-	/* MENU */
-	@FXML
+    @FXML
     private Button btnFile;
 
-	@FXML
+    @FXML
     private Button btnView;
 
-	@FXML
+    @FXML
     private Button btnFind;
 
-	@FXML
-	private Button btnTrim;
+    @FXML
+    private Button btnTrim;
 
-	@FXML
-	private Button btnQueue;
+    @FXML
+    private Button btnQueue;
 
-	@FXML
+    @FXML
     private Button btnHelp;
 
-	@FXML
-	private Pane findPane;
+    @FXML
+    private Pane findPane;
 
-	/* PLAYLISTS */
-	@FXML
+    @FXML
     private Label lblPlaylists;
 
-	@FXML
+    @FXML
     private Button btnPlaylists;
 
-	@FXML
+    @FXML
     private ImageView imgPlaylistsShowPanel;
-	
-	@FXML
+
+    @FXML
     private ScrollPane playlistsScroll;
-	
-	/* SONGS */
-	@FXML
+
+    @FXML
     private Label lblSong;
 
-	@FXML
+    @FXML
     private Label lblSongDesc;
 
-
-	@FXML
+    @FXML
     private ScrollPane songsScroll;
 
-	/* MEDIA CONTROL */
-	@FXML
-	private Slider progressBar;
+    @FXML
+    private Slider progressBar;
 
-	@FXML
-	private GridPane mediaControlGrid;
+    @FXML
+    private GridPane mediaControlGrid;
 
     @SuppressFBWarnings(
         value = { // List of bugs to be suppressed
@@ -154,97 +145,95 @@ public final class GUIController implements Initializable {
         justification = "A ChoiceDialog is always in its own stage"
             + ", and we don't need the status of the Runnable"
     )
-	@Override
-	public void initialize(final URL location, final ResourceBundle resources) {
-		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
+    @Override
+    public void initialize(final URL location, final ResourceBundle resources) {
+        this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
 
-		root.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
-			createShortcut(newScene, new KeyCodeCombination(KeyCode.F), () -> find());
-			createShortcut(newScene, new KeyCodeCombination(KeyCode.T), () -> trim());
-			createShortcut(newScene, new KeyCodeCombination(KeyCode.V), () -> view());
+        root.sceneProperty().addListener((observableScene, oldScene, newScene) -> {
+            createShortcut(newScene, new KeyCodeCombination(KeyCode.F), () -> find());
+            createShortcut(newScene, new KeyCodeCombination(KeyCode.T), () -> trim());
+            createShortcut(newScene, new KeyCodeCombination(KeyCode.V), () -> view());
             createShortcut(newScene, new KeyCodeCombination(KeyCode.N), () -> importFiles());
             createShortcut(newScene, new KeyCodeCombination(KeyCode.Q), () -> queue());
-		});
+        });
 
-		final String[] titles = {"01 - bachata.mp3",
-			"02 - Becky G, NATTI NATASHA - Sin Pijama (Official Video).mp3",
-			"03 - Fabio Rovazzi - ANDIAMO A COMANDARE (Official Video).mp3",
-			"04 - la bomba.mp3", "05 - ritmo vuelta.mp3"
-		};
+        final String[] titles = {"01 - bachata.mp3",
+            "02 - Becky G, NATTI NATASHA - Sin Pijama (Official Video).mp3",
+            "03 - Fabio Rovazzi - ANDIAMO A COMANDARE (Official Video).mp3",
+            "04 - la bomba.mp3", "05 - ritmo vuelta.mp3"
+        };
 
-		final File dirMusic = new File(System.getProperty("user.home") + File.separator + ".ElektReader");
-		dirMusic.mkdir();
-		InputStream is;
-		File tmp;
+        final File dirMusic = new File(System.getProperty("user.home") + File.separator + ".ElektReader");
+        dirMusic.mkdir();
+        InputStream is;
+        File tmp;
 
-		for (final String title : titles) {
-			is = ClassLoader.getSystemResourceAsStream("MUSICA/" + title);
-			tmp = new File(dirMusic.getPath() + File.separator + title);
-			try {
-				Files.copy(is, tmp.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			} catch (IOException e) { } //NOPMD
-		}
+        for (final String title : titles) {
+            is = ClassLoader.getSystemResourceAsStream("MUSICA/" + title);
+            tmp = new File(dirMusic.getPath() + File.separator + title);
+            try {
+                Files.copy(is, tmp.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) { } //NOPMD
+        }
 
-		Platform.runLater(() -> {
-			loadEnvironment(Optional.of(dirMusic.toPath()));
-		});
-	}
+        Platform.runLater(() -> {
+            loadEnvironment(Optional.of(dirMusic.toPath()));
+        });
+    }
 
-	/* EVENTS */
-	/* logics */
-	@FXML
-	private void importFiles() { //NOPMD
-		try {
-			final DirectoryChooser chooser = new DirectoryChooser();
-			chooser.setTitle("Open Folder");
-			chooser.setInitialDirectory(new File(System.getProperty("user.home")));
-			final Optional<File> res = Optional.of(chooser.showDialog(null));
-			if (res.isPresent()) {
-				loadEnvironment(Optional.of(res.get().toPath()));
-			}
-		} catch (IllegalArgumentException e) { } //NOPMD
-	}
+    @FXML
+    private void importFiles() { //NOPMD
+        try {
+            final DirectoryChooser chooser = new DirectoryChooser();
+            chooser.setTitle("Open Folder");
+            chooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            final Optional<File> res = Optional.of(chooser.showDialog(null));
+            if (res.isPresent()) {
+                loadEnvironment(Optional.of(res.get().toPath()));
+            }
+        } catch (IllegalArgumentException e) { } //NOPMD
+    }
 
-	@FXML
-	private void view() { //NOPMD
-		if (GUIController.READER.getCurrentPlaylist().isPresent()) {
-			controllerPlayLists.switchView();
-		}
-	}
+    @FXML
+    private void view() { //NOPMD
+        if (GUIController.READER.getCurrentPlaylist().isPresent()) {
+            controllerPlayLists.switchView();
+        }
+    }
 
-	@FXML
-	private void trim() { //NOPMD
-		new TrackTrimmerController(this.root.getScene().getWindow());
-	}
+    @FXML
+    private void trim() { //NOPMD
+        new TrackTrimmerController(this.root.getScene().getWindow());
+    }
 
-	@FXML
-	private void find() { //NOPMD
-		if (GUIController.READER.getCurrentEnvironment().isPresent()) {
-			Platform.runLater(() -> {
-				if (this.root.getRowConstraints().get(1)
-						.getMaxHeight() <= MIN_FIND_SIZE) { //pane is closed, so open it
-					this.root.getRowConstraints().get(1).setMaxHeight(MAX_FIND_SIZE);
-					find.show(this.findPane);
-				} else {
-					this.findPane.getChildren().clear();
-					this.root.getRowConstraints().get(1).setMaxHeight(MIN_FIND_SIZE);
-				}
-			});
-			responsive();
-		}
-	}
+    @FXML
+    private void find() { //NOPMD
+        if (GUIController.READER.getCurrentEnvironment().isPresent()) {
+            Platform.runLater(() -> {
+                if (this.root.getRowConstraints().get(1)
+                    .getMaxHeight() <= MIN_FIND_SIZE) { //pane is closed, so open it
+                    this.root.getRowConstraints().get(1).setMaxHeight(MAX_FIND_SIZE);
+                    find.show(this.findPane);
+                } else {
+                    this.findPane.getChildren().clear();
+                    this.root.getRowConstraints().get(1).setMaxHeight(MIN_FIND_SIZE);
+                }
+            });
+            responsive();
+        }
+    }
 
-	@FXML
-	private void queue() { //NOPMD
-		if (GUIController.READER.getCurrentPlaylist().isPresent()) {
-			new QueueGUI();
-		}
-	}
+    @FXML
+    private void queue() { //NOPMD
+        if (GUIController.READER.getCurrentPlaylist().isPresent()) {
+            new QueueGUI();
+        }
+    }
 
-	@FXML
-	private void help() { //NOPMD
-		/* codice per trovare le canzoni duplicate (inutile e poco efficente) */
-		// songs = files.stream().filter(t -> {
+    @FXML
+    private void help() { //NOPMD
+        /* codice per trovare le canzoni duplicate (inutile e poco efficente) */
+        // songs = files.stream().filter(t -> {
         //     if((int)files.stream()
         //             .map(Song::getTitle)
         //             .filter(s -> s.equals(Song.getTitle(t))).count() > 1) {
@@ -253,120 +242,117 @@ public final class GUIController implements Initializable {
         //     }
         //     return true;
         // }).toList();
-	}
-
-	/* only graphics */
-	@FXML
-	private void showPlaylists() { //NOPMD
-		if (GUIController.READER.getCurrentEnvironment().isPresent()) {
-			Platform.runLater(() -> {
-				if (this.lblPlaylists.getPrefWidth() == SIZE_ZERO) { //is hidden
-					this.imgPlaylistsShowPanel.setImage(new Image(
-						ClassLoader.getSystemResource("icons/Light/UI/HideSidepanel.png").toString())); 
-
-					this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE * this.root.getWidth());
-					this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth()
-						+ this.btnPlaylists.getWidth());
-					this.playlistsScroll.setVisible(true);
-				} else {
-					this.imgPlaylistsShowPanel.setImage(new Image(
-						ClassLoader.getSystemResource("icons/Light/UI/ShowSidepanel.png").toString())); 
-
-					this.playlistsScroll.setVisible(false);
-					this.playlistsScroll.setPrefWidth(SIZE_ZERO);
-					this.lblPlaylists.setPrefWidth(SIZE_ZERO);
-				}
-			});
-			responsive();
-		}
-	}
-
-	private void responsive() {
-		//this.findPane.setPrefWidth(this.root.getWidth());
-		this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth());
-		this.songsScroll.setPrefWidth(this.lblSong.getWidth());
-		this.controllerPlayLists.responsive();
-	}
-
-	private void reload() {
-		this.controllerPlayLists.reload();
-		this.controllerMediaControls.reload();
-	}
-
-	private Runnable guiReaderListener() {
-		return new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					Platform.runLater(() -> {
-						if (GUIController.READER.getPlayer().getMediaControl().isPresent()) {
-							GUIController.READER.getPlayer().getMediaControl().get().statusProperty()
-								.addListener(new ChangeListener<MediaPlayer.Status>() {
-								@Override
-								public void changed(
-								 final ObservableValue<? extends MediaPlayer.Status> observable,
-								 final MediaPlayer.Status oldValue,
-								 final MediaPlayer.Status newValue) {
-									reload();
-								}
-							});
-						}
-					});
-					try {
-						Thread.sleep(THREAD_SLEEP);
-					} catch (InterruptedException e) {
-						Logger.getLogger(e.toString());
-					}
-				}
-			}
-		};
-	}
-
-	/* PRIVATE METHODS */
-	private void loadEnvironment(final Optional<Path> root) {
-		GUIController.READER.setCurrentEnvironment(root.get());
-		if (GUIController.READER.getCurrentEnvironment().isPresent()) {
-			System.out.println("environment loaded: " + GUIController.READER.getCurrentEnvironment().get()); //NOPMD
-			loadPlaylists();
-			loadPlayer();
-			final Thread statusCheckerThread = new Thread(guiReaderListener());
-			statusCheckerThread.start();
-		}	
-	}
-	
-	private void loadPlayer() {
-		Platform.runLater(() -> {
-			this.mediaControlGrid.getChildren().clear();
-			this.controllerMediaControls = new MediaControlsController(this.mediaControlGrid, this.progressBar);
-		});
-	}
-
-	private void loadPlaylists() {
-		Platform.runLater(() -> {
-			this.playlistsScroll.setContent(null);
-			/* in order to keep constant track of the size of the two scrolls */
-			this.playlistsScroll.setFitToWidth(true);
-			this.songsScroll.setFitToWidth(true);
-			this.controllerPlayLists = new PlayListsController(this.playlistsScroll,
-			 this.songsScroll, this.lblSongDesc);
-		});
-	}
-
-	
-	/**
-	 * adds to the scene's accelerators list the KeyCombination and the associated action to perform.
-	 * @param scene
-	 * @param key
-	 * @param action
-	 */
-	private static void createShortcut(final Scene scene, final KeyCodeCombination key, final ShortcutAction action) {
-		scene.getAccelerators().put(key, () -> action.execute());
     }
 
-	/**
+    @FXML
+    private void showPlaylists() { //NOPMD
+        if (GUIController.READER.getCurrentEnvironment().isPresent()) {
+        Platform.runLater(() -> {
+                if (this.lblPlaylists.getPrefWidth() == SIZE_ZERO) { //is hidden
+                    this.imgPlaylistsShowPanel.setImage(new Image(
+                        ClassLoader.getSystemResource("icons/Light/UI/HideSidepanel.png").toString())); 
+
+                    this.lblPlaylists.setPrefWidth(SCALE_PLAYLIST_SIZE * this.root.getWidth());
+                    this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth()
+                        + this.btnPlaylists.getWidth());
+                    this.playlistsScroll.setVisible(true);
+                } else {
+                    this.imgPlaylistsShowPanel.setImage(new Image(
+                        ClassLoader.getSystemResource("icons/Light/UI/ShowSidepanel.png").toString())); 
+
+                    this.playlistsScroll.setVisible(false);
+                    this.playlistsScroll.setPrefWidth(SIZE_ZERO);
+                    this.lblPlaylists.setPrefWidth(SIZE_ZERO);
+                }
+            });
+            responsive();
+        }
+    }
+
+    private void responsive() {
+        //this.findPane.setPrefWidth(this.root.getWidth());
+        this.playlistsScroll.setPrefWidth(this.lblPlaylists.getWidth());
+        this.songsScroll.setPrefWidth(this.lblSong.getWidth());
+        this.controllerPlayLists.responsive();
+    }
+
+    private void reload() {
+        this.controllerPlayLists.reload();
+        this.controllerMediaControls.reload();
+    }
+
+    private Runnable guiReaderListener() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    Platform.runLater(() -> {
+                        if (GUIController.READER.getPlayer().getMediaControl().isPresent()) {
+                            GUIController.READER.getPlayer().getMediaControl().get().statusProperty()
+                                .addListener(new ChangeListener<MediaPlayer.Status>() {
+                                @Override
+                                public void changed(
+                                    final ObservableValue<? extends MediaPlayer.Status> observable,
+                                    final MediaPlayer.Status oldValue,
+                                    final MediaPlayer.Status newValue) {
+                                    reload();
+                                }
+                            });
+                        }
+                    });
+                    try {
+                        Thread.sleep(THREAD_SLEEP);
+                    } catch (InterruptedException e) {
+                        Logger.getLogger(e.toString());
+                    }
+                }
+            }
+        };
+    }
+
+    private void loadEnvironment(final Optional<Path> root) {
+        GUIController.READER.setCurrentEnvironment(root.get());
+        if (GUIController.READER.getCurrentEnvironment().isPresent()) {
+            System.out.println("environment loaded: " + GUIController.READER.getCurrentEnvironment().get()); //NOPMD
+            loadPlaylists();
+            loadPlayer();
+            final Thread statusCheckerThread = new Thread(guiReaderListener());
+            statusCheckerThread.start();
+        }
+    }
+
+    private void loadPlayer() {
+        Platform.runLater(() -> {
+            this.mediaControlGrid.getChildren().clear();
+            this.controllerMediaControls = new MediaControlsController(this.mediaControlGrid, this.progressBar);
+        });
+    }
+
+    private void loadPlaylists() {
+        Platform.runLater(() -> {
+            this.playlistsScroll.setContent(null);
+            /* in order to keep constant track of the size of the two scrolls */
+            this.playlistsScroll.setFitToWidth(true);
+            this.songsScroll.setFitToWidth(true);
+            this.controllerPlayLists = new PlayListsController(this.playlistsScroll,
+            this.songsScroll, this.lblSongDesc);
+        });
+    }
+
+    /**
+     * adds to the scene's accelerators list the KeyCombination and the associated action to perform.
+     * @param scene
+     * @param key
+     * @param action
+     */
+    private static void createShortcut(final Scene scene, final KeyCodeCombination key, final ShortcutAction action) {
+        scene.getAccelerators().put(key, () -> action.execute());
+    }
+
+    /**
      * Functional interface to execute FXML methods via shortcuts.
      */
     private interface ShortcutAction {
-		void execute();
+        void execute();
     }
 }
