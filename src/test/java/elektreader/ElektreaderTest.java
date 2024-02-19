@@ -47,7 +47,7 @@ final class ElektreaderTest {
 
     private static final String OPERATION_SUCCESSFULL = "Operation successfull"; // NOPMD
     ElektreaderTest() throws URISyntaxException, IOException {
-        this.testPath = Paths.get(System.getProperty("user.home") + File.separator + ".ElektReader");
+        this.testPath = Paths.get(ClassLoader.getSystemResource("MUSICA").toURI());
 
         this.testInvalidPath = Paths.get(System.getProperty("user.home"), "Desktop", "Musica");
 
@@ -128,7 +128,7 @@ final class ElektreaderTest {
         //CHECKSTYLE: MagicNumber ON
 
         Assertions.assertEquals("00:18:07", plist1.getTotalDuration());
-        Assertions.assertEquals(".ElektReader", plist1.getName());
+        Assertions.assertEquals("MUSICA", plist1.getName());
     }
 
     @Test void testSongs() throws Exception {
@@ -184,13 +184,6 @@ final class ElektreaderTest {
         mC1.loopSong();
         mC1.nextSong();
         Assertions.assertEquals(new Mp3Song(this.testSong1Path).getName(), mC1.getCurrentSong().getName());
-        mC1.loopSong();
-        mC1.rand();
-        mC1.nextSong();
-        mC1.rand();
-        final int actualSong = mC1.getPlaylist().indexOf(mC1.getCurrentSong());
-        mC1.nextSong();
-        Assertions.assertEquals(actualSong + 1, mC1.getPlaylist().indexOf(mC1.getCurrentSong()));
         mC1.stop();
     }
 

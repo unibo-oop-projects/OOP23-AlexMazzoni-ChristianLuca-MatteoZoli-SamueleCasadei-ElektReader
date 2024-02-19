@@ -56,27 +56,31 @@ public final class GUIController implements Initializable {
     public static final double SCALE_PLAYLIST_SIZE = 0.3;
 
     /**
-     *
+     * constant used for resize songs panel of 0.7 of the total window.
      */
     public static final double SCALE_SONG_SIZE = 0.7;
 
     /**
-     *
+     * constant used for resize find from a panel to a separator size
+     * that is resized when the user clicks on the Find Button.
      */
     public static final double MIN_FIND_SIZE = 4;
 
     /**
-     *
+     * constant used for resize find from a separator to a panel
+     * that is resized when the user clicks on the find Button.
      */
     public static final double MAX_FIND_SIZE = 800;
 
     /**
-     *
+     * contant used to put in sleep the thread used for
+     * synchronizing all the GUI and logics elements.
      */
     public static final long THREAD_SLEEP = 1000L;
 
     /**
-     *
+     * must be public for all the classes, becuase there is only 1 logic.
+     * it contains all the logics, and from it is possible to know all the staus of the reader.
      */
     public static final Reader READER = new ReaderImpl();
 
