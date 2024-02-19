@@ -3,7 +3,9 @@ package elektreader.view;
 import java.awt.Toolkit;
 import java.io.IOException;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -36,7 +38,15 @@ public final class GUI extends Application {
             Toolkit.getDefaultToolkit().getScreenSize().getHeight() * SCALE_SCREEN_SIZE_PERCENT);
     }
 
-
+    @SuppressFBWarnings(
+        value = { // List of bugs to be suppressed
+            "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+            "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE",
+            "DM_EXIT"
+        }, // String with the reasons for them to be suppressed
+        justification = "A ChoiceDialog is always in its own stage"
+            + ", and we don't need the status of the Runnable"
+    )
     @Override
     public void start(final Stage mainStage) {
         try {
@@ -46,7 +56,8 @@ public final class GUI extends Application {
             mainStage.setScene(scene);
             mainStage.setResizable(true);
             mainStage.setOnCloseRequest(event -> {
-                event.consume(); 
+                event.consume();
+                Platform.exit();
                 System.exit(0); // NOPMD
             });
             mainStage.show();

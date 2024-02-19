@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import elektreader.api.Reader;
 import elektreader.model.ReaderImpl;
 import elektreader.view.GUI;
@@ -54,10 +55,9 @@ public final class GUIController implements Initializable {
      */
     public static final double SCALE_PLAYLIST_SIZE = 0.3;
 
-    /**
-	 * constant used for resize songs panel of 0.7 of the total window.
-	 */
-	public static final double SCALE_SONG_SIZE = 0.7;
+    //CHECKSTYLE: FileTabCharacter OFF
+    public static final double SCALE_SONG_SIZE = 0.7;
+    //CHECKSTYLE: FileTabCharacter ON
 
 	/**
 	 * constant used for resize find separator a panel,
@@ -146,6 +146,14 @@ public final class GUIController implements Initializable {
 	@FXML
 	private GridPane mediaControlGrid;
 
+    @SuppressFBWarnings(
+        value = { // List of bugs to be suppressed
+            "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+            "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE"
+        }, // String with the reasons for them to be suppressed
+        justification = "A ChoiceDialog is always in its own stage"
+            + ", and we don't need the status of the Runnable"
+    )
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources) {
 		this.root.setPrefSize(GUI.scaleToScreenSize().getKey(), GUI.scaleToScreenSize().getValue());
@@ -353,7 +361,7 @@ public final class GUIController implements Initializable {
 	 */
 	private static void createShortcut(final Scene scene, final KeyCodeCombination key, final ShortcutAction action) {
 		scene.getAccelerators().put(key, () -> action.execute());
-	}
+    }
 
 	/**
      * Functional interface to execute FXML methods via shortcuts.
