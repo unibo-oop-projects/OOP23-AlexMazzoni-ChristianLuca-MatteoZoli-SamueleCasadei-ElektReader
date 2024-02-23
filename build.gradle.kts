@@ -5,14 +5,16 @@
  * For more details take a look at the 'Building Java & JVM projects' chapter in the Gradle
  * User Manual available at https://docs.gradle.org/8.0.2/userguide/building_java_projects.html
  */
-
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     java
     application
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("org.danilopianini.gradle-java-qa") version "0.40.0"
+
+    id("org.danilopianini.unibo-oop-gradle-plugin") version "1.0.6"
 }
+
 
 sourceSets {
     main {
@@ -71,3 +73,4 @@ tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+ java { toolchain { languageVersion.set(JavaLanguageVersion.of(17)) } }
