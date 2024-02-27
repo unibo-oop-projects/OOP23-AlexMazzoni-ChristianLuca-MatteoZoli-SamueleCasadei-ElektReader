@@ -6,4 +6,3 @@ ogni cartella è una playlist ed essa può contenere dei brani *mp3 o wav*.
 ### Library:
 Abbiamo utilizzato la libreria [https://openjfx.io/](javaFX) per l’implementazione grafica e per la manipolazione di generale,
 e la libreria [https://jthink.net/jaudiotagger/](jaudiotagger) per leggere i metadata dei file.
-prova
